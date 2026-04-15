@@ -6,7 +6,7 @@ function Header() {
       <div className="header-inner">
 
         <div className="header-left">
-          <a href="#" className="brand-link">
+          <a href="/" className="brand-link">
             <span className="brand-icon">B</span>
             <span className="brand-text">BusyBee</span>
           </a>

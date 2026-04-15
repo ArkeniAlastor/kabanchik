@@ -176,6 +176,34 @@ function MainPage() {
     'Офіціант', 'Кухар', 'Промоутер', 'Пакувальник', 'Складський робітник',
   ];
 
+  const geoCols = [
+    [
+      'Олександрія', 'Біла Церква', 'Білгород-Дністровський', 'Бердичів',
+      'Бердянськ', 'Березань', 'Бориспіль', 'Боярка', 'Бровари', 'Буча',
+      'Васильків', 'Вінниця', 'Вишневе', 'Вишгород',
+      'Дніпро (Дніпропетровськ)', 'Дрогобич', 'Житомир', 'Запоріжжя',
+    ],
+    [
+      'Івано-Франківськ', 'Ізмаїл', 'Ірпінь', "Кам'янець-Подільський",
+      "Кам'янське (Дніпродзержинськ)", 'Київ', 'Ковель', 'Конотоп',
+      'Краматорськ', 'Кременчук', 'Кривий Ріг',
+      'Кропивницький (Кіровоград)', 'Лисичанськ', 'Лозова',
+      'Луцьк', 'Львів', 'Маріуполь',
+    ],
+    [
+      'Мелітополь', 'Мукачево', 'Ніжин', 'Миколаїв', 'Нікополь',
+      'Новомосковськ', 'Обухів', 'Одеса', 'Павлоград', 'Первомайськ',
+      'Переяслав-Хмельницький', 'Полтава', 'Прилуки', 'Ржищів',
+      'Рівне', 'Северодонецьк', 'Славутич', "Слов'янськ",
+    ],
+    [
+      'Сміла', 'Суми', 'Тернопіль', 'Ужгород', 'Українка', 'Умань',
+      'Фастів', 'Харків', 'Херсон', 'Хмельницький', 'Червоноград',
+      'Черкаси', 'Чернігів', 'Чернівці', 'Чорноморськ (Іллічівськ)',
+      'Шостка', 'Енергодар', 'Яготин',
+    ],
+  ];
+
   return (
     <div className="page">
       <Header />
@@ -185,7 +213,11 @@ function MainPage() {
         {/* Hero */}
         <section className="hero-section">
           <div className="container">
-            <h1 className="hero-title">Замовляй та надавай послуги з комфортом</h1>
+            <div className="hero-badge">
+              <span />
+              Понад 50 000 фахівців онлайн
+            </div>
+            <h1 className="hero-title">Замовляй та надавай<br /><em>послуги з комфортом</em></h1>
             <p className="hero-subtitle">Разом нас не зупинити. Ми з Україною.</p>
             <div className="hero-search">
               <input
@@ -195,15 +227,31 @@ function MainPage() {
               />
               <button type="button">Знайти фахівця</button>
             </div>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <strong>50 000+</strong>
+                <span>фахівців</span>
+              </div>
+              <div className="hero-stat">
+                <strong>120 000+</strong>
+                <span>виконаних замовлень</span>
+              </div>
+              <div className="hero-stat">
+                <strong>4.9 ★</strong>
+                <span>середній рейтинг</span>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Services */}
         <section className="services-section">
           <div className="container">
+            <h2 className="section-title">Популярні послуги</h2>
+            <p className="section-lead">Знайди фахівця в будь-якій категорії</p>
             <div className="category-list">
               {categoryIcons.map((cat) => (
-                <a key={cat.label} href="#" className="category-card">
+                <a key={cat.label} href="/" className="category-card">
                   <div className="category-icon">
                     <img src={cat.img} alt={cat.label} />
                   </div>
@@ -230,7 +278,7 @@ function MainPage() {
                     ))}
                   </ul>
                   <div className="service-card-footer">
-                    <a href="#" className="service-card-link">Показати ще</a>
+                    <a href="/" className="service-card-link">Показати ще</a>
                   </div>
                 </article>
               ))}
@@ -242,6 +290,7 @@ function MainPage() {
         <section className="more-section">
           <div className="container">
             <h2 className="section-title">Ще більше послуг</h2>
+            <p className="section-lead">Ми охоплюємо всі сфери</p>
             <div className="service-grid">
               {extraServiceCards.map((card, idx) => (
                 <article key={idx} className="service-card">
@@ -260,7 +309,7 @@ function MainPage() {
                     ))}
                   </ul>
                   <div className="service-card-footer">
-                    <a href="#" className="service-card-link">Показати ще</a>
+                    <a href="/" className="service-card-link">Показати ще</a>
                   </div>
                 </article>
               ))}
@@ -328,6 +377,32 @@ function MainPage() {
                 <div className="step-number">03</div>
                 <h3 className="step-title">Готово!</h3>
                 <p className="step-text">Платіть тільки після виконання. Ваші гроші під захистом до підтвердження.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Geography */}
+        <section className="geo-section">
+          <div className="container">
+            <div className="geo-map-wrapper">
+              <h2 className="geo-title">Географія Пчілки</h2>
+              <div className="geo-cities">
+                {geoCols.map((col, ci) => (
+                  <ul key={ci} className="geo-col">
+                    {col.map((city, i) => (
+                      <li key={i}>{city}</li>
+                    ))}
+                  </ul>
+                ))}
+              </div>
+
+            </div>
+            <div className="geo-cta">
+              <p className="geo-cta-text">Шукайте перевірених фахівців або вигідні замовлення за допомогою сервісу Busy Bee</p>
+              <div className="geo-btns">
+                <button type="button" className="geo-btn-primary">Знайти фахівця</button>
+                <button type="button" className="geo-btn-outline">Стати фахівцем</button>
               </div>
             </div>
           </div>
