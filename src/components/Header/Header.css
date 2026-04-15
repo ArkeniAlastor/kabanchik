@@ -1,0 +1,163 @@
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 249, 233, 0.97);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(245, 188, 68, 0.2);
+    box-shadow: 0 4px 24px rgba(229, 170, 62, 0.08);
+}
+
+.header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.05rem;
+    white-space: nowrap;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #fff1c0;
+    color: #745000;
+    font-weight: 800;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-text {
+    letter-spacing: -0.02em;
+}
+
+.header-search {
+    flex: 1;
+    max-width: 440px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    background: #fff8e6;
+    border: 1px solid rgba(245, 188, 68, 0.35);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.header-search input {
+    border: none;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    color: #6b5426;
+    outline: none;
+    background: transparent;
+}
+
+.header-search input::placeholder {
+    color: #c5a25a;
+}
+
+.btn {
+    border: none;
+    border-radius: 999px;
+    padding: 11px 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: rgba(255, 245, 210, 0.95);
+    color: #7d5a08;
+    border: 1px solid rgba(245, 184, 59, 0.45);
+}
+
+.btn-search {
+    background: #f3c963;
+    color: #3f2f00;
+    border-radius: 0 999px 999px 0;
+    padding: 12px 22px;
+}
+
+.btn-primary {
+    background: #f3c963;
+    color: #3f2f00;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(241, 189, 86, 0.3);
+    background: #fff5d8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.avatar {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffe49a;
+}
+
+@media (max-width: 880px) {
+    .header-inner {
+        flex-wrap: wrap;
+    }
+
+    .header-search {
+        order: 3;
+        max-width: 100%;
+        flex: none;
+        width: 100%;
+    }
+
+    .header-left {
+        flex: 1;
+    }
+}
+
+@media (max-width: 560px) {
+    .brand-text {
+        display: none;
+    }
+
+    .btn-outline {
+        display: none;
+    }
+}

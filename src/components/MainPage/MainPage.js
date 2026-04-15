@@ -1,13 +1,17 @@
 import './MainPage.css';
-import iconHome from '../../imgs/icons-02.svg';
-import iconDelivery from '../../imgs/icons-02-14.svg';
-import iconFreelance from '../../imgs/icons-02-15.svg';
-import iconTeachers from '../../imgs/icons-02-16.svg';
-import iconBusiness from '../../imgs/icons-02-17.svg';
-import iconCategories from '../../imgs/icons-02-18.svg';
-import iconExtra1 from '../../imgs/icons-02-04.svg';
-import iconExtra2 from '../../imgs/Frame 84.svg';
-import iconExtra3 from '../../imgs/Frame 85.svg';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import {
+  iconHome,
+  iconDelivery,
+  iconFreelance,
+  iconTeachers,
+  iconBusiness,
+  iconCategories,
+  iconExtra1,
+  iconExtra2,
+  iconExtra3,
+} from '../../imgs/icons';
 
 function MainPage() {
   const categoryIcons = [
@@ -31,7 +35,7 @@ function MainPage() {
     },
     {
       icon: iconDelivery,
-      title: 'Доставка та кур’єр',
+      title: "Доставка та кур'єр",
       items: [
         { text: 'Термінові посилки', count: '642' },
         { text: 'Фургони та вантаж', count: '184' },
@@ -98,7 +102,7 @@ function MainPage() {
       items: [
         { text: 'Прибирання', count: '632' },
         { text: 'Догляд за будинком', count: '148' },
-        { text: 'Мелкий ремонт', count: '392' },
+        { text: 'Дрібний ремонт', count: '392' },
       ],
     },
   ];
@@ -117,7 +121,7 @@ function MainPage() {
       icon: iconFreelance,
       title: 'Дизайн',
       items: [
-        { text: 'Інтер’єрні ескізи', count: '128' },
+        { text: "Інтер'єрні ескізи", count: '128' },
         { text: 'Логотипи', count: '76' },
         { text: 'Презентації', count: '93' },
       ],
@@ -133,7 +137,7 @@ function MainPage() {
     },
     {
       icon: iconTeachers,
-      title: 'Краса та здоров’я',
+      title: "Краса та здоров'я",
       items: [
         { text: 'Перукарські послуги', count: '112' },
         { text: 'Манікюр', count: '87' },
@@ -160,64 +164,50 @@ function MainPage() {
     },
   ];
 
-  return (
-    <main className="main-page">
-      <section className="hero">
-        <header className="main-header">
-          <div className="header-left">
-            <a href="#" className="brand-link">
-              {/* logo placeholder */}
-              <span className="brand-icon" aria-hidden="true">B</span>
-              <span className="brand-text">BusyBee</span>
-            </a>
-            <button type="button" className="header-button header-button--outline">
-              Створити замовлення
-            </button>
-          </div>
+  const vacancyCards = [
+    { title: 'Бариста', location: 'Одеса', published: 'опубліковано 3 години тому' },
+    { title: "Кур'єр", location: 'Одеса', published: 'опубліковано 3 години тому' },
+    { title: 'Адміністратор', location: 'Одеса', published: 'опубліковано 3 години тому' },
+    { title: 'Водій', location: 'Одеса', published: 'опубліковано 3 години тому' },
+  ];
 
-          <div className="header-center">
-            <div className="header-searchbar">
+  const vacancyTags = [
+    'Продавець', 'Охоронець', 'Вантажник', 'Касир', 'Прибиральник',
+    'Офіціант', 'Кухар', 'Промоутер', 'Пакувальник', 'Складський робітник',
+  ];
+
+  return (
+    <div className="page">
+      <Header />
+
+      <main>
+
+        {/* Hero */}
+        <section className="hero-section">
+          <div className="container">
+            <h1 className="hero-title">Замовляй та надавай послуги з комфортом</h1>
+            <p className="hero-subtitle">Разом нас не зупинити. Ми з Україною.</p>
+            <div className="hero-search">
               <input
                 type="text"
                 placeholder="Що треба зробити?"
                 aria-label="Пошук послуг"
               />
-              <button type="button" className="header-button header-button--search">
-                Знайти фахівця
-              </button>
+              <button type="button">Знайти фахівця</button>
             </div>
           </div>
+        </section>
 
-          <div className="header-right">
-            <button type="button" className="icon-button" aria-label="Профіль">
-              {/* profile placeholder */}
-              <span className="profile-placeholder" />
-            </button>
-            <button type="button" className="header-button header-button--primary">
-              Стати фахівцем
-            </button>
-          </div>
-        </header>
-
-        <div className="hero-content">
-          <h1>Заказывай та надавай послуги з комфортом</h1>
-          <p>Разом нас не зупинити. Ми з Україною.</p>
-          <div className="hero-search">
-            <input
-              type="text"
-              placeholder="Що треба зробити?"
-              aria-label="Пошук послуг"
-            />
-            <button type="button">Знайти фахівця</button>
-          </div>
-          <div className="cards-block">
+        {/* Services */}
+        <section className="services-section">
+          <div className="container">
             <div className="category-list">
-              {categoryIcons.map((category) => (
-                <a key={category.label} href="#" className="category-card">
+              {categoryIcons.map((cat) => (
+                <a key={cat.label} href="#" className="category-card">
                   <div className="category-icon">
-                    <img src={category.img} alt={`${category.label} icon`} />
+                    <img src={cat.img} alt={cat.label} />
                   </div>
-                  <span className="category-label">{category.label}</span>
+                  <span className="category-label">{cat.label}</span>
                 </a>
               ))}
             </div>
@@ -227,13 +217,13 @@ function MainPage() {
                 <article key={idx} className="service-card">
                   <div className="service-card-header">
                     <div className="service-card-icon">
-                      <img src={card.icon} alt="Service icon" />
+                      <img src={card.icon} alt="icon" />
                     </div>
                     <h3 className="service-card-title">{card.title}</h3>
                   </div>
                   <ul className="service-features">
-                    {card.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="service-feature">
+                    {card.items.map((item, i) => (
+                      <li key={i} className="service-feature">
                         <span>{item.text}</span>
                         <span className="service-count">{item.count}</span>
                       </li>
@@ -246,21 +236,24 @@ function MainPage() {
               ))}
             </div>
           </div>
+        </section>
 
-          <section className="bottom-section">
-            <h2>Ще більше послуг</h2>
+        {/* More Services */}
+        <section className="more-section">
+          <div className="container">
+            <h2 className="section-title">Ще більше послуг</h2>
             <div className="service-grid">
               {extraServiceCards.map((card, idx) => (
                 <article key={idx} className="service-card">
                   <div className="service-card-header">
                     <div className="service-card-icon">
-                      <img src={card.icon} alt="Service icon" />
+                      <img src={card.icon} alt="icon" />
                     </div>
                     <h3 className="service-card-title">{card.title}</h3>
                   </div>
                   <ul className="service-features">
-                    {card.items.map((item, itemIdx) => (
-                      <li key={itemIdx} className="service-feature">
+                    {card.items.map((item, i) => (
+                      <li key={i} className="service-feature">
                         <span>{item.text}</span>
                         <span className="service-count">{item.count}</span>
                       </li>
@@ -272,12 +265,119 @@ function MainPage() {
                 </article>
               ))}
             </div>
-          </section>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+
+        {/* Vacancies */}
+        <section className="vacancies-section">
+          <div className="container">
+            <div className="vacancies-header">
+              <h2>Не знайшли потрібну послугу? Використовуйте пошук!</h2>
+              <div className="vacancies-search">
+                <input type="text" placeholder="Яку роботу вам потрібно виконати?" />
+                <button type="button" className="vacancies-city-btn">Одеса &#8964;</button>
+              </div>
+            </div>
+
+            <div className="vacancies-top">
+              <p className="vacancies-count"><strong>23</strong> вакансій знайдено</p>
+              <div className="vacancies-filters">
+                <button type="button" className="pill-button pill-button--active">Усі рубрики</button>
+                <button type="button" className="pill-button">Вся Україна</button>
+              </div>
+            </div>
+
+            <div className="vacancy-grid">
+              {vacancyCards.map((vacancy, idx) => (
+                <article key={idx} className="vacancy-card">
+                  <div className="vacancy-card-body">
+                    <h3 className="vacancy-title">{vacancy.title}</h3>
+                    <p className="vacancy-location">{vacancy.location}</p>
+                    <p className="vacancy-published">{vacancy.published}</p>
+                  </div>
+                  <button type="button" className="vacancy-button">Відгукнутись</button>
+                </article>
+              ))}
+            </div>
+
+            <div className="vacancy-tags">
+              {vacancyTags.map((tag, idx) => (
+                <button key={idx} type="button" className="tag-pill">{tag}</button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section className="how-section">
+          <div className="container">
+            <h2 className="section-title">Як це працює?</h2>
+            <p className="section-sub">Три простих кроки — і справа зроблена</p>
+            <div className="steps-grid">
+              <div className="step-card">
+                <div className="step-number">01</div>
+                <h3 className="step-title">Опишіть завдання</h3>
+                <p className="step-text">Розкажіть, що потрібно зробити — безкоштовно та швидко. Займає менше хвилини.</p>
+              </div>
+              <div className="step-card">
+                <div className="step-number">02</div>
+                <h3 className="step-title">Отримайте пропозиції</h3>
+                <p className="step-text">Фахівці самі напишуть вам з цінами та відгуками. Обирайте найкращого.</p>
+              </div>
+              <div className="step-card">
+                <div className="step-number">03</div>
+                <h3 className="step-title">Готово!</h3>
+                <p className="step-text">Платіть тільки після виконання. Ваші гроші під захистом до підтвердження.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Reviews */}
+        <section className="reviews-section">
+          <div className="container">
+            <h2 className="section-title">Що кажуть люди</h2>
+            <p className="section-sub">Тисячі задоволених замовників по всій Україні</p>
+            <div className="reviews-grid">
+              <article className="review-card">
+                <div className="review-header">
+                  <div className="review-avatar">М</div>
+                  <div>
+                    <p className="review-name">Марія К.</p>
+                    <div className="review-stars">★★★★★</div>
+                  </div>
+                </div>
+                <p className="review-text">Знайшла сантехніка за 10 хвилин. Прийшов вчасно, зробив акуратно. Дуже задоволена!</p>
+              </article>
+              <article className="review-card">
+                <div className="review-header">
+                  <div className="review-avatar">О</div>
+                  <div>
+                    <p className="review-name">Олег Д.</p>
+                    <div className="review-stars">★★★★★</div>
+                  </div>
+                </div>
+                <p className="review-text">Замовляв переїзд. Все пройшло швидко, без пошкоджень. Рекомендую сервіс!</p>
+              </article>
+              <article className="review-card">
+                <div className="review-header">
+                  <div className="review-avatar">А</div>
+                  <div>
+                    <p className="review-name">Анна В.</p>
+                    <div className="review-stars">★★★★☆</div>
+                  </div>
+                </div>
+                <p className="review-text">Знайшла репетитора з англійської. Дуже приємна людина, і ціна нижча ніж в агенціях.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+
+      </main>
+    </div>
   );
 }
 
 export default MainPage;
-
