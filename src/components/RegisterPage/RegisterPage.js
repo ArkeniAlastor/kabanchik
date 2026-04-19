@@ -121,7 +121,7 @@ function RegisterPage() {
           </p>
 
           <p className="register-login">
-            Вже маєте акаунт? <a href="/">Увійти</a>
+            Вже маєте акаунт? <Link to="/login">Увійти</Link>
           </p>
 
           <div className="register-divider">
