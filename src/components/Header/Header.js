@@ -1,38 +1,25 @@
 import './Header.css';
+import { Link } from 'react-router-dom';
+import { iconBee } from '../../imgs/icons';
 
 function Header() {
   return (
     <header className="site-header">
       <div className="header-inner">
 
-        <div className="header-left">
-          <a href="/" className="brand-link">
-            <span className="brand-icon">B</span>
-            <span className="brand-text">BusyBee</span>
-          </a>
-          <button type="button" className="btn btn-outline">
-            Створити замовлення
-          </button>
-        </div>
+        <Link to="/" className="brand-link">
+          <img src={iconBee} alt="BusyBee" className="brand-bee" />
+          <span className="brand-text">BusyBee</span>
+        </Link>
 
-        <div className="header-search">
-          <input
-            type="text"
-            placeholder="Що треба зробити?"
-            aria-label="Пошук послуг"
-          />
-          <button type="button" className="btn btn-search">
-            Знайти фахівця
-          </button>
-        </div>
+        <nav className="header-nav">
+          <a href="/" className="nav-link">Категорії</a>
+          <a href="/" className="nav-link">Замовлення</a>
+        </nav>
 
-        <div className="header-right">
-          <button type="button" className="icon-btn" aria-label="Профіль">
-            <span className="avatar" />
-          </button>
-          <button type="button" className="btn btn-primary">
-            Стати фахівцем
-          </button>
+        <div className="header-actions">
+          <Link to="/login" className="btn-login">Увійти</Link>
+          <Link to="/register" className="btn-register">Реєстрація</Link>
         </div>
 
       </div>

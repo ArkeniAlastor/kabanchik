@@ -1,0 +1,174 @@
+.forgot-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.forgot-form-side {
+  flex: 0 0 55%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+.forgot-form-wrap {
+  width: 100%;
+  max-width: 420px;
+  padding: 0 40px;
+}
+
+.forgot-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+}
+.forgot-back:hover { color: #1a1a2e; }
+.forgot-back-arrow { font-size: 1.3rem; line-height: 1; }
+
+.forgot-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.forgot-logo img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+.forgot-logo span {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+.forgot-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+.forgot-subtitle {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.forgot-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+.forgot-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+.forgot-label input {
+  padding: 13px 16px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1a1a2e;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.forgot-label input:focus { border-color: #2e3d72; }
+.forgot-label input::placeholder { color: #ccc; }
+
+.forgot-submit {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: #f5c842;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 4px;
+}
+.forgot-submit:hover { background: #d9a820; }
+.forgot-submit--link { margin-top: 20px; }
+
+.forgot-login {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #666;
+  margin-top: 16px;
+}
+.forgot-login a {
+  color: #2e3d72;
+  font-weight: 700;
+  text-decoration: none;
+}
+.forgot-login a:hover { text-decoration: underline; }
+
+/* Success state */
+.forgot-success {
+  text-align: center;
+  padding: 20px 0;
+}
+.forgot-success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+.forgot-success-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+.forgot-success-text {
+  font-size: 0.92rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.forgot-success-text strong { color: #1a1a2e; }
+
+/* Right promo */
+.forgot-promo-side {
+  flex: 1;
+  background: linear-gradient(to bottom right, #3d4f7c 0%, #4a5a8a 40%, #b8881a 80%, #d4a020 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.forgot-promo-wrap {
+  text-align: center;
+  padding: 40px;
+  max-width: 360px;
+}
+.forgot-promo-bee {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 28px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
+}
+.forgot-promo-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 14px;
+}
+.forgot-promo-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.5;
+}
