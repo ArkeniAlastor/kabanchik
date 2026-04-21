@@ -45,3 +45,7 @@ export { default as iconNewspaper } from './📰.png';
 export { default as iconPencil } from './✏️.png';
 export { default as iconCamera } from './🎥.png';
 export { default as iconComedyMask } from './🎭.png';
+export { default as iconMusical } from './🎼.png';
+export { default as iconPeizaj } from './🖼️.png';
+export { default as iconChuvak } from './🗣️.png';
+export { default as iconMobila } from './📱.png';
