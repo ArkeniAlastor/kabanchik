@@ -13,7 +13,7 @@ function Header() {
         </Link>
 
         <nav className="header-nav">
-          <a href="/" className="nav-link">Категорії</a>
+          <Link to="/category" className="nav-link">Категорії</Link>
           <a href="/" className="nav-link">Замовлення</a>
         </nav>
 
