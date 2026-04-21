@@ -1,6 +1,7 @@
 import './MainPage.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 import {
   iconBee,
   iconDesign,
@@ -87,17 +88,17 @@ function MainPage() {
             <h2 className="section-title">Популярні категорії</h2>
             <div className="categories-grid">
               {categories.map((cat) => (
-                <a key={cat.label} href="/" className="cat-card">
+                <Link key={cat.label} to="/category" className="cat-card">
                   <div className="cat-icon">
                     <img src={cat.icon} alt={cat.label} />
                   </div>
                   <p className="cat-label">{cat.label}</p>
                   <p className="cat-count">{cat.count}</p>
-                </a>
+                </Link>
               ))}
             </div>
             <div className="categories-more">
-              <button type="button" className="btn-all-cats">Переглянути всі категорії</button>
+              <Link to="/category" className="btn-all-cats">Переглянути всі категорії</Link>
             </div>
           </div>
         </section>

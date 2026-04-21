@@ -4,8 +4,9 @@
   z-index: 100;
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
 }
+
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -15,6 +16,7 @@
   align-items: center;
   gap: 32px;
 }
+
 .brand-link {
   display: flex;
   align-items: center;
@@ -25,18 +27,24 @@
   font-size: 1.15rem;
   letter-spacing: -0.02em;
 }
+
 .brand-bee {
   width: 32px;
   height: 32px;
   object-fit: contain;
 }
-.brand-text { color: #1a1a2e; }
+
+.brand-text {
+  color: #1a1a2e;
+}
+
 .header-nav {
   display: flex;
   align-items: center;
   gap: 28px;
   flex: 1;
 }
+
 .nav-link {
   text-decoration: none;
   color: #444;
@@ -44,12 +52,17 @@
   font-weight: 500;
   transition: color 0.15s;
 }
-.nav-link:hover { color: #1a1a2e; }
+
+.nav-link:hover {
+  color: #1a1a2e;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .btn-login {
   text-decoration: none;
   color: #1a1a2e;
@@ -59,7 +72,11 @@
   border-radius: 8px;
   transition: background 0.15s;
 }
-.btn-login:hover { background: #f5f5f5; }
+
+.btn-login:hover {
+  background: #f5f5f5;
+}
+
 .btn-register {
   text-decoration: none;
   background: #f5c842;
@@ -70,4 +87,7 @@
   border-radius: 24px;
   transition: background 0.2s;
 }
-.btn-register:hover { background: #d9a820; }
+
+.btn-register:hover {
+  background: #d9a820;
+}
