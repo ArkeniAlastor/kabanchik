@@ -1,6 +1,7 @@
 import './MainPage.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 import {
   iconBee,
   iconDesign,
@@ -97,7 +98,7 @@ function MainPage() {
               ))}
             </div>
             <div className="categories-more">
-              <button type="button" className="btn-all-cats">Переглянути всі категорії</button>
+              <Link to="/category" className="btn-all-cats">Переглянути всі категорії</Link>
             </div>
           </div>
         </section>

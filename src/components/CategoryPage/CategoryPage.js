@@ -1,7 +1,21 @@
 import './CategoryPage.css';
+import { useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import {iconCheck,iconMoney,iconLightning,iconShield,iconChat,iconStar,iconDarts,iconStudent,iconTree,iconTriangle,iconVessilya,iconHeadphones,iconLupa,iconOffice,iconTassel,iconCloud,iconGamePad,iconGlobus,iconBulb,iconNotes,iconBook,iconShine,iconPlenka,iconCircus,iconBlockChain,iconAI,iconEmail,iconSiren,iconMicrophone,iconNewspaper,iconPencil,iconCamera,iconComedyMask,iconMusical,iconPeizaj,iconChuvak,iconMobila } from '../../imgs/icons';
+import {iconCheck,iconMoney,iconLightning,iconShield,iconChat,iconStar,iconDarts,iconStudent,iconHome,iconTree,iconTriangle,iconVessilya,iconHeadphones,iconLupa,iconOffice,iconTassel,iconCloud,iconGamePad,iconGlobus,iconBulb,iconNotes,iconBook,iconShine,iconPlenka,iconCircus,iconBlockChain,iconAI,iconEmail,iconSiren,iconMicrophone,iconNewspaper,iconPencil,iconCamera,iconComedyMask,iconMusical,iconPeizaj,iconChuvak,iconMobila,iconBee } from '../../imgs/icons';
+
+
+const popularTags = ['Дизайн', 'Веб-розробка', 'SEO', 'Копірайтинг', 'Переклад'];
+
+const categoryButtons = [
+  'Всі категорії',
+  'Дизайні і графіка',
+  'Розробка і програмування',
+  'Маркетинг | реклама',
+  'Контент | копірайтинг',
+  'Відео | анімація',
+  'Аудіо'
+];
 
 
 const features = [
@@ -43,18 +57,102 @@ const features = [
     { icon: iconPeizaj, title: 'Дизайн логотипів', text: 'Обирайте на основі реальних відгуків' },
     { icon: iconChuvak, title: 'Усний переклад', text: 'Обирайте на основі реальних відгуків' },
     { icon: iconMobila, title: 'UI/UX дизайн', text: 'Обирайте на основі реальних відгуків' },
-    { icon: iconMusical, title: 'Створення музики', text: 'Обирайте на основі реальних відгуків' },
-    { icon: iconMusical, title: 'Створення музики', text: 'Обирайте на основі реальних відгуків' },
-    { icon: iconMusical, title: 'Створення музики', text: 'Обирайте на основі реальних відгуків' },
   ];
 
 
-const CategoryPage = () => (
-  <div className="CategoryPage">
-    <Header/>
-    <Footer/>
+function CategoryPage() {
+  const [selectedCategory, setSelectedCategory] = useState('Всі категорії');
+  const [showCategoryOverlay, setShowCategoryOverlay] = useState(false);
+
+  const handleCategoryClick = (category) => {
+    if (category !== 'Всі категорії') {
+      setSelectedCategory(category);
+      setShowCategoryOverlay(true);
+    }
+  };
+
+  const handleCloseOverlay = () => {
+    setShowCategoryOverlay(false);
+    setSelectedCategory('Всі категорії');
+  };
+
+  return (
+    <div className="CategoryPage">
+      <Header />
+      <section className="hero-section">
+        <div className="container">
+          <div className="hero-content">
+            <div className="hero-text">
+              <h1 className="hero-title">Всі категорії послуг</h1>
+              <p className="hero-subtitle">Знайдіть потрібного фахівця серед 65 категорій</p>
+              <div className="hero-search">
+                <input type="text" placeholder="Що потрібно зробити? (наприклад: дизайн лого)" aria-label="Пошук" />
+                <button type="button">Знайти</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="category-filter">
+        <div className="container">
+          <div className="category-buttons">
+            {categoryButtons.map((category) => (
+              <button
+                key={category}
+                className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          <p className="categories-count">Знайдено 65 категорій</p>
+        </div>
+      </section>
+      {!showCategoryOverlay ? (
+        <div className="features">
+          {features.map((feature1, index) => (
+            <div key={index} className="feature1-card">
+              <img src={feature1.icon} alt={feature1.title} />
+              <h3>{feature1.title}</h3>
+              <p>{feature1.text}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="category-overlay">
+          <button type="button" className="overlay-close-btn" onClick={handleCloseOverlay}>← Усі категорії</button>
+          <div className="overlay-content">
+            <h2 className="overlay-title">{selectedCategory}</h2>
+            <div className="overlay-features">
+              {features.slice(0, 12).map((feature1, index) => (
+                <div key={index} className="feature1-card">
+                  <img src={feature1.icon} alt={feature1.title} />
+                  <h3>{feature1.title}</h3>
+                  <p>{feature1.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+      <section className="cta-section">
+        <div className="container">
+          <h2 className="cta-title">Не знайшли потрібну категорію?</h2>
+          <p className="cta-sub">Опишіть ваше завдання, і ми допоможемо знайти фахівця</p>
+          <div className="cta-btns">
+            <button type="button" className="cta-btn-primary">Створити замовлення</button>
+          </div>
+        </div>
+      </section>
+              {/* Banner */}
+        <div className="banner-strip">
+          Маленька праця для великих людей!
+        </div>
+      <Footer />
+    </div>
+
     
-  </div>
-);
+  );}
 
 export default CategoryPage;
