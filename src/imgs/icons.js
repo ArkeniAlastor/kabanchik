@@ -49,3 +49,4 @@ export { default as iconMusical } from './🎼.png';
 export { default as iconPeizaj } from './🖼️.png';
 export { default as iconChuvak } from './🗣️.png';
 export { default as iconMobila } from './📱.png';
+export {default as iconKolokolchik } from './🔔.png'
