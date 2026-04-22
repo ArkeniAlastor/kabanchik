@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
 import { iconBee, iconCheck, iconMoney, iconLightning } from '../../imgs/icons';
 
 function RegisterPage() {
   const [role, setRole] = useState('client');
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate('/userpage');
   };
 
   const features = [

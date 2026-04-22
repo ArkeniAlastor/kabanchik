@@ -23,6 +23,8 @@ import {
 } from '../../imgs/icons';
 import './UserPage.css'
 import Footer from '../Footer/Footer';
+
+// Данные карточек статистики для вкладки "Огляд"
 const stats = [
     { label: 'Замовлень в роботі', count: '3', icon: iconBlocknote, text: 'АКТИВНИХ' },
     { label: 'Від фахівців', count: '55', icon: iconChumodan, text: 'ПРОПОЗИЦІЇ' },
@@ -30,6 +32,7 @@ const stats = [
     { label: 'Середня оцінка', count: '4.9', icon: iconStar, text: 'РЕЙТИНГ' },
 ];
 
+// Данные карточек заказов (используются в нескольких вкладках)
 const orderCard = [
     {
         id: 1,
@@ -88,6 +91,7 @@ const orderCard = [
         date: '2 тижні тому',
     }];
 
+// Карточки рекомендаций внизу вкладки "Огляд"
 const recomendationCards = [
     {
         id: 1,
@@ -113,6 +117,7 @@ const recomendationCards = [
     }
 ];
 
+// Данные избранных специалистов для вкладки "Обране"
 const specialists = [
     {
         id: 1,
@@ -207,9 +212,18 @@ const profilePhoto = {
     format: 'Формати: JPG, PNG',
 };
 
+// Возвращает css-класс статуса для цветового отображения бейджа
+const getStatusClass = (status) => {
+    if (status === 'Активне') return 'status-active';
+    if (status === 'В роботі') return 'status-progress';
+    if (status === 'Завершено') return 'status-done';
+    return '';
+};
+
+// Вкладка "Огляд": статистика, последние заказы и рекомендации
 const OverviewTab = ({ onGoToOrders }) => (
     <div className='overview-tab'>
-
+        {/* Stats */}
         <div className='stats-section'>
             <div className="container">
                 {stats.map((item, index) => (
@@ -227,17 +241,19 @@ const OverviewTab = ({ onGoToOrders }) => (
                 ))}
             </div>
         </div>
+
+        {/* Last Orders */}
         <div className='last-order-container '>
-            <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={onGoToOrders}> Переглянути всі →</p> {/*Должен быть синим*/}
+            <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={onGoToOrders}> Переглянути всі →</p>
             </span>
-            <div className='last-order-card-container'>{/*сделать сетчатое расположение*/}
+            <div className='last-order-card-container'>
                 <div className='last-order-card'>
                     {orderCard.map((orderCard) => (
                         <div className='card' key={orderCard.id}>
 
                             <div className='card-header'>
                                 <h2 className='card-title'>{orderCard.title}</h2>
-                                <span className='card-status'>{orderCard.status}</span>
+                                <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
                             </div>
 
                             <p className='card-description'>{orderCard.description}</p>
@@ -271,13 +287,19 @@ const OverviewTab = ({ onGoToOrders }) => (
                 </div>
             </div>
         </div>
+
+        {/* Recommendations */}
         <div className='recommendations-section'>
             {recomendationCards.map((card) => (
                 <div className='recomendation-card' key={card.id}>
                     <img className='recomendation-card-icon' src={card.icon} alt="" />
                     <h2 className='recomendation-card-title'>{card.title}</h2>
                     <p className='recomendation-card-description'>{card.description}</p>
-                    <span className='recomendation-card-link'>{card.linkText}</span>
+                    {card.linkPath ? (
+                        <Link className='recomendation-card-link' to="/category">{card.linkText}</Link>
+                    ) : (
+                        <span className='recomendation-card-link'>{card.linkText}</span>
+                    )}
                 </div>
             ))}
         </div>
@@ -285,20 +307,23 @@ const OverviewTab = ({ onGoToOrders }) => (
 
 )
 
+// Вкладка "Всі замовлення": полный список заказов
 const OrdersTab = () => (
     <div className='orders-tab'>
         <div className='orders-header'>
             <h1>Всі замовлення</h1>
         </div>
+
+        {/* Orders Grid */}
         <div className='orders-list'>
-            <div className='last-order-card-container'>{/*сделать сетчатое расположение*/}
+            <div className='last-order-card-container'>
                 <div className='last-order-card'>
                     {orderCard.map((orderCard) => (
                         <div className='card' key={orderCard.id}>
 
                             <div className='card-header'>
                                 <h2 className='card-title'>{orderCard.title}</h2>
-                                <span className='card-status'>{orderCard.status}</span>
+                                <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
                             </div>
 
                             <p className='card-description'>{orderCard.description}</p>
@@ -335,19 +360,22 @@ const OrdersTab = () => (
     </div>
 )
 
+// Вкладка "Активні": только заказы в работе
 const ActiveTab = () => (
     <div className='active-tab'>
         <div className='orders-header'>
             <h1>Активні замовлення</h1>
         </div>
-        <div className='last-order-card-container'>{/*сделать сетчатое расположение*/}
+
+        {/* Active Orders Grid */}
+        <div className='last-order-card-container'>
             <div className='last-order-card'>
                 {orderCard.filter(card => card.id !== 4).map((orderCard) => (
                     <div className='card' key={orderCard.id}>
 
                         <div className='card-header'>
                             <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className='card-status'>{orderCard.status}</span>
+                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
                         </div>
 
                         <p className='card-description'>{orderCard.description}</p>
@@ -383,19 +411,22 @@ const ActiveTab = () => (
     </div>
 )
 
+// Вкладка "Завершені": только завершенные заказы
 const EndOrderTab = () => (
     <div className='end-order-tab'>
         <div className='orders-header'>
             <h1>Завершені замовлення</h1>
         </div>
-        <div className='last-order-card-container'>{/*сделать сетчатое расположение*/}
+
+        {/* Completed Orders Grid */}
+        <div className='last-order-card-container'>
             <div className='last-order-card'>
                 {orderCard.filter(card => card.id === 4).map((orderCard) => (
                     <div className='card' key={orderCard.id}>
 
                         <div className='card-header'>
                             <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className='card-status'>{orderCard.status}</span>
+                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
                         </div>
 
                         <p className='card-description'>{orderCard.description}</p>
@@ -431,17 +462,59 @@ const EndOrderTab = () => (
     </div>
 )
 
+// Вкладка "Повідомлення": список чатов + активный чат
 const MessagesTab = () => {
+    // Список чатов в левой колонке
     const [chats] = useState([
-        { id: 1, name: 'Марина К.', gender: 'female' },
-        { id: 2, name: 'Андрій С.', gender: 'male' },
-        { id: 3, name: 'Олена М.', gender: 'female' },
-        { id: 4, name: 'Дмитро В.', gender: 'male' },
-        { id: 5, name: 'Ірина П.', gender: 'female' },
+        {
+            id: 1,
+            name: 'Марина К.',
+            gender: 'female',
+            preview: 'Дякую за замовлення! Почну роботу...',
+            time: '10:30',
+            unread: 2,
+            isOnline: true,
+        },
+        {
+            id: 2,
+            name: 'Андрій С.',
+            gender: 'male',
+            preview: 'Готовий перший варіант дизайну',
+            time: 'Вчора',
+            unread: 0,
+            isOnline: false,
+        },
+        {
+            id: 3,
+            name: 'Олена М.',
+            gender: 'female',
+            preview: 'Коли можемо обговорити деталі?',
+            time: '2 дні',
+            unread: 1,
+            isOnline: true,
+        },
+        {
+            id: 4,
+            name: 'Дмитро В.',
+            gender: 'male',
+            preview: 'Відправив фінальні файли',
+            time: '3 дні',
+            unread: 0,
+            isOnline: false,
+        },
+        {
+            id: 5,
+            name: 'Ірина П.',
+            gender: 'female',
+            preview: 'Дякую за співпрацю!',
+            time: 'Тиждень',
+            unread: 0,
+            isOnline: false,
+        },
 
     ]);
 
-    // 2. Истории сообщений, привязанные к ID чата
+    // Истории сообщений, привязанные к ID чата
     const [chatHistories, setChatHistories] = useState({
         1: [
             { id: 1, text: 'Вітаю! Я готова почати.', sender: 'them' },
@@ -458,8 +531,10 @@ const MessagesTab = () => {
     const [activeChatId, setActiveChatId] = useState(1);
     const [messageText, setMessageText] = useState('');
 
+    // Текущий выбранный чат
     const activeChat = chats.find(c => c.id === activeChatId);
 
+    // Отправка сообщения в текущий активный чат
     const handleSendMessage = () => {
         if (!messageText.trim()) return;
 
@@ -484,33 +559,64 @@ const MessagesTab = () => {
             </div>
 
             <div className='messages-list'>
-
+                {/* Chats Sidebar */}
                 <aside className="chats-sidebar">
+                    <div className='chat-search-wrap'>
+                        <input className='chat-search-input' type='text' placeholder='Пошук в повідомленнях...' />
+                    </div>
+
                     {chats.map(chat => (
                         <div
-                            key={chat.id} onClick={() => setActiveChatId(chat.id)} className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
-                            style={{ cursor: 'pointer', padding: '10px' }}/*Когда будешь ксс делать, убирай эту фигню, и сделаешь это уже в ксс */>
-                            {chat.name}
+                            key={chat.id}
+                            onClick={() => setActiveChatId(chat.id)}
+                            className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
+                        >
+                            <div className='chat-avatar'>
+                                {chat.name.charAt(0)}
+                                {chat.isOnline && <span className='chat-online-dot' />}
+                            </div>
+
+                            <div className='chat-item-content'>
+                                <div className='chat-item-head'>
+                                    <h3 className='chat-item-name'>{chat.name}</h3>
+                                    <span className='chat-item-time'>{chat.time}</span>
+                                </div>
+                                <div className='chat-item-foot'>
+                                    <p className='chat-item-preview'>{chat.preview}</p>
+                                    {chat.unread > 0 && <span className='chat-item-unread'>{chat.unread}</span>}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </aside>
 
-
+                {/* Active Chat Window */}
                 <main className='chat-window'>
                     <header className='chat-header'>
-                        <h2>{activeChat?.name}</h2>
+                        <div className='chat-header-user'>
+                            <div className='chat-avatar'>{activeChat?.name.charAt(0)}</div>
+                            <div>
+                                <h2>{activeChat?.name}</h2>
+                                <p className='chat-header-status'>{activeChat?.isOnline ? 'В мережі' : 'Був(ла) нещодавно'}</p>
+                            </div>
+                        </div>
+                        <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
+                            &#9742;
+                        </button>
                     </header>
 
                     <div className='messages-container'>
                         {chatHistories[activeChatId].map(msg => (
-                            <div key={msg.id} className={`message ${msg.sender}`}>
-                                <b className='message-sender'>
-                                    {msg.sender === 'me'
-                                        ? 'Ви: '
-                                        : (activeChat?.gender === 'male' ? 'Він: ' : 'Вона: ')
-                                    }
-                                </b>
-                                <span className='message-text'>{msg.text}</span>
+                            <div key={msg.id} className={`message-row ${msg.sender}`}>
+                                {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat?.name.charAt(0)}</div>}
+                                <div className='message-bubble-wrap'>
+                                    <div className={`message ${msg.sender}`}>
+                                        <span className='message-text'>{msg.text}</span>
+                                    </div>
+                                    <span className='message-time'>
+                                        {msg.sender === 'me' ? '10:29' : '10:30'}
+                                    </span>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -531,55 +637,56 @@ const MessagesTab = () => {
     );
 };
 
+// Вкладка "Обране": сетка карточек избранных специалистов
 const FavoritesTab = ({ onGoToMessages }) => (
     <div className='favorites-tab'>
         <div className='orders-header'>
             <h1 className='favorites-title'>Обрані фахівці</h1>
         </div>
-        <div className='specialist-card'>
-            {specialists.map((specialists) => (
-                <div className='card-specialist' key={specialists.id}>
 
-                    <div className='card-specialist-header'>
-                        <img src={specialists.avatar} alt={specialists.name} width="40" />
-                        <div>
-                            <h2 className='card-title'>{specialists.name}</h2>
-                            <span className='card-description'>{specialists.description}</span>
+        {/* Favorites Specialists Grid */}
+        <div className='specialists-grid'>
+            {specialists.map((specialist) => (
+                <article className='specialist-fav-card' key={specialist.id}>
+                    <div className='specialist-top'>
+                        <div className='specialist-profile'>
+                            <img className='specialist-avatar' src={specialist.avatar} alt={specialist.name} />
+                            <div>
+                                <h2 className='specialist-name'>{specialist.name}</h2>
+                                <p className='specialist-role'>{specialist.description}</p>
+                            </div>
                         </div>
+
+                        <button type='button' className='specialist-fav-btn' aria-label='Прибрати з обраного'>
+                            <img src={specialist.iconFav} alt='favorite' width='20' height='20' />
+                        </button>
                     </div>
 
-                    <div className='card-specialist-details'>
-                        <div className='card-category-item'>
-                            <img className='card-item-icon' src={specialists.iconFav} alt="fav" width="16" />
-                        </div>
-
-                        <div className='card-specialist-rating-item'>
-                            <img className='card-item-icon' src={specialists.iconRating} alt="rating" width="16" />
-                            <span className='card-specialist-item-text'>{specialists.rating} {specialists.Reviews}</span>
-                        </div>
-
-                        <div className='card-specialist-directions'>
-                            <span className='card-specialist-item-text'>{specialists.DirectionOne}</span>
-                            <span className='card-specialist-item-text'>{specialists.DirectionTwo}</span>
-                            <span className='card-specialist-item-text'>{specialists.DirectionThree}</span>
-                        </div>
-
-                        <div className='card-specialist-price-item'>
-                            <span className='card-specialist-item-text'>{specialists.PriceOnHour}</span>
-                        </div>
+                    <div className='specialist-rating-row'>
+                        <img className='card-item-icon' src={specialist.iconRating} alt='rating' width='16' />
+                        <span className='specialist-rating'>{specialist.rating}</span>
+                        <span className='specialist-reviews'>{specialist.Reviews}</span>
                     </div>
 
-                    <div className='card-specialist-footer'>
-                        <button className='view-specialist-details-btn' onClick={onGoToMessages}>Написати</button>
+                    <div className='specialist-tags'>
+                        <span className='specialist-tag'>{specialist.DirectionOne}</span>
+                        <span className='specialist-tag'>{specialist.DirectionTwo}</span>
+                        <span className='specialist-tag'>{specialist.DirectionThree}</span>
                     </div>
 
-                </div>
+                    <div className='specialist-footer'>
+                        <p className='specialist-price'>{specialist.PriceOnHour}</p>
+                        <button type='button' className='view-specialist-details-btn' onClick={onGoToMessages}>Написати</button>
+                    </div>
+                </article>
             ))}
         </div>
     </div>
 );
 
+// Вкладка "Налаштування": профиль, пароль, уведомления и опасная зона
 const SettingsTab = () => {
+    // Форма личных данных
     const [personalData, setPersonalData] = useState({
         firstName: 'Олег',
         lastName: 'Петренко',
@@ -588,22 +695,26 @@ const SettingsTab = () => {
         city: ''
     });
 
+    // Форма смены пароля
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
     });
 
+    // Обработчик изменений полей личной информации
     const handlePersonalChange = (e) => {
         const { name, value } = e.target;
         setPersonalData({ ...personalData, [name]: value });
     };
 
+    // Обработчик изменений полей пароля
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
         setPasswordData({ ...passwordData, [name]: value });
     };
 
+    // Доступные типы уведомлений
     const notificationItems = [
         { id: 'email', title: 'Email сповіщення', desc: 'Отримувати сповіщення на пошту' },
         { id: 'offers', title: 'Нові пропозиції', desc: 'Сповіщення про нові пропозиції від фахівців' },
@@ -612,6 +723,7 @@ const SettingsTab = () => {
         { id: 'marketing', title: 'Маркетингові листи', desc: 'Новини та спеціальні пропозиції' }
     ];
 
+    // Состояние переключателей уведомлений
     const [notifications, setNotifications] = useState({
         email: true,
         offers: true,
@@ -620,6 +732,7 @@ const SettingsTab = () => {
         marketing: false
     });
 
+    // Переключает конкретный тип уведомлений
     const handleToggle = (id) => {
         setNotifications(prev => ({
             ...prev,
@@ -634,29 +747,32 @@ const SettingsTab = () => {
             </div>
 
             <div className='settings-content'>
-                <section сlassName='profile-photo-section'>
-                    <div сlassName='profile-photo-header'>
-                        <h2 сlassName='profile-photo-title'>{profilePhoto.title}</h2>
+                {/* Profile Photo */}
+                <section className='profile-photo-section'>
+                    <div className='profile-photo-header'>
+                        <h2 className='profile-photo-title'>{profilePhoto.title}</h2>
                     </div>
-                    <div сlassName='profile-photo-body'>
-                        <img сlassName='profile-photo' src={profilePhoto.icon} alt="Профіль" />
+                    <div className='profile-photo-body'>
+                        <img className='profile-photo' src={profilePhoto.icon} alt="Профіль" />
                         <div className='profile-photo-buttons'>
-                            <button сlassName='upload-photo-btn'>Завантажити фото</button>
-                            <button сlassName='delete-photo-btn'>Видалити фото</button>
+                            <button className='upload-photo-btn'>Завантажити фото</button>
+                            <button className='delete-photo-btn'>Видалити фото</button>
                         </div>
-                        <p сlassName='profile-photo-recommendation'>{profilePhoto.recommendationSize}</p>
-                        <p сlassName='profile-photo-format'>{profilePhoto.format}</p>
+                        <p className='profile-photo-recommendation'>{profilePhoto.recommendationSize}</p>
+                        <p className='profile-photo-format'>{profilePhoto.format}</p>
                     </div>
                 </section>
+
+                {/* Personal Data and Password */}
                 <div className='settings-forms'>
-                    <section сlassName='personal-info-section'>
-                        <div сlassName='personal-info-header'>
-                            <h2 сlassName='personal-info-title'>Особиста інформація</h2>
+                    <section className='personal-info-section'>
+                        <div className='personal-info-header'>
+                            <h2 className='personal-info-title'>Особиста інформація</h2>
                         </div>
-                        <form сlassName='personal-info-form'>
-                            <label сlassName='personal-info-label'>
+                        <form className='personal-info-form'>
+                            <label className='personal-info-label'>
                                 Ім'я
-                                <input сlassName='personal-info-input'
+                                <input className='personal-info-input'
                                     name="firstName"
                                     type="text"
                                     value={personalData.firstName}
@@ -665,9 +781,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сlassName='personal-info-label'>
+                            <label className='personal-info-label'>
                                 Прізвище
-                                <input сlassName='personal-info-input'
+                                <input className='personal-info-input'
                                     name="lastName"
                                     type="text"
                                     value={personalData.lastName}
@@ -676,9 +792,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сlassName='personal-info-label'>
+                            <label className='personal-info-label'>
                                 Email
-                                <input сlassName='personal-info-input'
+                                <input className='personal-info-input'
                                     name="email"
                                     type="email"
                                     value={personalData.email}
@@ -687,9 +803,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сlassName='personal-info-label'>
+                            <label className='personal-info-label'>
                                 Телефон
-                                <input сlassName='personal-info-input'
+                                <input className='personal-info-input'
                                     name="phone"
                                     type="tel"
                                     value={personalData.phone}
@@ -697,9 +813,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сclassName='personal-info-label'>
+                            <label className='personal-info-label'>
                                 Місто
-                                <input сclassName='personal-info-input'
+                                <input className='personal-info-input'
                                     name="city"
                                     type="text"
                                     value={personalData.city}
@@ -711,14 +827,14 @@ const SettingsTab = () => {
                         </form>
                     </section>
 
-                    <section сlassName='change-password-section'>
-                        <div сlassName='change-password-header'>
-                            <h2 сlassName='change-password-title'>Змінити пароль</h2>
+                    <section className='change-password-section'>
+                        <div className='change-password-header'>
+                            <h2 className='change-password-title'>Змінити пароль</h2>
                         </div>
                         <form className='change-password-form' onSubmit={(e) => e.preventDefault()}>
-                            <label сclass_name='change-password-label'>
+                            <label className='change-password-label'>
                                 Поточний пароль
-                                <input сlassName='change-password-input'
+                                <input className='change-password-input'
                                     name="currentPassword"
                                     type="password"
                                     value={passwordData.currentPassword}
@@ -727,9 +843,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сlassName='change-password-label'>
+                            <label className='change-password-label'>
                                 Новий пароль
-                                <input сlassName='change-password-input'
+                                <input className='change-password-input'
                                     name="newPassword"
                                     type="password"
                                     value={passwordData.newPassword}
@@ -739,9 +855,9 @@ const SettingsTab = () => {
                                 />
                             </label>
 
-                            <label сclass_name='change-password-label'>
+                            <label className='change-password-label'>
                                 Підтвердіть новий пароль
-                                <input сclass_name='change-password-input'
+                                <input className='change-password-input'
                                     name="confirmPassword"
                                     type="password"
                                     value={passwordData.confirmPassword}
@@ -754,6 +870,8 @@ const SettingsTab = () => {
                         </form>
                     </section>
                 </div>
+
+                {/* Notifications */}
                 <div className='message-section'>
                     <div className='message-header'>
                         <h1>Налаштування профілю</h1>
@@ -784,6 +902,8 @@ const SettingsTab = () => {
                         </div>
                     </section>
                 </div>
+
+                {/* Danger Zone */}
                 <div className='delete-account-section'>
                     <div className='delete-account-header'>
                         <h2 className='delete-account-title'>Небезпечна зона</h2>
@@ -817,16 +937,20 @@ const SettingsTab = () => {
     );
 };
 
+// Основной компонент личного кабинета пользователя
 function UserPage() {
+    // Вкладки верхнего меню
     const tabs = [
         { key: 'overview', label: 'Огляд' },
-        { key: 'orders', label: 'Всі Замовлення' },
+        { key: 'orders', label: 'Всі замовлення', badge: 4 },
         { key: 'active', label: 'Активні' },
         { key: 'completed', label: 'Завершені' },
-        { key: 'messages', label: 'Повідомлення' },
+        { key: 'messages', label: 'Повідомлення', badge: 5 },
         { key: 'favorites', label: 'Обране' },
         { key: 'settings', label: 'Налаштування' },
     ];
+
+    // Соответствие ключа вкладки и React-компонента контента
     const contentMap = {
         overview: <OverviewTab onGoToOrders={() => setActiveTab('orders')} />,
         orders: <OrdersTab />,
@@ -836,15 +960,19 @@ function UserPage() {
         favorites: <FavoritesTab onGoToMessages={() => setActiveTab('messages')} />,
         settings: <SettingsTab />,
     };
+
+    // Данные карточки пользователя в шапке
     const user = { icon: iconOleg, title: 'Замовник', text: 'Олег П.' };
 
+    // Активная вкладка кабинета
     const [activeTab, setActiveTab] = useState('overview');
 
     return (
         <div className="user-page">
+            {/* Header */}
             <header className='header-user'>
                 <div className='brand'>
-                    <Link to="###"/* Мне лень сюда марщрутизацию вставлять, потом*/ className="main-page-link">
+                    <Link to="/" className="main-page-link">
                         <img src={iconBee} alt="BusyBee" className="brand-bee" />
                         <span className="brand-text">BusyBee</span>
                     </Link>
@@ -866,20 +994,32 @@ function UserPage() {
                     <p>{user.text}</p>
                 </div>
             </header>
+
+            {/* Tabs Navigation and Content */}
             <nav className='user-nav'>
                 <div className="tabs-container">
+                    {/* Tabs */}
                     <nav className="tabs-menu">
                         {tabs.map((tab) => (
-                            <button key={tab.key} onClick={() => setActiveTab(tab.key)}>
+                            <button
+                                key={tab.key}
+                                onClick={() => setActiveTab(tab.key)}
+                                className={activeTab === tab.key ? 'active' : ''}
+                            >
                                 {tab.label}
+                                {tab.badge ? <span className='tab-badge'>{tab.badge}</span> : null}
                             </button>
                         ))}
                     </nav>
+
+                    {/* Active Tab Content */}
                     <div className="tabs-content">
                         {contentMap[activeTab]}
                     </div>
                 </div>
             </nav>
+
+            {/* Footer */}
             <Footer />
         </div>
     )

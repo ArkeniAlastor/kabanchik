@@ -5,6 +5,8 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPage from './components/ForgotPage/ForgotPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
+import OffersPage from './components/OffersPage/OffersPage';
+import UserPage from './components/UserPage/UserPage';
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPage />} />
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/offers" element={<OffersPage />} />
+        <Route path="/userpage" element={<UserPage />} />
       </Routes>
     </BrowserRouter>
   );
