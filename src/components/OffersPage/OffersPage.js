@@ -500,7 +500,6 @@ function OffersPage() {
       <div className="banner-strip">
         Маленька праця для великих людей!
       </div>
-      <Footer />
     </div>
   );
 }
