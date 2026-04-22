@@ -1,5 +1,6 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import Footer from './components/Footer/Footer';
 import MainPage from './components/MainPage/MainPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
@@ -9,18 +10,35 @@ import OffersPage from './components/OffersPage/OffersPage';
 import UserPage from './components/UserPage/UserPage';
 
 
+function AppContent() {
+  // вот тут юзаеться локатион, что бы показать системе, куда футер не ставить
+  const location = useLocation();
+  const noFooterRoutes = ['/login', '/register', '/forgot'];
+  const shouldShowFooter = !noFooterRoutes.includes(location.pathname);
+  //чут чут перелопаченный контент
+  return (
+    <div className="app-wrapper">
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot" element={<ForgotPage />} />
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/offers" element={<OffersPage />} />
+          <Route path="/userpage" element={<UserPage />} />
+        </Routes>
+      </main>
+
+      {shouldShowFooter && <Footer />}
+    </div>
+  );
+}
+// Маршрутка теперь вот тут
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot" element={<ForgotPage />} />
-        <Route path="/category" element={<CategoryPage />} />
-        <Route path="/offers" element={<OffersPage />} />
-        <Route path="/userpage" element={<UserPage />} />
-      </Routes>
+      <AppContent />
     </BrowserRouter>
   );
 }

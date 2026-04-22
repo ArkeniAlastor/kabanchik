@@ -1020,7 +1020,7 @@ function UserPage() {
             </nav>
 
             {/* Footer */}
-            <Footer />
+
         </div>
     )
 };

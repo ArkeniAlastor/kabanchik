@@ -187,7 +187,6 @@ function MainPage() {
           Маленька праця для великих людей!
         </div>
 
-        <Footer />
 
       </main>
     </div>
