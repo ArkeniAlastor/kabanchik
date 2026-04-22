@@ -1,5 +1,6 @@
 import './CategoryPage.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import {
@@ -138,12 +139,18 @@ const categories = [
 
 function CategoryPage() {
   const [selectedCategory, setSelectedCategory] = useState('Всі категорії');
+  const navigate = useNavigate();
+  
   const filteredCategories = selectedCategory === 'Всі категорії'
     ? categories
     : categories.filter((category) => category.group === selectedCategory);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+  };
+
+  const handleOfferClick = (categoryTitle, categoryGroup) => {
+    navigate('/offers', { state: { selectedCategory: categoryGroup, selectedSubCategory: categoryTitle } });
   };
 
   return (
