@@ -49,4 +49,16 @@ export { default as iconMusical } from './🎼.png';
 export { default as iconPeizaj } from './🖼️.png';
 export { default as iconChuvak } from './🗣️.png';
 export { default as iconMobila } from './📱.png';
-export {default as iconKolokolchik } from './🔔.png'
+export { default as iconKolokolchik } from './🔔.png'
+export { default as iconOleg } from './oleg.png';
+export { default as iconBlocknote} from './📋.png';
+export { default as iconChumodan} from './💼.png';
+export { default as iconFolder } from './📁.png';
+export { default as iconTime} from './⏰.png';
+export { default as iconZvonilka } from './📞.png';
+export { default as iconHeart } from './💛.png';
+export { default as iconIrina } from './irina.png';
+export { default as iconOlena } from './olena.png';
+export { default as iconMaxim} from './Maxim.png';
+export { default as iconDanilka} from './danilka.png';
+export { default as iconAndrei} from './andreios.png';
