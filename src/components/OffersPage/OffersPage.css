@@ -10,12 +10,11 @@
 
 .OffersPage .offers-hero-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 40px;
   width: 100%;
-  max-width: 900px;
-  text-align: center;
+  max-width: 1200px;
 }
 
 .OffersPage .offers-hero-icon-wrapper {
@@ -35,6 +34,39 @@
 .OffersPage .offers-hero-text {
   flex: 1;
   width: 100%;
+  text-align: center;
+}
+
+.OffersPage .offers-hero-action {
+  min-width: 230px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.OffersPage .offers-create-order-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 22px;
+  background: #fff;
+  color: #3f5aa9;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.OffersPage .offers-create-order-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+}
+
+.OffersPage .offers-create-order-plus {
+  font-size: 18px;
+  line-height: 1;
 }
 
 .OffersPage .offers-hero-title {

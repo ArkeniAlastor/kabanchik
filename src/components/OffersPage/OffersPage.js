@@ -64,6 +64,39 @@ const offersData = {
         description: 'Повна розробка веб-портала для управління реклами. Frontend на React, Backend на Node.js. Потрібна оптимізація, безпека, масштабованість.',
         technologies: ['React', 'Node.js', 'MongoDB', 'Docker'],
         freelancer: { name: 'Геннадій Х.', rating: 4.8, reviews: 39 }
+      },
+      {
+        id: 22,
+        title: 'Розробка landing page для SaaS продукту',
+        mainCategory: 'Веб-розробка',
+        budget: '12,000 - 20,000 ₴',
+        views: '6 переглядів',
+        likes: '2',
+        description: 'Потрібно створити сучасний адаптивний landing page для B2B SaaS. Важливо: швидке завантаження, SEO, інтеграція форми з CRM та аналітикою.',
+        technologies: ['HTML', 'CSS', 'JavaScript', 'Google Analytics'],
+        freelancer: { name: 'Світлана Б.', rating: 4.7, reviews: 21 }
+      },
+      {
+        id: 23,
+        title: 'Доопрацювання інтернет-магазину на Next.js',
+        mainCategory: 'Веб-розробка',
+        budget: '28,000 - 45,000 ₴',
+        views: '10 переглядів',
+        likes: '5',
+        description: 'Шукаємо розробника для доопрацювання e-commerce проекту: оптимізація SSR, сторінка товару, checkout, інтеграція з платіжним шлюзом та CRM.',
+        technologies: ['Next.js', 'React', 'Stripe', 'REST API'],
+        freelancer: { name: 'Богдан М.', rating: 4.9, reviews: 48 }
+      },
+      {
+        id: 24,
+        title: 'Створення адмін-панелі для сервісу бронювання',
+        mainCategory: 'Веб-розробка',
+        budget: '22,000 - 38,000 ₴',
+        views: '7 переглядів',
+        likes: '3',
+        description: 'Потрібно реалізувати адмін-панель для управління бронюваннями: таблиці, фільтри, ролі користувачів, аудит дій та експорт звітів.',
+        technologies: ['React', 'TypeScript', 'Ant Design', 'Node.js'],
+        freelancer: { name: 'Ілля К.', rating: 4.8, reviews: 30 }
       }
     ],
     'Мобільні додатки': [
@@ -181,6 +214,58 @@ const offersData = {
         technologies: ['Unreal Engine 5', 'C++', 'Blueprints'],
         freelancer: { name: 'Сергій М.', rating: 4.9, reviews: 41 }
       }
+    ],
+    'AI/ML розробка': [
+      {
+        id: 25,
+        title: 'ML модель для прогнозування попиту',
+        mainCategory: 'AI/ML розробка',
+        budget: '35,000 - 55,000 ₴',
+        views: '8 переглядів',
+        likes: '4',
+        description: 'Потрібен ML інженер для розробки моделі прогнозування попиту на товари на основі історичних даних продажів.',
+        technologies: ['Python', 'Pandas', 'Scikit-learn', 'XGBoost'],
+        freelancer: { name: 'Торгова мережа "Продукт"', rating: 4.7, reviews: 19 }
+      }
+    ],
+    Blockchain: [
+      {
+        id: 26,
+        title: 'Смарт-контракт для NFT маркетплейсу',
+        mainCategory: 'Blockchain',
+        budget: '45,000 - 70,000 ₴',
+        views: '4 перегляди',
+        likes: '2',
+        description: 'Потрібна розробка smart contract на Solidity для NFT маркетплейсу з аудитом безпеки та тестами.',
+        technologies: ['Solidity', 'Hardhat', 'Web3.js', 'OpenZeppelin'],
+        freelancer: { name: 'UkraineArt NFT', rating: 4.8, reviews: 12 }
+      }
+    ],
+    'Кібербезпека': [
+      {
+        id: 27,
+        title: 'Аудит безпеки веб-додатку',
+        mainCategory: 'Кібербезпека',
+        budget: '20,000 - 35,000 ₴',
+        views: '7 переглядів',
+        likes: '3',
+        description: 'Необхідно провести pentest веб-додатку, перевірити OWASP Top 10 та підготувати звіт з рекомендаціями.',
+        technologies: ['OWASP', 'Burp Suite', 'Nmap', 'Report Writing'],
+        freelancer: { name: 'IT компанія "Софтлайн"', rating: 4.9, reviews: 16 }
+      }
+    ],
+    DevOps: [
+      {
+        id: 28,
+        title: 'Налаштування CI/CD pipeline для проекту',
+        mainCategory: 'DevOps',
+        budget: '15,000 - 25,000 ₴',
+        views: '11 переглядів',
+        likes: '5',
+        description: 'Потрібно налаштувати автоматизований CI/CD для веб-проекту: тести, деплой, rollback та моніторинг.',
+        technologies: ['GitHub Actions', 'Docker', 'AWS', 'Terraform'],
+        freelancer: { name: 'Дмитро П.', rating: 4.9, reviews: 18 }
+      }
     ]
   },
   'Дизайн і графіка': {
@@ -265,12 +350,34 @@ const categoryDescriptions = {
   'Маркетинг і реклама': '6 доступних завдань для фахівців'
 };
 
+const PROGRAMMING_SUBCATEGORIES = [
+  'Всі',
+  'Веб-розробка',
+  'Мобільні додатки',
+  'Backend розробка',
+  'Розробка ігор',
+  'AI/ML розробка',
+  'Blockchain',
+  'Кібербезпека',
+  'DevOps'
+];
+
 function OffersPage() {
   const location = useLocation();
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [offers, setOffers] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [mainCategory, setMainCategory] = useState('Розробка і програмування');
+
+  const getOffersBySubCategory = (category, subCategory) => {
+    const categoryData = offersData[category] || {};
+
+    if (subCategory === 'Всі') {
+      return Object.values(categoryData).flat();
+    }
+
+    return categoryData[subCategory] || [];
+  };
 
   useEffect(() => {
     const state = location.state;
@@ -280,24 +387,27 @@ function OffersPage() {
     setMainCategory(category);
     
     if (offersData[category]) {
-      const subs = Object.keys(offersData[category]);
+      const subs = category === 'Розробка і програмування'
+        ? PROGRAMMING_SUBCATEGORIES
+        : ['Всі', ...Object.keys(offersData[category])];
       setSubCategories(subs);
       
-      const defaultSub = subCategory && subs.includes(subCategory) ? subCategory : subs[0];
+      const defaultSub = subCategory && subs.includes(subCategory) ? subCategory : 'Всі';
       setSelectedSubCategory(defaultSub);
-      setOffers(offersData[category][defaultSub] || []);
+      setOffers(getOffersBySubCategory(category, defaultSub));
     }
   }, [location.state]);
 
   const handleSubCategoryClick = (subCategory) => {
     setSelectedSubCategory(subCategory);
-    setOffers(offersData[mainCategory][subCategory] || []);
+    setOffers(getOffersBySubCategory(mainCategory, subCategory));
   };
 
   return (
     <div className="OffersPage">
       <Header />
-      
+
+      {/* Hero */}
       <section className="offers-hero-section">
         <div className="container">
           <div className="offers-hero-content">
@@ -312,10 +422,17 @@ function OffersPage() {
                 <span className="offers-hero-search-icon">⌕</span>
               </div>
             </div>
+            <div className="offers-hero-action">
+              <button type="button" className="offers-create-order-btn">
+                <span className="offers-create-order-plus">+</span>
+                Створити замовлення
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Subcategory Filter */}
       <section className="offers-filter-section">
         <div className="container">
           <div className="offers-category-buttons">
@@ -333,6 +450,7 @@ function OffersPage() {
         </div>
       </section>
 
+      {/* Offers List */}
       <section className="offers-list-section">
         <div className="container">
           <div className="offers-list">
@@ -378,6 +496,7 @@ function OffersPage() {
         </div>
       </section>
 
+      {/* Banner */}
       <div className="banner-strip">
         Маленька праця для великих людей!
       </div>

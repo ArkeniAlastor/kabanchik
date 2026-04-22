@@ -1,5 +1,5 @@
 import './CategoryPage.css';
-import { useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -136,26 +136,34 @@ const categories = [
   { icon: iconBee, title: 'Бізнес-тренінги', count: '7k+', group: 'Навчання' }
 ];
 
+const ALL_CATEGORIES = 'Всі категорії';
+
 
 function CategoryPage() {
-  const [selectedCategory, setSelectedCategory] = useState('Всі категорії');
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORIES);
   const navigate = useNavigate();
-  
-  const filteredCategories = selectedCategory === 'Всі категорії'
-    ? categories
-    : categories.filter((category) => category.group === selectedCategory);
 
-  const handleCategoryClick = (category) => {
+  const filteredCategories = useMemo(() => {
+    return selectedCategory === ALL_CATEGORIES
+      ? categories
+      : categories.filter((category) => category.group === selectedCategory);
+  }, [selectedCategory]);
+
+  const handleCategoryClick = useCallback((category) => {
     setSelectedCategory(category);
-  };
+  }, []);
 
-  const handleOfferClick = (categoryTitle, categoryGroup) => {
-    navigate('/offers', { state: { selectedCategory: categoryGroup, selectedSubCategory: categoryTitle } });
-  };
+  const handleOfferClick = useCallback((categoryTitle, categoryGroup) => {
+    navigate('/offers', {
+      state: { selectedCategory: categoryGroup, selectedSubCategory: categoryTitle }
+    });
+  }, [navigate]);
 
   return (
     <div className="CategoryPage">
       <Header />
+
+      {/* Hero */}
       <section className="hero-section">
         <div className="container">
           <div className="hero-content">
@@ -163,13 +171,19 @@ function CategoryPage() {
               <h1 className="hero-title">Всі категорії послуг</h1>
               <p className="hero-subtitle">Знайдіть потрібного фахівця серед 65 категорій</p>
               <div className="hero-search">
-                <input type="text" placeholder="Пошук категорії..." aria-label="Пошук категорії" />
+                <input
+                  type="text"
+                  placeholder="Пошук категорії..."
+                  aria-label="Пошук категорії"
+                />
                 <span className="hero-search-icon">⌕</span>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Category Filter */}
       <section className="category-filter">
         <div className="container">
           <div className="category-buttons">
@@ -186,19 +200,32 @@ function CategoryPage() {
           <p className="categories-count">Знайдено {filteredCategories.length} категорій</p>
         </div>
       </section>
+
+      {/* Categories Grid */}
       <section className="categories-grid-section">
         <div className="container">
           <div className="features">
             {filteredCategories.map((category) => (
-              <div key={category.title} className="feature1-card">
+              <button
+                key={`${category.group}-${category.title}`}
+                type="button"
+                className={`feature1-card ${category.title === 'Веб-розробка' ? 'is-clickable' : ''}`}
+                onClick={() => {
+                  if (category.title === 'Веб-розробка') {
+                    handleOfferClick(category.title, category.group);
+                  }
+                }}
+              >
                 <img src={category.icon} alt={category.title} />
                 <h3>{category.title}</h3>
                 <p>{category.count}</p>
-              </div>
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* CTA */}
       <section className="cta-section">
         <div className="container">
           <h2 className="cta-title">Не знайшли потрібну категорію?</h2>
@@ -208,6 +235,8 @@ function CategoryPage() {
           </div>
         </div>
       </section>
+
+      {/* Banner */}
       <div className="banner-strip">
         Маленька праця для великих людей!
       </div>
