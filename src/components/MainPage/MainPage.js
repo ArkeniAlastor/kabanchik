@@ -1,6 +1,5 @@
 import './MainPage.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 import {
   iconBee,

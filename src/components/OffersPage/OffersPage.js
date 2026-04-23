@@ -2,7 +2,6 @@ import './OffersPage.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 import {
   iconDev,
@@ -383,15 +382,15 @@ function OffersPage() {
     const state = location.state;
     const category = state?.selectedCategory || 'Розробка і програмування';
     const subCategory = state?.selectedSubCategory || null;
-    
+
     setMainCategory(category);
-    
+
     if (offersData[category]) {
       const subs = category === 'Розробка і програмування'
         ? PROGRAMMING_SUBCATEGORIES
         : ['Всі', ...Object.keys(offersData[category])];
       setSubCategories(subs);
-      
+
       const defaultSub = subCategory && subs.includes(subCategory) ? subCategory : 'Всі';
       setSelectedSubCategory(defaultSub);
       setOffers(getOffersBySubCategory(category, defaultSub));
