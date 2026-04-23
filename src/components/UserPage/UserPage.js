@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     iconBee,
     iconKolokolchik,
@@ -22,7 +22,6 @@ import {
     iconHeart,
 } from '../../imgs/icons';
 import './UserPage.css'
-import Footer from '../Footer/Footer';
 
 // Данные карточек статистики для вкладки "Огляд"
 const stats = [
@@ -939,6 +938,8 @@ const SettingsTab = () => {
 
 // Основной компонент личного кабинета пользователя
 function UserPage() {
+    const navigate = useNavigate();
+
     // Вкладки верхнего меню
     const tabs = [
         { key: 'overview', label: 'Огляд' },
@@ -982,7 +983,13 @@ function UserPage() {
                     <input type="text" placeholder="Пошук замовлень..." aria-label="Пошук" />
                 </div>
                 <div className='button'>
-                    <button type="button" className='create-order-btn'>+Створити</button>
+                    <button
+                        type="button"
+                        className='create-order-btn'
+                        onClick={() => navigate('/create-order')}
+                    >
+                        +Створити
+                    </button>
 
                     <button type='button' className='alert'>
                         <img src={iconKolokolchik} alt="kolokolchik" />

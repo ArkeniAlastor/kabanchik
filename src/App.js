@@ -8,6 +8,7 @@ import ForgotPage from './components/ForgotPage/ForgotPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
 import OffersPage from './components/OffersPage/OffersPage';
 import UserPage from './components/UserPage/UserPage';
+import CreateOrder from './components/CreateOrder/CreateOrder';
 
 
 function AppContent() {
@@ -27,6 +28,7 @@ function AppContent() {
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/offers" element={<OffersPage />} />
           <Route path="/userpage" element={<UserPage />} />
+          <Route path="/create-order" element={<CreateOrder />} />
         </Routes>
       </main>
 
