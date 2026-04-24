@@ -9,6 +9,7 @@ import CategoryPage from './components/CategoryPage/CategoryPage';
 import OffersPage from './components/OffersPage/OffersPage';
 import UserPage from './components/UserPage/UserPage';
 import CreateOrder from './components/CreateOrder/CreateOrder';
+import SpecialistsDirectory from './components/SpecialistsDirectory/SpecialistsDirectory';
 
 
 function AppContent() {
@@ -29,6 +30,7 @@ function AppContent() {
           <Route path="/offers" element={<OffersPage />} />
           <Route path="/userpage" element={<UserPage />} />
           <Route path="/create-order" element={<CreateOrder />} />
+          <Route path="/catalogue-specs" element={<SpecialistsDirectory />} />
         </Routes>
       </main>
 
