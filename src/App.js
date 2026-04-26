@@ -23,7 +23,7 @@ function AppContent() {
     <div className="app-wrapper">
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<SpecPage />} />
+          <Route path="/" element={<ManePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
@@ -32,6 +32,7 @@ function AppContent() {
           <Route path="/userpage" element={<UserPage />} />
           <Route path="/create-order" element={<CreateOrder />} />
           <Route path="/catalogue-specs" element={<SpecialistsDirectory />} />
+          <Route path='/SpecPage' element={<SpecPage />} />
         </Routes>
       </main>
 
