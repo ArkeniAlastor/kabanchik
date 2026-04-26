@@ -1,34 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    iconBee,
-    iconKolokolchik,
-    iconOleg,
-    iconIrina,
-    iconOlena,
-    iconMaxim,
-    iconDanilka,
-    iconAndrei,
-    iconCheck,
-    iconStar,
-    iconBlocknote,
-    iconChumodan,
-    iconTime,
-    iconFolder,
-    iconMoney,
-    iconDarts,
-    iconBulb,
-    iconZvonilka,
-    iconHeart,
-} from '../../imgs/icons';
+import * as icons from '../../imgs/icons';
 import './UserPage.css'
 
 // Данные карточек статистики для вкладки "Огляд"
 const stats = [
-    { label: 'Замовлень в роботі', count: '3', icon: iconBlocknote, text: 'АКТИВНИХ' },
-    { label: 'Від фахівців', count: '55', icon: iconChumodan, text: 'ПРОПОЗИЦІЇ' },
-    { label: 'Успішних проектів', count: '1', icon: iconCheck, text: 'ЗАВЕРШЕНО' },
-    { label: 'Середня оцінка', count: '4.9', icon: iconStar, text: 'РЕЙТИНГ' },
+    { label: 'Замовлень в роботі', count: '3', icon: icons.iconBlocknote, text: 'АКТИВНИХ' },
+    { label: 'Від фахівців', count: '55', icon: icons.iconChumodan, text: 'ПРОПОЗИЦІЇ' },
+    { label: 'Успішних проектів', count: '1', icon: icons.iconCheck, text: 'ЗАВЕРШЕНО' },
+    { label: 'Середня оцінка', count: '4.9', icon: icons.iconStar, text: 'РЕЙТИНГ' },
 ];
 
 // Данные карточек заказов (используются в нескольких вкладках)
@@ -38,11 +18,11 @@ const orderCard = [
         title: 'Дизайн логотипу для IT стартапу',
         description: 'Потрібен сучасний мінімалістичний логотип для AI стартапу.',
         status: 'Активне',
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Дизайн',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '5000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '5 днів',
         proposals: '12 пропозицій',
         date: '2 дні тому',
@@ -52,11 +32,11 @@ const orderCard = [
         title: 'SEO оптимізація інтернет-магазину',
         description: 'Комплексна SEO оптимізація для підвищення позицій в Google.',
         status: 'Активне',
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Маркетинг',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '8000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '7 днів',
         proposals: '12 пропозицій',
         date: '1 день тому',
@@ -66,11 +46,11 @@ const orderCard = [
         title: 'Розробка лендінгу на React',
         description: 'Потрібно написати сайт з адаптивним дизайном та анімаціями.',
         status: 'В роботі',
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Веб-розробка',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '15000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '14 днів',
         proposals: '8 пропозицій',
         date: '5 днів тому',
@@ -80,11 +60,11 @@ const orderCard = [
         title: 'Копірайтинг для соц. мереж',
         description: 'Написання постів для instagram та Facebook протягом міцяця.',
         status: 'Завершено',
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Контент',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '3000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: 'Завершено',
         proposals: '20 пропозицій',
         date: '2 тижні тому',
@@ -94,7 +74,7 @@ const orderCard = [
 const recomendationCards = [
     {
         id: 1,
-        icon: iconDarts,
+        icon: icons.iconDarts,
         title: 'Знайти фахівця',
         description: 'Перегляньте категорії та знайдіть ідеального винонавця.',
         linkText: 'Переглянути категорії →',
@@ -102,14 +82,14 @@ const recomendationCards = [
     },
     {
         id: 2,
-        icon: iconBulb,
+        icon: icons.iconBulb,
         title: 'Поради',
         description: 'Як отримати найкращі результати від співпраці.',
         linkText: 'Переглянути категорії →',
     },
     {
         id: 3,
-        icon: iconZvonilka,
+        icon: icons.iconZvonilka,
         title: 'Підримка 24/7',
         description: 'Завжди готові допомогти вам.',
         linkText: 'Зв\'язатись →',
@@ -120,11 +100,11 @@ const recomendationCards = [
 const specialists = [
     {
         id: 1,
-        avatar: iconMaxim,
+        avatar: icons.iconMaxim,
         name: 'Марина Коваленко',
         description: 'UI/UX дизайнер',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '4.9',
         Reviews: '(127 відгуків)',
         DirectionOne: 'Дизайн',
@@ -134,11 +114,11 @@ const specialists = [
     },
     {
         id: 2,
-        avatar: iconAndrei,
+        avatar: icons.iconAndrei,
         name: 'Андрій Шевченко',
         description: 'full-stack розробник',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '5',
         Reviews: '(89 відгуків)',
         DirectionOne: 'React',
@@ -148,11 +128,11 @@ const specialists = [
     },
     {
         id: 3,
-        avatar: iconOlena,
+        avatar: icons.iconOlena,
         name: 'Олена Мельник',
         description: 'Копірайтер',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '4.8',
         Reviews: '(156 відгуків)',
         DirectionOne: 'SEO',
@@ -162,11 +142,11 @@ const specialists = [
     },
     {
         id: 4,
-        avatar: iconDanilka,
+        avatar: icons.iconDanilka,
         name: 'Дмитро Василенко',
         description: 'Motion-дизайнер',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '4.9',
         Reviews: '(94 відгуків)',
         DirectionOne: 'Афтер Еффектс',
@@ -176,11 +156,11 @@ const specialists = [
     },
     {
         id: 5,
-        avatar: iconIrina,
+        avatar: icons.iconIrina,
         name: 'Ірина Петренко',
         description: 'SMM менеджер',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '4.7',
         Reviews: '(112 відгуків)',
         DirectionOne: 'Instagram',
@@ -190,11 +170,11 @@ const specialists = [
     },
     {
         id: 6,
-        avatar: iconMaxim,
+        avatar: icons.iconMaxim,
         name: 'Максим Іваненко',
         description: 'UI/UX дизайнер',
-        iconFav: iconHeart,
-        iconRating: iconStar,
+        iconFav: icons.iconHeart,
+        iconRating: icons.iconStar,
         rating: '5',
         Reviews: '(78 відгуків)',
         DirectionOne: 'Web Flow',
@@ -206,7 +186,7 @@ const specialists = [
 
 const profilePhoto = {
     title: 'Фото профілю',
-    icon: iconOleg,
+    icon: icons.iconOleg,
     recommendationSize: 'Рекомендований розмір: 400x400px',
     format: 'Формати: JPG, PNG',
 };
@@ -963,7 +943,7 @@ function UserPage() {
     };
 
     // Данные карточки пользователя в шапке
-    const user = { icon: iconOleg, title: 'Замовник', text: 'Олег П.' };
+    const user = { icon: icons.iconOleg, title: 'Замовник', text: 'Олег П.' };
 
     // Активная вкладка кабинета
     const [activeTab, setActiveTab] = useState('overview');
@@ -974,7 +954,7 @@ function UserPage() {
             <header className='header-user'>
                 <div className='brand'>
                     <Link to="/" className="main-page-link">
-                        <img src={iconBee} alt="BusyBee" className="brand-bee" />
+                        <img src={icons.iconBee} alt="BusyBee" className="brand-bee" />
                         <span className="brand-text">BusyBee</span>
                     </Link>
                 </div>
@@ -992,7 +972,7 @@ function UserPage() {
                     </button>
 
                     <button type='button' className='alert'>
-                        <img src={iconKolokolchik} alt="kolokolchik" />
+                        <img src={icons.iconKolokolchik} alt="kolokolchik" />
                     </button>
                 </div>
                 <div className='user-card'>

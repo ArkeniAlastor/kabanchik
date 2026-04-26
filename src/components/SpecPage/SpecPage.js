@@ -1,48 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    iconBee,
-    iconKolokolchik,
-    iconOleg,
-    iconIrina,
-    iconOlena,
-    iconMaxim,
-    iconDanilka,
-    iconAndrei,
-    iconCheck,
-    iconStar,
-    iconBlocknote,
-    iconChumodan,
-    iconTime,
-    iconFolder,
-    iconMoney,
-    iconDarts,
-    iconBulb,
-    iconZvonilka,
-    iconHeart,
-    iconPchel,
-    iconLightning,
-    iconLupa,
-    iconBigTime,
-    iconPisat,
-    iconMKultra,
-    iconRedact,
-    iconMusorka,
-    iconPart1,
-    iconPart2,
-    iconPart3,
-    iconPart4,
-    iconPart5,
-    iconPart6
-} from '../../imgs/icons';
+import * as icons from '../../imgs/icons';
 import './SpecPage.css'
 
 // Данные карточек статистики для вкладки "Огляд"
 const stats = [
-    { label: 'Загальний дохід', count: '6.0k', icon: iconMoney, text: 'ЗАРОБІТОК' },
-    { label: 'Проектів в роботі', count: '2', icon: iconLightning, text: 'АКТИВНИХ' },
-    { label: 'Успішних проектів', count: '1', icon: iconCheck, text: 'ЗАВЕРШЕНО' },
-    { label: 'Середня оцінка', count: '4.9', icon: iconStar, text: 'РЕЙТИНГ' },
+    { label: 'Загальний дохід', count: '6.0k', icon: icons.iconMoney, text: 'ЗАРОБІТОК' },
+    { label: 'Проектів в роботі', count: '2', icon: icons.iconLightning, text: 'АКТИВНИХ' },
+    { label: 'Успішних проектів', count: '1', icon: icons.iconCheck, text: 'ЗАВЕРШЕНО' },
+    { label: 'Середня оцінка', count: '4.9', icon: icons.iconStar, text: 'РЕЙТИНГ' },
 ];
 
 // Данные карточек заказов (используются в нескольких вкладках)
@@ -53,13 +19,13 @@ const orderCard = [
         description: 'розробка сучасного інтерфейсу для фінансового додатку.',
         status: 'В роботі',
         progressValue: 65,
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'UI/UX Дизайн',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Олег П.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '12000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '5 днів',
     },
     {
@@ -68,13 +34,13 @@ const orderCard = [
         description: 'E-commerce платформа на React з адмін панеллю',
         status: 'В роботі',
         progressValue: 40,
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Веб-розробка',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Марина К.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '25000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '12 днів',
     },
     {
@@ -83,13 +49,13 @@ const orderCard = [
         description: 'Створення фірмового стилю для нового бренду одягу.',
         status: 'Завершено',
         progressValue: 100,
-        categoryIcon: iconFolder,
+        categoryIcon: icons.iconFolder,
         categoryText: 'Графічний дизайн',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Андрій С.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '6000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: 'Завершено',
     }];
 
@@ -97,7 +63,7 @@ const orderCard = [
 const recomendationCards = [
     {
         id: 1,
-        icon: iconLupa,
+        icon: icons.iconLupa,
         title: 'Нові проекти',
         description: '5 свіжих замовлень чекають на вас.',
         linkText: 'Переглянути переглянути проекти →',
@@ -105,14 +71,14 @@ const recomendationCards = [
     },
     {
         id: 2,
-        icon: iconFolder,
+        icon: icons.iconFolder,
         title: 'Партфоліо',
         description: 'Додайте нові роботи до свого портфоліо.',
         linkText: 'Керувати партфоліо →',
     },
     {
         id: 3,
-        icon: iconBulb,
+        icon: icons.iconBulb,
         title: 'Поради для успіху',
         description: 'Як збільшити свій дохід на платформі.',
         linkText: 'Читати поради →',
@@ -126,15 +92,15 @@ const projects = [
         title: 'Дизайн логотипу для IT-стартапу',
         description: 'Потрібен сучасний мінімалістичний логотип для AI стартапу. Очікую креативні рішення з використанням синіх та зелених відтінків.',
         category: 'Дизайн',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Андрій С.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '5000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '5 днів',
-        offersIcon: iconPisat,
+        offersIcon: icons.iconPisat,
         offers: '3 пропозиції',
-        addIcon: iconBigTime,
+        addIcon: icons.iconBigTime,
         addText: '2 години тому'
     },
     {
@@ -142,15 +108,15 @@ const projects = [
         title: 'Розробка лендінгу на React',
         description: 'Односторінковий сайт з адаптивним дизайном, анімаціями та інтеграцією форм.',
         category: 'Веб-розробка',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Наталія В.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '15000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '14 днів',
-        offersIcon: iconPisat,
+        offersIcon: icons.iconPisat,
         offers: '8 пропозицій',
-        addIcon: iconBigTime,
+        addIcon: icons.iconBigTime,
         addText: '5 годин тому'
     },
     {
@@ -158,15 +124,15 @@ const projects = [
         title: 'SEO оптимізація сайту',
         description: 'Комплексна SEO оптимізація для покращення позицій в Google.',
         category: 'Маркетинг',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Дмитро К.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '8000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '7 днів',
-        offersIcon: iconPisat,
+        offersIcon: icons.iconPisat,
         offers: '15 пропозицій',
-        addIcon: iconBigTime,
+        addIcon: icons.iconBigTime,
         addText: '1 день тому'
     },
     {
@@ -174,15 +140,15 @@ const projects = [
         title: '3D моделювання продукту ',
         description: 'Потрібна 3D візуалізація нового продукту для презентації інвесторам.',
         category: '3D Графіка',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Ірина Л.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '10000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '10 днів',
-        offersIcon: iconPisat,
+        offersIcon: icons.iconPisat,
         offers: '6 пропозицій',
-        addIcon: iconBigTime,
+        addIcon: icons.iconBigTime,
         addText: '6 години тому'
     },
     {
@@ -190,22 +156,22 @@ const projects = [
         title: 'Контент для Instagram',
         description: 'Створення контенту та підтримка акаунту в Instagram протягом місяця.',
         category: 'SMM',
-        personaIcon: iconPchel,
+        personaIcon: icons.iconPchel,
         personaText: 'Максим Т.',
-        priceIcon: iconMoney,
+        priceIcon: icons.iconMoney,
         priceText: '4000 грн',
-        deadlineIcon: iconTime,
+        deadlineIcon: icons.iconTime,
         deadlineText: '30 днів',
-        offersIcon: iconPisat,
+        offersIcon: icons.iconPisat,
         offers: '20 пропозицій',
-        addIcon: iconBigTime,
+        addIcon: icons.iconBigTime,
         addText: '3 години тому'
     }
 ];
 
 const profilePhoto = {
     title: 'Фото профілю',
-    icon: iconMKultra,
+    icon: icons.iconMKultra,
     recommendationSize: 'Рекомендований розмір: 400x400px',
     format: 'Формати: JPG, PNG',
 };
@@ -220,69 +186,69 @@ const getStatusClass = (status) => {
 const partfolioOrder = [
     {
         id: 1,
-        iconPart: iconPart1,
+        iconPart: icons.iconPart1,
         title: 'Мобільний банкінг додаток',
         category: 'UI/UX',
         description: 'Сучасний інтерфейс для фітнес додатку.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '234',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
     {
         id: 2,
-        iconPart: iconPart2,
+        iconPart: icons.iconPart2,
         title: 'E-commerce платформа',
         category: 'Веб-дизайн',
         description: 'Інтернет-магазин з мінімалістичним дизайном.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '189',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
     {
         id: 3,
-        iconPart: iconPart3,
+        iconPart: icons.iconPart3,
         title: 'Брендинг для кав\'ярні ',
         category: 'Графічний дизайн',
         description: 'Комплексний фірмовий стиль.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '312',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
     {
         id: 4,
-        iconPart: iconPart4,
+        iconPart: icons.iconPart4,
         title: 'Dashboard для аналітики',
         category: 'UI/UX',
         description: 'Адмін панель з графіками  та статистикою.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '156',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
     {
         id: 5,
-        iconPart: iconPart5,
+        iconPart: icons.iconPart5,
         title: 'Логотип для стартапу',
         category: 'Графічний дизайн',
         description: 'Сучасний інтерфейс для tech компанії.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '267',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
     {
         id: 6,
-        iconPart: iconPart6,
+        iconPart: icons.iconPart6,
         title: 'Лендінг для продукту',
         category: 'Веб-дизайн',
         description: 'Односторінковий сайт з анімаціями.',
-        iconLike: iconHeart,
+        iconLike: icons.iconHeart,
         likeRewius: '198',
-        reductIcon: iconRedact,
-        iconDelite: iconMusorka
+        reductIcon: icons.iconRedact,
+        iconDelite: icons.iconMusorka
     },
 ]
 // Вкладка "Огляд": статистика, последние заказы и рекомендации
@@ -343,8 +309,6 @@ const OverviewTab = ({ onGoToSearchProjects }) => (
                                     <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
                                     <span className='card-item-text'>{orderCard.priceText}</span>
                                 </div>
-                                <div>
-                                </div>
 
                                 <div className='card-deadline-item'>
                                     <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
@@ -352,10 +316,6 @@ const OverviewTab = ({ onGoToSearchProjects }) => (
                                 </div>
                             </div>
                             <div className='card-footer'>
-                                <span className='card-item-text'> {orderCard.proposals}</span>
-                                <span> • </span>
-                                <span className='card-item-text'>{orderCard.date}</span>
-
                                 <button className='view-details-btn'>Деталі</button>
                                 <button className='view-messenge-btn'>Повідомлення</button>
                             </div>
@@ -486,8 +446,6 @@ const MyProjectsTab = () => (
                                 <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
                                 <span className='card-item-text'>{orderCard.priceText}</span>
                             </div>
-                            <div>
-                            </div>
 
                             <div className='card-deadline-item'>
                                 <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
@@ -495,10 +453,6 @@ const MyProjectsTab = () => (
                             </div>
                         </div>
                         <div className='card-footer'>
-                            <span className='card-item-text'> {orderCard.proposals}</span>
-                            <span> • </span>
-                            <span className='card-item-text'>{orderCard.date}</span>
-
                             <button className='view-details-btn'>Деталі</button>
                             <button className='view-messenge-btn'>Повідомлення</button>
                         </div>
@@ -534,8 +488,6 @@ const MyProjectsTab = () => (
                                 <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
                                 <span className='card-item-text'>{orderCard.priceText}</span>
                             </div>
-                            <div>
-                            </div>
 
                             <div className='card-deadline-item'>
                                 <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
@@ -543,10 +495,6 @@ const MyProjectsTab = () => (
                             </div>
                         </div>
                         <div className='card-footer'>
-                            <span className='card-item-text'> {orderCard.proposals}</span>
-                            <span> • </span>
-                            <span className='card-item-text'>{orderCard.date}</span>
-
                             <button className='view-details-btn'>Деталі</button>
                             <button className='view-rewius-btn'>Залишити відгук</button>
                         </div>
@@ -1201,7 +1149,7 @@ function SpecPage() {
     };
 
     // Данные карточки пользователя в шапке
-    const user = { icon: iconMKultra, title: 'Фахівець', iconbee: iconBee, text: 'Марина К.' };
+    const user = { icon: icons.iconMKultra, title: 'Фахівець', iconbee: icons.iconBee, text: 'Марина К.' };
 
     // Активная вкладка кабинета
     const [activeTab, setActiveTab] = useState('overview');
@@ -1212,7 +1160,7 @@ function SpecPage() {
             <header className='header-user'>
                 <div className='brand'>
                     <Link to="/" className="main-page-link">
-                        <img src={iconBee} alt="BusyBee" className="brand-bee" />
+                        <img src={icons.iconBee} alt="BusyBee" className="brand-bee" />
                         <span className="brand-text">BusyBee</span>
                     </Link>
                 </div>
@@ -1230,7 +1178,7 @@ function SpecPage() {
                     </button>
 
                     <button type='button' className='alert'>
-                        <img src={iconKolokolchik} alt="kolokolchik" />
+                        <img src={icons.iconKolokolchik} alt="kolokolchik" />
                     </button>
                 </div>
                 <div className='user-card'>

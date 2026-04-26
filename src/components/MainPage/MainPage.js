@@ -1,51 +1,31 @@
 import './MainPage.css';
 import Header from '../Header/Header';
 import { Link } from 'react-router-dom';
-import {
-  iconBee,
-  iconDesign,
-  iconDev,
-  iconCopywriting,
-  iconMarketing,
-  iconVideo,
-  iconAudio,
-  iconBusiness,
-  iconPhoto,
-  iconProgramming,
-  iconArch,
-  iconEngineering,
-  iconEducation,
-  iconCheck,
-  iconMoney,
-  iconLightning,
-  iconShield,
-  iconChat,
-  iconStar,
-} from '../../imgs/icons';
+import * as icons from '../../imgs/icons';
 
 function MainPage() {
   const categories = [
-    { label: 'Дизайн та графіка', icon: iconDesign, count: '420+' },
-    { label: 'Розробка', icon: iconDev, count: '380+' },
-    { label: 'Копірайтинг', icon: iconCopywriting, count: '320+' },
-    { label: 'Маркетинг', icon: iconMarketing, count: '248+' },
-    { label: 'Відео', icon: iconVideo, count: '210+' },
-    { label: 'Аудіо', icon: iconAudio, count: '180+' },
-    { label: 'Бізнес', icon: iconBusiness, count: '196+' },
-    { label: 'Фото', icon: iconPhoto, count: '114+' },
-    { label: 'Програмування', icon: iconProgramming, count: '438+' },
-    { label: 'Архітектура', icon: iconArch, count: '92+' },
-    { label: 'Інжинірінг', icon: iconEngineering, count: '84+' },
-    { label: 'Навчання', icon: iconEducation, count: '196+' },
+    { label: 'Дизайн та графіка', icon: icons.iconDesign, count: '420+' },
+    { label: 'Розробка', icon: icons.iconDev, count: '380+' },
+    { label: 'Копірайтинг', icon: icons.iconCopywriting, count: '320+' },
+    { label: 'Маркетинг', icon: icons.iconMarketing, count: '248+' },
+    { label: 'Відео', icon: icons.iconVideo, count: '210+' },
+    { label: 'Аудіо', icon: icons.iconAudio, count: '180+' },
+    { label: 'Бізнес', icon: icons.iconBusiness, count: '196+' },
+    { label: 'Фото', icon: icons.iconPhoto, count: '114+' },
+    { label: 'Програмування', icon: icons.iconProgramming, count: '438+' },
+    { label: 'Архітектура', icon: icons.iconArch, count: '92+' },
+    { label: 'Інжинірінг', icon: icons.iconEngineering, count: '84+' },
+    { label: 'Навчання', icon: icons.iconEducation, count: '196+' },
   ];
 
   const features = [
-    { icon: iconCheck, title: 'Перевірені фахівці', text: 'Всі спеціалісти проходять верифікацію' },
-    { icon: iconMoney, title: 'Безпечні платежі', text: 'Гарантія повернення коштів' },
-    { icon: iconLightning, title: 'Швидкий старт', text: 'Знайдіть фахівця за кілька хвилин' },
-    { icon: iconShield, title: 'Захист угод', text: 'Безпека кожної транзакції' },
-    { icon: iconChat, title: 'Підтримка 24/7', text: 'Завжди готові вам допомогти' },
-    { icon: iconStar, title: 'Рейтинги та відгуки', text: 'Обирайте на основі реальних відгуків' },
+    { icon: icons.iconCheck, title: 'Перевірені фахівці', text: 'Всі спеціалісти проходять верифікацію' },
+    { icon: icons.iconMoney, title: 'Безпечні платежі', text: 'Гарантія повернення коштів' },
+    { icon: icons.iconLightning, title: 'Швидкий старт', text: 'Знайдіть фахівця за кілька хвилин' },
+    { icon: icons.iconShield, title: 'Захист угод', text: 'Безпека кожної транзакції' },
+    { icon: icons.iconChat, title: 'Підтримка 24/7', text: 'Завжди готові вам допомогти' },
+    { icon: icons.iconStar, title: 'Рейтинги та відгуки', text: 'Обирайте на основі реальних відгуків' },
   ];
 
   const popularTags = ['Дизайн', 'Веб-розробка', 'SEO', 'Копірайтинг', 'Переклад'];
@@ -75,7 +55,7 @@ function MainPage() {
                 </div>
               </div>
               <div className="hero-image">
-                <img src={iconBee} alt="BusyBee" />
+                <img src={icons.iconBee} alt="BusyBee" />
               </div>
             </div>
           </div>
@@ -185,7 +165,6 @@ function MainPage() {
         <div className="banner-strip">
           Маленька праця для великих людей!
         </div>
-
 
       </main>
     </div>

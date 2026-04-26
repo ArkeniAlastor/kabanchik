@@ -23,7 +23,7 @@ function AppContent() {
     <div className="app-wrapper">
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<ManePage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
