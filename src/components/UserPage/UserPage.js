@@ -98,7 +98,7 @@ const recomendationCards = [
         title: 'Знайти фахівця',
         description: 'Перегляньте категорії та знайдіть ідеального винонавця.',
         linkText: 'Переглянути категорії →',
-        linkPath: '../CategoryPage/CategoryPage', /*с задумкой на маршрутизацию, но пока плевать*/
+        linkPath: '/catalogue-specs',
     },
     {
         id: 2,
@@ -295,7 +295,7 @@ const OverviewTab = ({ onGoToOrders }) => (
                     <h2 className='recomendation-card-title'>{card.title}</h2>
                     <p className='recomendation-card-description'>{card.description}</p>
                     {card.linkPath ? (
-                        <Link className='recomendation-card-link' to="/category">{card.linkText}</Link>
+                        <Link className='recomendation-card-link' to={card.linkPath}>{card.linkText}</Link>
                     ) : (
                         <span className='recomendation-card-link'>{card.linkText}</span>
                     )}
