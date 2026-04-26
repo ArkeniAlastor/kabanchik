@@ -10,6 +10,7 @@ import OffersPage from './components/OffersPage/OffersPage';
 import UserPage from './components/UserPage/UserPage';
 import CreateOrder from './components/CreateOrder/CreateOrder';
 import SpecialistsDirectory from './components/SpecialistsDirectory/SpecialistsDirectory';
+import SpecPage from './components/SpecPage/SpecPage';
 
 
 function AppContent() {
@@ -22,7 +23,7 @@ function AppContent() {
     <div className="app-wrapper">
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<SpecPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
