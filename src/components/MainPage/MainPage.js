@@ -155,7 +155,7 @@ function MainPage() {
             <h2 className="cta-title">Готові почати?</h2>
             <p className="cta-sub">Приєднуйтесь до тисяч користувачів які вже знайшли свого фахівця</p>
             <div className="cta-btns">
-              <button type="button" className="cta-btn-primary">Створити замовлення</button>
+              <Link to="/register" className="cta-btn-primary">Створити замовлення</Link>
               <button type="button" className="cta-btn-outline">Знайти фахівця</button>
             </div>
           </div>

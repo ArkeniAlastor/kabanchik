@@ -238,6 +238,13 @@
 }
 .social-btn:hover { border-color: #bbb; background: #f9f9f9; }
 
+.social-btn-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 /* Right side promo */
 .register-promo-side {
   flex: 1;

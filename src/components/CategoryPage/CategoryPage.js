@@ -2,7 +2,6 @@ import './CategoryPage.css';
 import { useMemo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import * as icons from '../../imgs/icons';
 
 const categoryButtons = [

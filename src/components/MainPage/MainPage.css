@@ -253,6 +253,10 @@
 .cta-btn-primary {
   border-radius: 24px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 /* cta buttons share size */

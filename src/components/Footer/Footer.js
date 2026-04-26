@@ -4,7 +4,7 @@ import { iconBee } from '../../imgs/icons';
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container">
+      <div className="footer-container">
         <div className="footer-top">
 
           <div className="footer-brand">

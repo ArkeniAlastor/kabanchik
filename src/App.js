@@ -11,12 +11,13 @@ import UserPage from './components/UserPage/UserPage';
 import CreateOrder from './components/CreateOrder/CreateOrder';
 import SpecialistsDirectory from './components/SpecialistsDirectory/SpecialistsDirectory';
 import SpecPage from './components/SpecPage/SpecPage';
+import TermsPage from './components/TermsPage/TermsPage';
 
 
 function AppContent() {
   // вот тут юзаеться локатион, что бы показать системе, куда футер не ставить
   const location = useLocation();
-  const noFooterRoutes = ['/login', '/register', '/forgot'];
+  const noFooterRoutes = ['/login', '/register', '/forgot', '/terms'];
   const shouldShowFooter = !noFooterRoutes.includes(location.pathname);
   //чут чут перелопаченный контент
   return (
@@ -33,6 +34,7 @@ function AppContent() {
           <Route path="/create-order" element={<CreateOrder />} />
           <Route path="/catalogue-specs" element={<SpecialistsDirectory />} />
           <Route path='/SpecPage' element={<SpecPage />} />
+          <Route path="/terms" element={<TermsPage />} />
         </Routes>
       </main>
 

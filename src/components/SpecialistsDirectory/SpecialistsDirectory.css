@@ -1,416 +1,442 @@
 .SpecialistsDirectory {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: #f6f1eb;
+  padding-bottom: 56px;
+}
+
+.SpecialistsDirectory .directory-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 /* Page Header */
-.page-header {
-  background: linear-gradient(135deg, #4a5a8f 0%, #c9a961 100%);
-  color: white;
-  padding: 60px 20px;
-  text-align: center;
+.SpecialistsDirectory .page-header {
   position: relative;
   overflow: hidden;
+  background: linear-gradient(95deg, #4d62a6 0%, #6d6a80 44%, #e0ac1d 100%);
+  color: white;
+  padding: 44px 0 38px;
 }
 
-.page-header::after {
+.SpecialistsDirectory .page-header::before,
+.SpecialistsDirectory .page-header::after {
   content: '';
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 200px;
-  height: 200px;
-  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  transform: translate(100px, -50px);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.page-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 10px 0;
+.SpecialistsDirectory .page-header::before {
+  top: -120px;
+  left: -56px;
+  width: 220px;
+  height: 220px;
+}
+
+.SpecialistsDirectory .page-header::after {
+  right: -32px;
+  bottom: -126px;
+  width: 240px;
+  height: 240px;
+}
+
+.SpecialistsDirectory .page-header-content {
   position: relative;
   z-index: 1;
+  max-width: 760px;
 }
 
-.subtitle {
-  font-size: 1rem;
-  opacity: 0.95;
-  margin: 0;
-  position: relative;
-  z-index: 1;
-}
-
-/* Filters Section */
-.filters-section {
-  background: white;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.filter-buttons {
+.SpecialistsDirectory .page-title-row {
   display: flex;
-  gap: 15px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.SpecialistsDirectory .page-title-icon {
+  font-size: 1.45rem;
+}
+
+.SpecialistsDirectory .page-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.SpecialistsDirectory .subtitle {
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 24px;
+}
+
+.SpecialistsDirectory .hero-search {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 620px;
+  height: 52px;
+  margin: 0;
+  padding: 0 18px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  box-shadow: none;
+}
+
+.SpecialistsDirectory .hero-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1rem;
+}
+
+.SpecialistsDirectory .hero-search input::placeholder {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.SpecialistsDirectory .hero-search input:focus {
+  outline: none;
+}
+
+.SpecialistsDirectory .hero-search-icon {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1.15rem;
+}
+
+.SpecialistsDirectory .category-filter {
+  background: #fff;
+  border-bottom: 1px solid #ebe4d8;
+}
+
+.SpecialistsDirectory .catalog-content {
+  padding: 24px 0 0;
+}
+
+.SpecialistsDirectory .filter-buttons {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
   align-items: center;
+  padding: 16px 0 12px;
 }
 
-.filter-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  background-color: #f0f0f0;
-  color: #333;
+.SpecialistsDirectory .filter-btn {
+  padding: 8px 16px;
+  border: 1px solid #e7e1d7;
+  border-radius: 999px;
+  background-color: #f8f5ef;
+  color: #4a5061;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.filter-icon {
-  width: 20px;
-  height: 20px;
+.SpecialistsDirectory .filter-icon {
+  width: 16px;
+  height: 16px;
   object-fit: contain;
 }
 
-.filter-btn:hover {
-  background-color: #e0e0e0;
+.SpecialistsDirectory .filter-btn:hover {
+  background-color: #ece4d8;
 }
 
-.filter-btn.active {
+.SpecialistsDirectory .filter-btn.active {
   background-color: #ffc107;
-  color: #333;
+  color: #262631;
+  border-color: #ffc107;
   font-weight: 600;
+  box-shadow: none;
 }
 
 /* Search Filters */
-.search-filters {
-  background: white;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 8px;
+.SpecialistsDirectory .search-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
 }
 
-.search-filters p {
-  margin: 0 0 15px 0;
-  font-size: 0.9rem;
-  color: #999;
+.SpecialistsDirectory .search-filters p {
+  margin: 0;
+  font-size: 0.94rem;
+  color: #9b9387;
   font-weight: 500;
 }
 
-.search-inputs {
+.SpecialistsDirectory .search-inputs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 540px;
 }
 
-.search-input {
-  padding: 12px 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  background-color: #fafafa;
-  transition: border-color 0.3s ease;
+.SpecialistsDirectory .search-input {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid #e6ded2;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  background-color: #fffdfa;
+  color: #3e465c;
+  box-shadow: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.search-input:focus {
+.SpecialistsDirectory .search-input:focus {
   outline: none;
-  border-color: #ffc107;
+  border-color: #d3a84d;
+  box-shadow: 0 0 0 3px rgba(235, 190, 76, 0.12);
   background-color: white;
 }
 
-.search-input::placeholder {
-  color: #ccc;
+.SpecialistsDirectory .search-input::placeholder {
+  color: #c3b8aa;
 }
 
 /* Specialists Grid */
-.specialists-grid {
+.SpecialistsDirectory .specialists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.SpecialistsDirectory .empty-state {
+  grid-column: 1 / -1;
+  padding: 32px 24px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #eee4d8;
+  color: #756d62;
+  text-align: center;
 }
 
 /* Specialist Card */
-.specialist-card {
+.SpecialistsDirectory .specialist-card {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border: 1px solid #f0f0f0;
-}
-
-.specialist-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transform: translateY(-4px);
-}
-
-.card-header {
   display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
+  flex-direction: column;
+  min-height: 100%;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 14px 32px rgba(70, 64, 52, 0.06);
+  transition: all 0.3s ease;
+  border: 1px solid #eee4d8;
+}
+
+.SpecialistsDirectory .specialist-card:hover {
+  box-shadow: 0 18px 36px rgba(70, 64, 52, 0.1);
+  transform: translateY(-3px);
+}
+
+.SpecialistsDirectory .card-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
   align-items: flex-start;
 }
 
-.avatar-section {
-  position: relative;
+.SpecialistsDirectory .avatar-section {
   flex-shrink: 0;
 }
 
-.avatar {
-  width: 60px;
-  height: 60px;
+.SpecialistsDirectory .avatar {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  background-color: #f0f0f0;
-  border: 3px solid #f5f5f5;
+  background-color: #f4f6fb;
+  border: 3px solid #f1f4fb;
+  box-shadow: inset 0 0 0 1px #dce2f3;
 }
 
-.verified-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 24px;
-  height: 24px;
-  background-color: #4caf50;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: bold;
-  border: 2px solid white;
-}
-
-.name-section {
+.SpecialistsDirectory .name-section {
   flex: 1;
   min-width: 0;
 }
 
-.specialist-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 5px 0;
-  color: #333;
+.SpecialistsDirectory .name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.SpecialistsDirectory .verified-mark {
+  color: #2fb766;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.SpecialistsDirectory .specialist-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #20253a;
   word-break: break-word;
 }
 
-.specialist-title {
-  font-size: 0.85rem;
-  color: #999;
+.SpecialistsDirectory .specialist-title {
+  font-size: 0.78rem;
+  color: #77809a;
   margin: 0;
   font-weight: 500;
 }
 
 /* Rating Section */
-.rating-section {
+.SpecialistsDirectory .rating-section {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
+  gap: 6px;
+  font-size: 0.78rem;
   margin-bottom: 12px;
   flex-wrap: wrap;
+  color: #8d93a5;
 }
 
-.rating {
+.SpecialistsDirectory .rating {
   display: flex;
   align-items: center;
   gap: 4px;
-}
-
-.stars {
-  color: #ffc107;
-  font-size: 1rem;
-}
-
-.rating-value {
+  color: #232b46;
   font-weight: 600;
-  color: #333;
 }
 
-.reviews {
-  color: #999;
+.SpecialistsDirectory .stars {
+  color: #ffc107;
+  font-size: 0.9rem;
 }
 
-.location {
-  color: #999;
-  font-size: 0.85rem;
+.SpecialistsDirectory .reviews {
+  color: #8d93a5;
+}
+
+.SpecialistsDirectory .reviews::after {
+  content: '•';
+  margin-left: 6px;
+  color: #d2c8bb;
+}
+
+.SpecialistsDirectory .location {
+  color: #9a9489;
 }
 
 /* Description */
-.description {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #666;
-  margin: 12px 0;
+.SpecialistsDirectory .description {
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: #5d6577;
+  margin: 0 0 12px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
+  min-height: 4em;
 }
 
 /* Skills */
-.skills {
+.SpecialistsDirectory .skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 15px 0;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0 0 12px;
+  min-height: 0;
 }
 
-.skill-tag {
-  display: inline-block;
-  padding: 6px 12px;
-  background-color: #f0f0f0;
-  color: #333;
-  border-radius: 16px;
-  font-size: 0.8rem;
+.SpecialistsDirectory .skill-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  background-color: #f6f4ef;
+  color: #5f6675;
+  border-radius: 10px;
+  font-size: 0.72rem;
   font-weight: 500;
-  border: 1px solid #e0e0e0;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid #ece6db;
   transition: all 0.2s ease;
 }
 
-.skill-tag:hover {
-  background-color: #e0e0e0;
-  border-color: #d0d0d0;
+.SpecialistsDirectory .skill-tag:hover {
+  background-color: #efe8de;
+  border-color: #e2d7c6;
 }
 
-/* Price Section */
-.price-section {
-  border-top: 1px solid #f0f0f0;
-  padding-top: 15px;
-  margin-top: 15px;
-}
-
-.price {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffc107;
-  margin: 0 0 12px 0;
-}
-
-.card-actions {
+/* Card Footer */
+.SpecialistsDirectory .card-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f2ece3;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
 }
 
-.view-profile {
-  display: inline-block;
-  color: #4a5a8f;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  padding: 8px 0;
+.SpecialistsDirectory .price-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.view-profile:hover {
-  color: #ffc107;
-  text-decoration: underline;
+.SpecialistsDirectory .price {
+  font-size: 1.05rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #4059ad;
+  margin: 0;
 }
 
-.contact-btn {
-  padding: 8px 16px;
-  border: none;
-  background-color: #ffc107;
-  color: #333;
-  border-radius: 4px;
+.SpecialistsDirectory .projects-count {
+  font-size: 0.72rem;
+  color: #b0a79a;
+}
+
+.SpecialistsDirectory .card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.SpecialistsDirectory .availability-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
   font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
 }
 
-.contact-btn:hover {
-  background-color: #ffb300;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+.SpecialistsDirectory .availability-badge.is-open {
+  background: #edf9ef;
+  color: #38a056;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .specialists-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-  }
-
-  .page-header h1 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .specialists-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .filter-buttons {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .filter-btn {
-    padding: 8px 16px;
-    font-size: 0.85rem;
-  }
-
-  .search-inputs {
-    grid-template-columns: 1fr;
-  }
-
-  .page-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .page-header {
-    padding: 40px 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .specialists-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .specialist-card {
-    padding: 15px;
-  }
-
-  .card-header {
-    gap: 10px;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .specialist-name {
-    font-size: 1rem;
-  }
-
-  .page-header h1 {
-    font-size: 1.3rem;
-  }
-
-  .card-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .contact-btn {
-    width: 100%;
-  }
+.SpecialistsDirectory .availability-badge.is-busy {
+  background: #f1f1f1;
+  color: #9aa0ad;
 }

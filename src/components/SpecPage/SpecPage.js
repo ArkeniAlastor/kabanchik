@@ -458,7 +458,7 @@ const MyProjectsTab = () => (
                         </div>
                     </div>
                 ))}
-                {orderCard.filter(card => card.id == 3).map((orderCard) => (
+                {orderCard.filter(card => card.id === 3).map((orderCard) => (
                     <div className='card' key={orderCard.id}>
 
                         <div className='card-header'>
@@ -1183,7 +1183,7 @@ function SpecPage() {
                 </div>
                 <div className='user-card'>
                     <img src={user.icon} alt={user.text} />
-                    <h3>{user.title} <img src={user.iconbee}></img></h3>
+                    <h3>{user.title} <img src={user.iconbee} alt="" /></h3>
                     <p>{user.text}</p>
                 </div>
             </header>
