@@ -1,0 +1,10 @@
+
+ComputerName           : localtunnel.me
+RemoteAddress          : 193.34.76.44
+RemotePort             : 27233
+InterfaceAlias         : Беспроводная сеть
+SourceAddress          : 192.168.0.153
+PingSucceeded          : True
+PingReplyDetails (RTT) : 263 ms
+TcpTestSucceeded       : False
+

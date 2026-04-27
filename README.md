@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Kabanchik
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React frontend for the BusyBee/Kabanchik project.
 
-## Available Scripts
+## Local Run
 
-In the project directory, you can run:
+```bash
+npm install
+npm start
+```
 
-### `npm start`
+Production build:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm run build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## VPS + Nginx
 
-### `npm test`
+This project can be deployed as a static React build behind Nginx.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Files added for deployment:
 
-### `npm run build`
+- `deploy/nginx/kabanchik.conf` - Nginx site config
+- `deploy/bootstrap-vps.sh` - installs Nginx and Node.js on Ubuntu VPS
+- `deploy/publish-build.sh` - builds the project and publishes `build/` to `/var/www/kabanchik/current`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Upload project to server
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Example:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone <YOUR_REPO_URL> kabanchik
+cd kabanchik
+```
 
-### `npm run eject`
+### 2. Bootstrap server
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Run on the VPS from the project root:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+sudo bash deploy/bootstrap-vps.sh
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Update domain or IP in Nginx
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Edit:
 
-## Learn More
+```bash
+sudo nano /etc/nginx/sites-available/kabanchik
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Replace:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```text
+YOUR_DOMAIN_OR_IP
+```
 
-### Code Splitting
+with your real domain or server IP.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. Publish build
 
-### Analyzing the Bundle Size
+```bash
+bash deploy/publish-build.sh
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Nginx serves the app from:
 
-### Making a Progressive Web App
+```text
+/var/www/kabanchik/current
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 5. Optional SSL
 
-### Advanced Configuration
+If your domain already points to the VPS:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d your-domain.com
+```
 
-### Deployment
+## React Router Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The Nginx config already includes:
 
-### `npm run build` fails to minify
+```nginx
+try_files $uri $uri/ /index.html;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This is required so routes like `/SpecPage`, `/services`, and `/userpage` open correctly after refresh.
