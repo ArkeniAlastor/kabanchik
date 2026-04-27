@@ -19,7 +19,7 @@ function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/userpage');
+    navigate(role === 'expert' ? '/SpecPage' : '/userpage');
   };
 
   const features = [

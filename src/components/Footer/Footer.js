@@ -1,5 +1,6 @@
 import './Footer.css';
 import { iconBee } from '../../imgs/icons';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -27,9 +28,9 @@ function Footer() {
           <div className="footer-col">
             <h4 className="footer-col-title">Сервіси</h4>
             <ul className="footer-links">
-              <li><a href="/">Безпечний рахунок</a></li>
-              <li><a href="/">Преміум</a></li>
-              <li><a href="/">Товарний сертифікат</a></li>
+              <li><Link to="/services">Безпечний рахунок</Link></li>
+              <li><Link to="/services">Преміум</Link></li>
+              <li><Link to="/services">Товарний сертифікат</Link></li>
             </ul>
           </div>
 
