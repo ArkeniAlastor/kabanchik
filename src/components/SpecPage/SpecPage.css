@@ -258,7 +258,7 @@
 	gap: 8px;
 }
 
-.overview-tab .card-footer > span {
+.overview-tab .card-footer>span {
 	display: none;
 }
 
@@ -1470,7 +1470,7 @@
 	padding-top: 10px;
 }
 
-.my-projects-tab .card-footer > span {
+.my-projects-tab .card-footer>span {
 	display: none;
 }
 
@@ -1506,14 +1506,14 @@
 	gap: 10px;
 }
 
-.settings-tab .personal-info-input[name="rate"] + span {
+.settings-tab .personal-info-input[name="rate"]+span {
 	align-self: center;
 	font-size: 13px;
 	color: #6b738a;
 	margin-top: 2px;
 }
 
-.settings-tab [class*="personal-info-pp"] > label > div {
+.settings-tab [class*="personal-info-pp"]>label>div {
 	display: flex;
 	align-items: center;
 	gap: 8px;

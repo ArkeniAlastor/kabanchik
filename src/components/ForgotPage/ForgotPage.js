@@ -1,15 +1,44 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './ForgotPage.css';
-import { iconBee } from '../../imgs/icons';
+import { iconBee, iconCheck, iconLightning, iconMoney } from '../../imgs/icons';
+
+const FORGOT_FIELD = {
+  name: 'email',
+  label: 'Email',
+  type: 'email',
+  placeholder: 'your@email.com'
+};
+
+const PROMO_FEATURES = [
+  {
+    icon: iconCheck,
+    title: 'Швидке відновлення',
+    text: 'Повернення доступу починається з одного email без зайвих кроків.'
+  },
+  {
+    icon: iconLightning,
+    title: 'Доступ до кабінету',
+    text: 'Після відновлення можна одразу повернутися до замовлень і повідомлень.'
+  },
+  {
+    icon: iconMoney,
+    title: 'Безпечний процес',
+    text: 'Відновлення побудоване як окремий простий сценарій без зайвого шуму.'
+  },
+];
 
 function ForgotPage() {
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     setSent(true);
+  };
+
+  const handleChange = (event) => {
+    setEmail(event.target.value);
   };
 
   return (
@@ -35,12 +64,13 @@ function ForgotPage() {
 
               <form className="forgot-fields" onSubmit={handleSubmit}>
                 <label className="forgot-label">
-                  Email
+                  {FORGOT_FIELD.label}
                   <input
-                    type="email"
-                    placeholder="your@email.com"
+                    name={FORGOT_FIELD.name}
+                    type={FORGOT_FIELD.type}
+                    placeholder={FORGOT_FIELD.placeholder}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleChange}
                     required
                   />
                 </label>
@@ -53,7 +83,9 @@ function ForgotPage() {
             </>
           ) : (
             <div className="forgot-success">
-              <div className="forgot-success-icon">✉️</div>
+              <div className="forgot-success-icon">
+                <img src={iconCheck} alt="Успіх" />
+              </div>
               <h2 className="forgot-success-title">Листа надіслано!</h2>
               <p className="forgot-success-text">
                 Ми надіслали інструкції для відновлення пароля на <strong>{email}</strong>
@@ -70,7 +102,19 @@ function ForgotPage() {
         <div className="forgot-promo-wrap">
           <img src={iconBee} alt="BusyBee" className="forgot-promo-bee" />
           <h2 className="forgot-promo-title">BusyBee</h2>
-          <p className="forgot-promo-sub">Знайдіть ідеального фахівця для вашого проекту</p>
+          <p className="forgot-promo-sub">Поверніть доступ до акаунту і продовжуйте роботу без зайвих бар'єрів.</p>
+
+          <ul className="forgot-promo-features">
+            {PROMO_FEATURES.map((feature) => (
+              <li key={feature.title} className="forgot-promo-feature">
+                <img src={feature.icon} alt={feature.title} className="forgot-promo-feature-icon" />
+                <div>
+                  <p className="forgot-promo-feature-title">{feature.title}</p>
+                  <p className="forgot-promo-feature-text">{feature.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

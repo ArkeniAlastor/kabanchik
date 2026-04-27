@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as icons from '../../imgs/icons';
+import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import './SpecPage.css'
 
 // Данные карточек статистики для вкладки "Огляд"
@@ -183,6 +184,74 @@ const getStatusClass = (status) => {
     if (status === 'Завершено') return 'status-done';
     return '';
 };
+
+const matchesSearchQuery = (values, normalizedQuery) => {
+    const searchableText = values.join(' ').toLowerCase();
+    return !normalizedQuery || searchableText.includes(normalizedQuery);
+};
+
+const ProjectStatusCard = ({ order, secondaryActionLabel = 'Повідомлення' }) => (
+    <div className='card'>
+        <div className='card-header'>
+            <h2 className='card-title'>{order.title}</h2>
+            <span className={`card-status ${getStatusClass(order.status)}`}>{order.status}</span>
+        </div>
+
+        <p className='card-description'>{order.description}</p>
+
+        <div className='progressValue'>
+            <label className='progress-title'>Прогрес: {order.progressValue}%</label>
+            <progress className='progress' value={order.progressValue} max="100" style={{ width: '100%' }}></progress>
+        </div>
+
+        <div className='card-details'>
+            <div className='card-category-item'>
+                <img className='card-item-icon' src={order.categoryIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.categoryText}</span>
+            </div>
+
+            <div className='order-persona'>
+                <img src={order.personaIcon} alt="Customer" />
+                <span> {order.personaText} </span>
+            </div>
+
+            <div className='card-price-item'>
+                <img className='card-item-icon' src={order.priceIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.priceText}</span>
+            </div>
+
+            <div className='card-deadline-item'>
+                <img className='card-item-icon' src={order.deadlineIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.deadlineText}</span>
+            </div>
+        </div>
+
+        <div className='card-footer'>
+            <button className='view-details-btn'>Деталі</button>
+            <button className={secondaryActionLabel === 'Залишити відгук' ? 'view-rewius-btn' : 'view-messenge-btn'}>{secondaryActionLabel}</button>
+        </div>
+    </div>
+);
+
+const ProjectStatusGrid = ({ orders, secondaryActionLabel, emptyText }) => (
+    <div className='last-order-card-container'>
+        <div className='last-order-card'>
+            {orders.length ? (
+                orders.map((order) => (
+                    <ProjectStatusCard
+                        key={order.id}
+                        order={order}
+                        secondaryActionLabel={secondaryActionLabel}
+                    />
+                ))
+            ) : (
+                <div className='card'>
+                    <p className='card-description'>{emptyText}</p>
+                </div>
+            )}
+        </div>
+    </div>
+);
 const partfolioOrder = [
     {
         id: 1,
@@ -252,7 +321,7 @@ const partfolioOrder = [
     },
 ]
 // Вкладка "Огляд": статистика, последние заказы и рекомендации
-const OverviewTab = ({ onGoToSearchProjects }) => (
+const OverviewTab = ({ onGoToSearchProjects, orders }) => (
     <div className='overview-tab'>
         {/* Stats */}
         <div className='stats-section'>
@@ -277,52 +346,11 @@ const OverviewTab = ({ onGoToSearchProjects }) => (
         <div className='last-order-container '>
             <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={onGoToSearchProjects}> Переглянути всі →</p>
             </span>
-            <div className='last-order-card-container'>
-                <div className='last-order-card'>
-                    {orderCard.filter(card => card.id !== 3).map((orderCard) => (
-                        <div className='card' key={orderCard.id}>
-
-                            <div className='card-header'>
-                                <h2 className='card-title'>{orderCard.title}</h2>
-                                <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                            </div>
-
-                            <p className='card-description'>{orderCard.description}</p>
-
-                            <div className='progressValue'>
-                                <label className='progress-title'>Прогрес: {orderCard.progressValue}%</label>
-                                <progress className='progress' value={orderCard.progressValue} max="100" style={{ width: '100%' }}></progress>
-                            </div>
-
-                            <div className='card-details'>
-                                <div className='card-category-item'>
-                                    <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.categoryText}</span>
-                                </div>
-
-                                <div className='order-persona'>
-                                    <img src={orderCard.personaIcon} alt="Customer" />
-                                    <span> {orderCard.personaText} </span>
-                                </div>
-
-                                <div className='card-price-item'>
-                                    <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.priceText}</span>
-                                </div>
-
-                                <div className='card-deadline-item'>
-                                    <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.deadlineText}</span>
-                                </div>
-                            </div>
-                            <div className='card-footer'>
-                                <button className='view-details-btn'>Деталі</button>
-                                <button className='view-messenge-btn'>Повідомлення</button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <ProjectStatusGrid
+                orders={orders}
+                secondaryActionLabel='Повідомлення'
+                emptyText='За вашим запитом проєктів не знайдено.'
+            />
         </div>
 
         {/* Recommendations */}
@@ -347,7 +375,7 @@ const OverviewTab = ({ onGoToSearchProjects }) => (
 )
 
 // Вкладка "Всі замовлення": полный список заказов
-const SearchProjectsTab = () => (
+const SearchProjectsTab = ({ projects }) => (
     <div className='orders-tab'>
         <div className='orders-header'>
             <h1>Пошук проектів</h1>
@@ -357,49 +385,53 @@ const SearchProjectsTab = () => (
         <div className='orders-list'>
             <div className='last-order-card-container'>
                 <div className='last-order-card'>
-                    {projects.map((project) => (
-                        <div className='card' key={project.id}>
+                    {projects.length ? (
+                        projects.map((project) => (
+                            <div className='card' key={project.id}>
+                                <div className='card-header'>
+                                    <h2 className='card-title'>{project.title}</h2>
+                                    <span className='card-category'>{project.category}</span>
+                                </div>
 
-                            <div className='card-header'>
-                                <h2 className='card-title'>{project.title}</h2>
-                                <span className='card-category'>{project.category}</span>
+                                <p className='card-description'>{project.description}</p>
+
+                                <div className='card-details'>
+                                    <div className='card-persona-item'>
+                                        <img src={project.personaIcon} alt="" />
+                                        <span className='card-item-text'>{project.personaText}</span>
+                                    </div>
+
+                                    <div className='card-price-item'>
+                                        <img src={project.priceIcon} alt="" />
+                                        <span className='card-item-text'>{project.priceText}</span>
+                                    </div>
+                                    <div className='card-deadline-item'>
+                                        <img src={project.deadlineIcon} alt="" />
+                                        <span className='card-item-text'>{project.deadlineText}</span>
+                                    </div>
+                                </div>
+
+                                <div className='card-footer'>
+                                    <div className='card-stats'>
+                                        <img src={project.offersIcon} alt="" />
+                                        <span className='card-item-text'>{project.offers}</span>
+                                        <span> • </span>
+                                        <img src={project.addIcon} alt="" />
+                                        <span className='card-item-text'>{project.addText}</span>
+                                    </div>
+
+                                    <div className='card-actions'>
+                                        <button className='send-offer-btn'>Відправити пропозицію</button>
+                                        <button className='save-btn'>Зберегти</button>
+                                    </div>
+                                </div>
                             </div>
-
-                            <p className='card-description'>{project.description}</p>
-
-                            <div className='card-details'>
-                                <div className='card-persona-item'>
-                                    <img src={project.personaIcon} alt="" />
-                                    <span className='card-item-text'>{project.personaText}</span>
-                                </div>
-
-                                <div className='card-price-item'>
-                                    <img src={project.priceIcon} alt="" />
-                                    <span className='card-item-text'>{project.priceText}</span>
-                                </div>
-                                <div className='card-deadline-item'>
-                                    <img src={project.deadlineIcon} alt="" />
-                                    <span className='card-item-text'>{project.deadlineText}</span>
-                                </div>
-                            </div>
-
-                            <div className='card-footer'>
-                                <div className='card-stats'>
-                                    <img src={project.offersIcon} alt="" />
-                                    <span className='card-item-text'>{project.offers}</span>
-                                    <span> • </span>
-                                    <img src={project.addIcon} alt="" />
-                                    <span className='card-item-text'>{project.addText}</span>
-                                </div>
-
-                                <div className='card-actions'>
-                                    <button className='send-offer-btn'>Відправити пропозицію</button>
-                                    <button className='save-btn'>Зберегти</button>
-                                </div>
-                            </div>
-
+                        ))
+                    ) : (
+                        <div className='card'>
+                            <p className='card-description'>За вашим запитом проєктів не знайдено.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         </div>
@@ -407,143 +439,71 @@ const SearchProjectsTab = () => (
 )
 
 // Вкладка "Активні": только заказы в работе
-const MyProjectsTab = () => (
+const MyProjectsTab = ({ activeOrders, completedOrders }) => (
     <div className='my-projects-tab'>
         <div className='orders-header'>
             <h1>Активні замовлення</h1>
         </div>
 
         {/* Active Orders Grid */}
-        <div className='last-order-card-container'>
-            <div className='last-order-card'>
-                {orderCard.filter(card => card.id !== 3).map((orderCard) => (
-                    <div className='card' key={orderCard.id}>
-
-                        <div className='card-header'>
-                            <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                        </div>
-
-                        <p className='card-description'>{orderCard.description}</p>
-
-                        <div className='progressValue'>
-                            <label className='progress-title'>Прогрес: {orderCard.progressValue}%</label>
-                            <progress className='progress' value={orderCard.progressValue} max="100" style={{ width: '100%' }}></progress>
-                        </div>
-
-                        <div className='card-details'>
-                            <div className='card-category-item'>
-                                <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.categoryText}</span>
-                            </div>
-
-                            <div className='order-persona'>
-                                <img src={orderCard.personaIcon} alt="Customer" />
-                                <span> {orderCard.personaText} </span>
-                            </div>
-
-                            <div className='card-price-item'>
-                                <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.priceText}</span>
-                            </div>
-
-                            <div className='card-deadline-item'>
-                                <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.deadlineText}</span>
-                            </div>
-                        </div>
-                        <div className='card-footer'>
-                            <button className='view-details-btn'>Деталі</button>
-                            <button className='view-messenge-btn'>Повідомлення</button>
-                        </div>
-                    </div>
-                ))}
-                {orderCard.filter(card => card.id === 3).map((orderCard) => (
-                    <div className='card' key={orderCard.id}>
-
-                        <div className='card-header'>
-                            <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                        </div>
-
-                        <p className='card-description'>{orderCard.description}</p>
-
-                        <div className='progressValue'>
-                            <label className='progress-title'>Прогрес: {orderCard.progressValue}%</label>
-                            <progress className='progress' value={orderCard.progressValue} max="100" style={{ width: '100%' }}></progress>
-                        </div>
-
-                        <div className='card-details'>
-                            <div className='card-category-item'>
-                                <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.categoryText}</span>
-                            </div>
-
-                            <div className='order-persona'>
-                                <img src={orderCard.personaIcon} alt="Customer" />
-                                <span> {orderCard.personaText} </span>
-                            </div>
-
-                            <div className='card-price-item'>
-                                <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.priceText}</span>
-                            </div>
-
-                            <div className='card-deadline-item'>
-                                <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.deadlineText}</span>
-                            </div>
-                        </div>
-                        <div className='card-footer'>
-                            <button className='view-details-btn'>Деталі</button>
-                            <button className='view-rewius-btn'>Залишити відгук</button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <ProjectStatusGrid
+            orders={activeOrders}
+            secondaryActionLabel='Повідомлення'
+            emptyText='За вашим запитом активних замовлень не знайдено.'
+        />
+        <ProjectStatusGrid
+            orders={completedOrders}
+            secondaryActionLabel='Залишити відгук'
+            emptyText='За вашим запитом завершених замовлень не знайдено.'
+        />
     </div>
 )
 
 // Вкладка "Завершені": только завершенные заказы
-const PartfolioTab = () => (
+const PartfolioTab = ({ items }) => (
     <div className='Partfolio-tab'>
         <div className='Partfolio-header'>
             <h1>Моє портфоліо </h1>
             <button className='partfolio-plus'>+ Додати роботу</button>
         </div>
-        {partfolioOrder.map((partfolioOrder) => (
-            <div className='cardPart' key={partfolioOrder.id}>
-                <div className='cardPart-header'>
-                    <div className='cardPart-header-left'>
-                        <img className='cardPart-project-icon' src={partfolioOrder.iconPart} alt="Project" width="40" />
-                        <h2 className='cardPart-title'>{partfolioOrder.title}</h2>
+        {items.length ? (
+            items.map((item) => (
+                <div className='cardPart' key={item.id}>
+                    <div className='cardPart-header'>
+                        <div className='cardPart-header-left'>
+                            <img className='cardPart-project-icon' src={item.iconPart} alt="Project" width="40" />
+                            <h2 className='cardPart-title'>{item.title}</h2>
+                        </div>
+                        <span className='cardPart-category-tag'>{item.category}</span>
                     </div>
-                    <span className='cardPart-category-tag'>{partfolioOrder.category}</span>
-                </div>
 
-                <p className='cardPart-description'>{partfolioOrder.description}</p>
+                    <p className='cardPart-description'>{item.description}</p>
 
-                <div className='cardPart-footer'>
-                    <div className='cardPart-stats'>
-                        <div className='cardPart-like-item'>
-                            <img className='cardPart-item-icon' src={partfolioOrder.iconLike} alt="Like" width="16" />
-                            <span className='cardPart-item-text'>{partfolioOrder.likeRewius}</span>
+                    <div className='cardPart-footer'>
+                        <div className='cardPart-stats'>
+                            <div className='cardPart-like-item'>
+                                <img className='cardPart-item-icon' src={item.iconLike} alt="Like" width="16" />
+                                <span className='cardPart-item-text'>{item.likeRewius}</span>
+                            </div>
+                        </div>
+
+                        <div className='cardPart-actions'>
+                            <button className='action-btn' title="Редагувати">
+                                <img src={item.reductIcon} alt="Edit" width="18" />
+                            </button>
+
+                            <button className='action-btn delete' title="Видалити">
+                                <img src={item.iconDelite} alt="Delete" />
+                            </button>
                         </div>
                     </div>
-
-                    <div className='cardPart-actions'>
-                        <button className='action-btn' title="Редагувати">
-                            <img src={partfolioOrder.reductIcon} alt="Edit" width="18" />
-                        </button>
-
-                        <button className='action-btn delete' title="Видалити">
-                            <img src={partfolioOrder.iconDelite} alt="Delete" />
-                        </button>
-                    </div>
                 </div>
+            ))
+        ) : (
+            <div className='card'>
+                <p className='card-description'>За вашим запитом робіт не знайдено.</p>
             </div>
-        ))};
+        )}
     </div>
 )
 
@@ -593,14 +553,22 @@ const MessagesTab = () => {
     });
 
     const [activeChatId, setActiveChatId] = useState(1);
+    const [chatSearchQuery, setChatSearchQuery] = useState('');
     const [messageText, setMessageText] = useState('');
+    const normalizedChatQuery = chatSearchQuery.trim().toLowerCase();
+    const filteredChats = chats.filter((chat) => matchesSearchQuery([
+        chat.name,
+        chat.preview
+    ], normalizedChatQuery));
 
     // Текущий выбранный чат
-    const activeChat = chats.find(c => c.id === activeChatId);
+    const activeChat = filteredChats.find((chat) => chat.id === activeChatId) || filteredChats[0] || null;
+    const selectedChatId = activeChat?.id || null;
+    const activeMessages = selectedChatId ? chatHistories[selectedChatId] || [] : [];
 
     // Отправка сообщения в текущий активный чат
     const handleSendMessage = () => {
-        if (!messageText.trim()) return;
+        if (!messageText.trim() || !selectedChatId) return;
 
         const newMessage = {
             id: Date.now(),
@@ -608,10 +576,10 @@ const MessagesTab = () => {
             sender: 'me',
         };
 
-        setChatHistories({
-            ...chatHistories,
-            [activeChatId]: [...chatHistories[activeChatId], newMessage]
-        });
+        setChatHistories((prev) => ({
+            ...prev,
+            [selectedChatId]: [...(prev[selectedChatId] || []), newMessage]
+        }));
 
         setMessageText('');
     };
@@ -626,14 +594,20 @@ const MessagesTab = () => {
                 {/* Chats Sidebar */}
                 <aside className="chats-sidebar">
                     <div className='chat-search-wrap'>
-                        <input className='chat-search-input' type='text' placeholder='Пошук в повідомленнях...' />
+                        <input
+                            className='chat-search-input'
+                            type='text'
+                            placeholder='Пошук в повідомленнях...'
+                            value={chatSearchQuery}
+                            onChange={(event) => setChatSearchQuery(event.target.value)}
+                        />
                     </div>
 
-                    {chats.map(chat => (
+                    {filteredChats.length ? filteredChats.map((chat) => (
                         <div
                             key={chat.id}
                             onClick={() => setActiveChatId(chat.id)}
-                            className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
+                            className={`chat-item ${selectedChatId === chat.id ? 'active' : ''}`}
                         >
                             <div className='chat-avatar'>
                                 {chat.name.charAt(0)}
@@ -651,50 +625,60 @@ const MessagesTab = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p className='chat-item-preview'>За вашим запитом чатів не знайдено.</p>
+                    )}
                 </aside>
 
                 {/* Active Chat Window */}
                 <main className='chat-window'>
-                    <header className='chat-header'>
-                        <div className='chat-header-user'>
-                            <div className='chat-avatar'>{activeChat?.name.charAt(0)}</div>
-                            <div>
-                                <h2>{activeChat?.name}</h2>
-                                <p className='chat-header-status'>{activeChat?.isOnline ? 'В мережі' : 'Був(ла) нещодавно'}</p>
-                            </div>
-                        </div>
-                        <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
-                            &#9742;
-                        </button>
-                    </header>
-
-                    <div className='messages-container'>
-                        {chatHistories[activeChatId].map(msg => (
-                            <div key={msg.id} className={`message-row ${msg.sender}`}>
-                                {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat?.name.charAt(0)}</div>}
-                                <div className='message-bubble-wrap'>
-                                    <div className={`message ${msg.sender}`}>
-                                        <span className='message-text'>{msg.text}</span>
+                    {activeChat ? (
+                        <>
+                            <header className='chat-header'>
+                                <div className='chat-header-user'>
+                                    <div className='chat-avatar'>{activeChat.name.charAt(0)}</div>
+                                    <div>
+                                        <h2>{activeChat.name}</h2>
+                                        <p className='chat-header-status'>{activeChat.isOnline ? 'В мережі' : 'Був(ла) нещодавно'}</p>
                                     </div>
-                                    <span className='message-time'>
-                                        {msg.sender === 'me' ? '10:29' : '10:30'}
-                                    </span>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                                <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
+                                    &#9742;
+                                </button>
+                            </header>
 
-                    <footer className='chat-input-area'>
-                        <input className="message-input"
-                            type='text'
-                            value={messageText}
-                            onChange={(e) => setMessageText(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                            placeholder="Напишіть повідомлення..."
-                        />
-                        <button className='send-button' onClick={handleSendMessage}>Надіслати</button>
-                    </footer>
+                            <div className='messages-container'>
+                                {activeMessages.map((msg) => (
+                                    <div key={msg.id} className={`message-row ${msg.sender}`}>
+                                        {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat.name.charAt(0)}</div>}
+                                        <div className='message-bubble-wrap'>
+                                            <div className={`message ${msg.sender}`}>
+                                                <span className='message-text'>{msg.text}</span>
+                                            </div>
+                                            <span className='message-time'>
+                                                {msg.sender === 'me' ? '10:29' : '10:30'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <footer className='chat-input-area'>
+                                <input className="message-input"
+                                    type='text'
+                                    value={messageText}
+                                    onChange={(e) => setMessageText(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                                    placeholder="Напишіть повідомлення..."
+                                />
+                                <button className='send-button' onClick={handleSendMessage}>Надіслати</button>
+                            </footer>
+                        </>
+                    ) : (
+                        <div className='messages-container'>
+                            <p className='chat-item-preview'>Оберіть чат або змініть пошуковий запит.</p>
+                        </div>
+                    )}
                 </main>
             </div>
         </div>
@@ -702,42 +686,42 @@ const MessagesTab = () => {
 };
 
 // Вкладка "Обране": сетка карточек избранных специалистов
-const TakeTab = ({ onGoToMessages }) => (
+const TakeTab = ({ savedProjects }) => (
     <div className='take-tab'>
         <div className='takes-header'>
             <h1 className='take-title'>Збережені замовлення</h1>
         </div>
 
         <div className='specialists-grid'>
-            {projects.slice(0, 3).map((projects) => (
-                <article className='project-fav-card' key={projects.id}>
+            {savedProjects.length ? savedProjects.map((project) => (
+                <article className='project-fav-card' key={project.id}>
                     <div className='project-top'>
                         <div className='project-profile'>
-                            <img className='project-avatar' src={projects.personaIcon} alt={projects.personaText} />
+                            <img className='project-avatar' src={project.personaIcon} alt={project.personaText} />
                             <div>
-                                <h2 className='project-name'>{projects.title}</h2>
-                                <p className='project-role'>{projects.personaText} • {projects.category}</p>
+                                <h2 className='project-name'>{project.title}</h2>
+                                <p className='project-role'>{project.personaText} • {project.category}</p>
                             </div>
                         </div>
                     </div>
 
                     <div className='project-description'>
-                        <p className='project-role'>{projects.description}</p>
+                        <p className='project-role'>{project.description}</p>
                     </div>
 
                     <progress value="50" max="100"></progress>
 
                     <div className='project-rating-row'>
-                        <img src={projects.priceIcon} alt='price' width='16' />
-                        <span>{projects.priceText}</span>
+                        <img src={project.priceIcon} alt='price' width='16' />
+                        <span>{project.priceText}</span>
 
-                        <img src={projects.deadlineIcon} alt='deadline' width='16' />
-                        <span>{projects.deadlineText}</span>
+                        <img src={project.deadlineIcon} alt='deadline' width='16' />
+                        <span>{project.deadlineText}</span>
                     </div>
 
                     <div className='project-tags'>
-                        <span>{projects.offers}</span>
-                        <span>{projects.addText}</span>
+                        <span>{project.offers}</span>
+                        <span>{project.addText}</span>
                     </div>
 
                     <div className='project-footer'>
@@ -749,7 +733,11 @@ const TakeTab = ({ onGoToMessages }) => (
                         </button>
                     </div>
                 </article>
-            ))}
+            )) : (
+                <div className='card'>
+                    <p className='card-description'>За вашим запитом збережених замовлень не знайдено.</p>
+                </div>
+            )}
         </div>
     </div>
 );
@@ -1124,7 +1112,50 @@ const SettingsTab = () => {
 
 // Основной компонент личного кабинета пользователя
 function SpecPage() {
-    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('overview');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    const filteredOrders = orderCard.filter((order) => {
+        const matchesQuery = matchesSearchQuery([
+            order.title,
+            order.description,
+            order.categoryText,
+            order.personaText,
+            order.priceText,
+            order.deadlineText,
+            order.status
+        ], normalizedQuery);
+
+        return matchesQuery;
+    });
+
+    const activeOrders = filteredOrders.filter((order) => order.status !== 'Завершено');
+    const completedOrders = filteredOrders.filter((order) => order.status === 'Завершено');
+
+    const filteredProjects = projects.filter((project) => {
+        const matchesQuery = matchesSearchQuery([
+            project.title,
+            project.description,
+            project.category,
+            project.personaText,
+            project.priceText,
+            project.deadlineText
+        ], normalizedQuery);
+
+        return matchesQuery;
+    });
+
+    const filteredPortfolio = partfolioOrder.filter((item) => {
+        const matchesQuery = matchesSearchQuery([
+            item.title,
+            item.category,
+            item.description
+        ], normalizedQuery);
+
+        return matchesQuery;
+    });
 
     // Вкладки верхнего меню
     const tabs = [
@@ -1139,54 +1170,33 @@ function SpecPage() {
 
     // Соответствие ключа вкладки и React-компонента контента
     const contentMap = {
-        overview: <OverviewTab onGoToSearchProjects={() => setActiveTab('searchProjects')} />,
-        searchProjects: <SearchProjectsTab />,
-        myProjects: <MyProjectsTab />,
-        partfolio: <PartfolioTab />,
+        overview: <OverviewTab onGoToSearchProjects={() => setActiveTab('searchProjects')} orders={activeOrders} />,
+        searchProjects: <SearchProjectsTab projects={filteredProjects} />,
+        myProjects: <MyProjectsTab activeOrders={activeOrders} completedOrders={completedOrders} />,
+        partfolio: <PartfolioTab items={filteredPortfolio} />,
         messages: <MessagesTab />,
-        take: <TakeTab />,
+        take: <TakeTab savedProjects={filteredProjects.slice(0, 3)} />,
         settings: <SettingsTab />,
     };
 
     // Данные карточки пользователя в шапке
-    const user = { icon: icons.iconMKultra, title: 'Фахівець', iconbee: icons.iconBee, text: 'Марина К.' };
-
-    // Активная вкладка кабинета
-    const [activeTab, setActiveTab] = useState('overview');
+    const user = {
+        avatar: icons.iconMKultra,
+        role: 'Фахівець',
+        roleIcon: icons.iconBee,
+        name: 'Марина К.'
+    };
 
     return (
         <div className="user-page">
-            {/* Header */}
-            <header className='header-user'>
-                <div className='brand'>
-                    <Link to="/" className="main-page-link">
-                        <img src={icons.iconBee} alt="BusyBee" className="brand-bee" />
-                        <span className="brand-text">BusyBee</span>
-                    </Link>
-                </div>
-                <div className='order-search'>
-                    <span className="hero-search-icon">⌕</span>
-                    <input type="text" placeholder="Пошук проектів..." aria-label="Пошук" />
-                </div>
-                <div className='button'>
-                    <button
-                        type="button"
-                        className='create-order-btn'
-                        onClick={() => navigate('')}
-                    >
-                        Знайти роботу
-                    </button>
-
-                    <button type='button' className='alert'>
-                        <img src={icons.iconKolokolchik} alt="kolokolchik" />
-                    </button>
-                </div>
-                <div className='user-card'>
-                    <img src={user.icon} alt={user.text} />
-                    <h3>{user.title} <img src={user.iconbee} alt="" /></h3>
-                    <p>{user.text}</p>
-                </div>
-            </header>
+            <DashboardHeader
+                searchPlaceholder="Пошук проектів..."
+                searchValue={searchQuery}
+                onSearchChange={setSearchQuery}
+                actionLabel="Знайти роботу"
+                onActionClick={() => setActiveTab('searchProjects')}
+                user={user}
+            />
 
             {/* Tabs Navigation and Content */}
             <nav className='user-nav'>

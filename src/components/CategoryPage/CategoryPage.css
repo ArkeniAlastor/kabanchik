@@ -1,14 +1,39 @@
 .CategoryPage {
   --cp-accent: #f4bf2a;
+  --cp-accent-strong: #f0bf2f;
+  --cp-accent-shadow: rgba(244, 191, 42, 0.34);
+  --cp-accent-focus: rgba(244, 191, 42, 0.25);
   --cp-dark: #1f2845;
+  --cp-text: #4b4f5c;
+  --cp-text-soft: #9aa0b2;
+  --cp-text-softest: #a5aab8;
+  --cp-surface: #fff;
+  --cp-surface-soft: #f6f7fb;
+  --cp-page-bg: #efedeb;
+  --cp-filter-border: #ebebeb;
+  --cp-btn-border: #e1e1e1;
+  --cp-card-border: #ebe9e7;
+  --cp-hero-gradient: linear-gradient(95deg, #4d62a6 0%, #5a648e 42%, #e2aa18 100%);
+  --cp-banner-bg: #4d62a6;
   --cp-white-75: rgba(255, 255, 255, 0.75);
-  background: #efedeb;
+  --cp-white-90: rgba(255, 255, 255, 0.9);
+  --cp-hero-surface: rgba(255, 255, 255, 0.2);
+  --cp-hero-border: rgba(255, 255, 255, 0.35);
+  --cp-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+  background: var(--cp-page-bg);
+}
+
+.CategoryPage,
+.CategoryPage *,
+.CategoryPage *::before,
+.CategoryPage *::after {
+  box-sizing: border-box;
 }
 
 /* Hero */
 .CategoryPage .hero-section {
-  background: linear-gradient(95deg, #4d62a6 0%, #5a648e 42%, #e2aa18 100%);
   padding: 56px 0 52px;
+  background: var(--cp-hero-gradient);
   color: #fff;
 }
 
@@ -23,31 +48,37 @@
   text-align: center;
 }
 
-.CategoryPage .hero-title {
-  margin: 0 0 14px;
-  font-size: 52px;
-  font-weight: 800;
+.CategoryPage .hero-title,
+.CategoryPage .cta-title {
+  margin: 0;
+  color: var(--cp-dark);
   line-height: 1.15;
+  font-weight: 800;
+}
+
+.CategoryPage .hero-title {
+  margin-bottom: 14px;
   color: #fff;
+  font-size: 52px;
 }
 
 .CategoryPage .hero-subtitle {
   margin: 0 0 30px;
+  color: var(--cp-white-90);
   font-size: 22px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
 }
 
 .CategoryPage .hero-search {
+  display: flex;
+  align-items: center;
   height: 50px;
   max-width: 560px;
   margin: 0 auto;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  display: flex;
-  align-items: center;
   padding: 0 18px;
+  border: 1px solid var(--cp-hero-border);
+  border-radius: 28px;
+  background: var(--cp-hero-surface);
 }
 
 .CategoryPage .hero-search input {
@@ -71,56 +102,70 @@
 
 /* Filter */
 .CategoryPage .category-filter {
-  background: #fff;
-  border-bottom: 1px solid #ebebeb;
   padding: 16px 0 8px;
+  background: var(--cp-surface);
+  border-bottom: 1px solid var(--cp-filter-border);
+}
+
+.CategoryPage .category-buttons,
+.CategoryPage .cta-btns {
+  display: flex;
+  justify-content: center;
 }
 
 .CategoryPage .category-buttons {
-  display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: center;
   padding: 4px 0 10px;
+}
+
+.CategoryPage .categories-count {
+  margin: 0;
+  padding: 0 8px 8px;
+  color: var(--cp-text-soft);
+  font-size: 14px;
 }
 
 /* Buttons */
 .CategoryPage .category-btn,
 .CategoryPage .cta-btn-primary {
   border-radius: 999px;
-  font-weight: 700;
   cursor: pointer;
 }
 
 .CategoryPage .category-btn {
-  border: 1px solid #e1e1e1;
+  padding: 8px 16px;
+  border: 1px solid var(--cp-btn-border);
   background: #f7f7f7;
-  color: #4b4f5c;
+  color: var(--cp-text);
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 16px;
   white-space: nowrap;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .CategoryPage .category-btn:hover {
-  border-color: #f0bf2f;
+  border-color: var(--cp-accent-strong);
 }
 
 .CategoryPage .category-btn.active {
-  background: var(--cp-accent);
   border-color: var(--cp-accent);
+  background: var(--cp-accent);
   color: #fff;
 }
 
-.CategoryPage .categories-count {
-  margin: 0;
-  color: #9ea3b1;
-  font-size: 14px;
-  padding: 0 8px 8px;
+.CategoryPage .cta-btn-primary {
+  min-width: 235px;
+  padding: 14px 24px;
+  border: none;
+  background: var(--cp-accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 10px 22px var(--cp-accent-shadow);
 }
 
-/* Categories Grid */
+/* Categories */
 .CategoryPage .categories-grid-section {
   padding: 24px 0 64px;
 }
@@ -132,17 +177,17 @@
 }
 
 .CategoryPage .feature1-card {
-  min-height: 160px;
-  border-radius: 14px;
-  background: #fff;
-  border: 1px solid #ebe9e7;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  width: 100%;
+  min-height: 160px;
   padding: 20px 14px;
+  border: 1px solid var(--cp-card-border);
+  border-radius: 14px;
+  background: var(--cp-surface);
+  text-align: center;
   -webkit-appearance: none;
   appearance: none;
   outline: none;
@@ -150,7 +195,7 @@
 }
 
 .CategoryPage .feature1-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+  box-shadow: var(--cp-card-shadow);
   transform: translateY(-3px);
 }
 
@@ -164,7 +209,7 @@
 }
 
 .CategoryPage .feature1-card:focus-visible {
-  box-shadow: 0 0 0 3px rgba(244, 191, 42, 0.25);
+  box-shadow: 0 0 0 3px var(--cp-accent-focus);
 }
 
 .CategoryPage .feature1-card img {
@@ -174,67 +219,46 @@
   object-fit: contain;
 }
 
-.CategoryPage .feature1-card h3,
-.CategoryPage .cta-title {
-  color: var(--cp-dark);
-  font-weight: 700;
-}
-
 .CategoryPage .feature1-card h3 {
   margin: 0;
+  color: var(--cp-dark);
   font-size: 17px;
   line-height: 1.25;
+  font-weight: 700;
 }
 
 .CategoryPage .feature1-card p {
   margin: 7px 0 0;
+  color: var(--cp-text-softest);
   font-size: 12px;
-  color: #a5aab8;
   font-weight: 500;
 }
 
 /* CTA */
 .CategoryPage .cta-section {
-  background: #f6f7fb;
-  text-align: center;
   padding: 72px 0;
+  background: var(--cp-surface-soft);
+  text-align: center;
 }
 
 .CategoryPage .cta-title {
-  margin: 0 0 12px;
+  margin-bottom: 12px;
   font-size: 50px;
-  line-height: 1.15;
-  font-weight: 800;
 }
 
 .CategoryPage .cta-sub {
   margin: 0 0 28px;
-  color: #9aa0b2;
+  color: var(--cp-text-soft);
   font-size: 18px;
-}
-
-.CategoryPage .cta-btns {
-  display: flex;
-  justify-content: center;
-}
-
-.CategoryPage .cta-btn-primary {
-  min-width: 235px;
-  padding: 14px 24px;
-  border: none;
-  background: var(--cp-accent);
-  color: #fff;
-  font-size: 16px;
-  box-shadow: 0 10px 22px rgba(244, 191, 42, 0.34);
 }
 
 /* Banner */
 .CategoryPage .banner-strip {
-  background: #4d62a6;
-  color: #fff;
-  text-align: center;
   padding: 20px 12px;
+  background: var(--cp-banner-bg);
+  color: #fff;
   font-size: 30px;
   font-weight: 700;
   line-height: 1.2;
+  text-align: center;
 }

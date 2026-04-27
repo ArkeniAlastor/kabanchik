@@ -12,6 +12,7 @@
   align-items: center;
   padding: 40px 0;
 }
+
 .forgot-form-wrap {
   width: 100%;
   max-width: 420px;
@@ -27,8 +28,15 @@
   font-size: 0.9rem;
   margin-bottom: 28px;
 }
-.forgot-back:hover { color: #1a1a2e; }
-.forgot-back-arrow { font-size: 1.3rem; line-height: 1; }
+
+.forgot-back:hover {
+  color: #1a1a2e;
+}
+
+.forgot-back-arrow {
+  font-size: 1.3rem;
+  line-height: 1;
+}
 
 .forgot-logo {
   display: flex;
@@ -36,11 +44,13 @@
   gap: 8px;
   margin-bottom: 32px;
 }
+
 .forgot-logo img {
   width: 32px;
   height: 32px;
   object-fit: contain;
 }
+
 .forgot-logo span {
   font-size: 1.1rem;
   font-weight: 800;
@@ -53,6 +63,7 @@
   color: #1a1a2e;
   margin-bottom: 8px;
 }
+
 .forgot-subtitle {
   font-size: 0.9rem;
   color: #888;
@@ -66,6 +77,7 @@
   gap: 18px;
   margin-bottom: 16px;
 }
+
 .forgot-label {
   display: flex;
   flex-direction: column;
@@ -74,6 +86,7 @@
   font-weight: 600;
   color: #333;
 }
+
 .forgot-label input {
   padding: 13px 16px;
   border: 1.5px solid #e0e0e0;
@@ -83,8 +96,14 @@
   outline: none;
   transition: border-color 0.15s;
 }
-.forgot-label input:focus { border-color: #2e3d72; }
-.forgot-label input::placeholder { color: #ccc; }
+
+.forgot-label input:focus {
+  border-color: #2e3d72;
+}
+
+.forgot-label input::placeholder {
+  color: #ccc;
+}
 
 .forgot-submit {
   display: block;
@@ -102,8 +121,14 @@
   text-decoration: none;
   margin-top: 4px;
 }
-.forgot-submit:hover { background: #d9a820; }
-.forgot-submit--link { margin-top: 20px; }
+
+.forgot-submit:hover {
+  background: #d9a820;
+}
+
+.forgot-submit--link {
+  margin-top: 20px;
+}
 
 .forgot-login {
   text-align: center;
@@ -111,35 +136,59 @@
   color: #666;
   margin-top: 16px;
 }
+
 .forgot-login a {
   color: #2e3d72;
   font-weight: 700;
   text-decoration: none;
 }
-.forgot-login a:hover { text-decoration: underline; }
+
+.forgot-login a:hover {
+  text-decoration: underline;
+}
 
 /* Success state */
 .forgot-success {
   text-align: center;
   padding: 20px 0;
 }
+
 .forgot-success-icon {
-  font-size: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
   margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  background: #eef6e8;
 }
+
+.forgot-success-icon img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
 .forgot-success-title {
   font-size: 1.6rem;
   font-weight: 800;
   color: #1a1a2e;
   margin-bottom: 12px;
 }
+
 .forgot-success-text {
   font-size: 0.92rem;
   color: #666;
   line-height: 1.6;
   margin-bottom: 8px;
 }
-.forgot-success-text strong { color: #1a1a2e; }
+
+.forgot-success-text strong {
+  color: #1a1a2e;
+}
 
 /* Right promo */
 .forgot-promo-side {
@@ -149,26 +198,73 @@
   align-items: center;
   justify-content: center;
 }
+
 .forgot-promo-wrap {
   text-align: center;
   padding: 40px;
-  max-width: 360px;
+  max-width: 390px;
 }
+
 .forgot-promo-bee {
   width: 140px;
   height: 140px;
   object-fit: contain;
   margin-bottom: 28px;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
 }
+
 .forgot-promo-title {
   font-size: 2.4rem;
   font-weight: 800;
   color: #fff;
   margin-bottom: 14px;
 }
+
 .forgot-promo-sub {
   font-size: 1rem;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.forgot-promo-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.forgot-promo-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.forgot-promo-feature-icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.forgot-promo-feature-title {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.forgot-promo-feature-text {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
 }

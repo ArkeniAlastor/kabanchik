@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as icons from '../../imgs/icons';
+import DashboardHeader from '../DashboardHeader/DashboardHeader';
 import './UserPage.css'
 
 // Данные карточек статистики для вкладки "Огляд"
@@ -85,14 +86,16 @@ const recomendationCards = [
         icon: icons.iconBulb,
         title: 'Поради',
         description: 'Як отримати найкращі результати від співпраці.',
-        linkText: 'Переглянути категорії →',
+        linkText: 'Читати поради →',
+        linkPath: '/customer-help',
     },
     {
         id: 3,
         icon: icons.iconZvonilka,
-        title: 'Підримка 24/7',
+        title: 'Підтримка 24/7',
         description: 'Завжди готові допомогти вам.',
         linkText: 'Зв\'язатись →',
+        linkPath: '/customer-help',
     }
 ];
 
@@ -199,8 +202,63 @@ const getStatusClass = (status) => {
     return '';
 };
 
+const matchesSearchQuery = (values, normalizedQuery) => {
+    const searchableText = values.join(' ').toLowerCase();
+    return !normalizedQuery || searchableText.includes(normalizedQuery);
+};
+
+const OrderCard = ({ order }) => (
+    <div className='card'>
+        <div className='card-header'>
+            <h2 className='card-title'>{order.title}</h2>
+            <span className={`card-status ${getStatusClass(order.status)}`}>{order.status}</span>
+        </div>
+
+        <p className='card-description'>{order.description}</p>
+
+        <div className='card-details'>
+            <div className='card-category-item'>
+                <img className='card-item-icon' src={order.categoryIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.categoryText}</span>
+            </div>
+
+            <div className='card-price-item'>
+                <img className='card-item-icon' src={order.priceIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.priceText}</span>
+            </div>
+
+            <div className='card-deadline-item'>
+                <img className='card-item-icon' src={order.deadlineIcon} alt="" width="16" />
+                <span className='card-item-text'>{order.deadlineText}</span>
+            </div>
+        </div>
+
+        <div className='card-footer'>
+            <span className='card-item-text'> {order.proposals}</span>
+            <span> • </span>
+            <span className='card-item-text'>{order.date}</span>
+
+            <button className='view-details-btn'>Переглянути</button>
+        </div>
+    </div>
+);
+
+const OrdersGrid = ({ orders, emptyText }) => (
+    <div className='last-order-card-container'>
+        <div className='last-order-card'>
+            {orders.length ? (
+                orders.map((order) => <OrderCard key={order.id} order={order} />)
+            ) : (
+                <div className='card'>
+                    <p className='card-description'>{emptyText}</p>
+                </div>
+            )}
+        </div>
+    </div>
+);
+
 // Вкладка "Огляд": статистика, последние заказы и рекомендации
-const OverviewTab = ({ onGoToOrders }) => (
+const OverviewTab = ({ onGoToOrders, orders }) => (
     <div className='overview-tab'>
         {/* Stats */}
         <div className='stats-section'>
@@ -225,46 +283,10 @@ const OverviewTab = ({ onGoToOrders }) => (
         <div className='last-order-container '>
             <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={onGoToOrders}> Переглянути всі →</p>
             </span>
-            <div className='last-order-card-container'>
-                <div className='last-order-card'>
-                    {orderCard.map((orderCard) => (
-                        <div className='card' key={orderCard.id}>
-
-                            <div className='card-header'>
-                                <h2 className='card-title'>{orderCard.title}</h2>
-                                <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                            </div>
-
-                            <p className='card-description'>{orderCard.description}</p>
-
-                            <div className='card-details'>
-                                <div className='card-category-item'>
-                                    <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.categoryText}</span>
-                                </div>
-
-                                <div className='card-price-item'>
-                                    <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.priceText}</span>
-                                </div>
-
-                                <div className='card-deadline-item'>
-                                    <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.deadlineText}</span>
-                                </div>
-                            </div>
-                            <div className='card-footer'>
-                                <span className='card-item-text'> {orderCard.proposals}</span>
-                                <span> • </span>
-                                <span className='card-item-text'>{orderCard.date}</span>
-
-                                <button className='view-details-btn'>Переглянути</button>
-                            </div>
-
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <OrdersGrid
+                orders={orders}
+                emptyText='За вашим запитом замовлень не знайдено.'
+            />
         </div>
 
         {/* Recommendations */}
@@ -287,7 +309,7 @@ const OverviewTab = ({ onGoToOrders }) => (
 )
 
 // Вкладка "Всі замовлення": полный список заказов
-const OrdersTab = () => (
+const OrdersTab = ({ orders }) => (
     <div className='orders-tab'>
         <div className='orders-header'>
             <h1>Всі замовлення</h1>
@@ -295,149 +317,41 @@ const OrdersTab = () => (
 
         {/* Orders Grid */}
         <div className='orders-list'>
-            <div className='last-order-card-container'>
-                <div className='last-order-card'>
-                    {orderCard.map((orderCard) => (
-                        <div className='card' key={orderCard.id}>
-
-                            <div className='card-header'>
-                                <h2 className='card-title'>{orderCard.title}</h2>
-                                <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                            </div>
-
-                            <p className='card-description'>{orderCard.description}</p>
-
-                            <div className='card-details'>
-                                <div className='card-category-item'>
-                                    <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.categoryText}</span>
-                                </div>
-
-                                <div className='card-price-item'>
-                                    <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.priceText}</span>
-                                </div>
-
-                                <div className='card-deadline-item'>
-                                    <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                    <span className='card-item-text'>{orderCard.deadlineText}</span>
-                                </div>
-                            </div>
-                            <div className='card-footer'>
-                                <span className='card-item-text'> {orderCard.proposals}</span>
-                                <span> • </span>
-                                <span className='card-item-text'>{orderCard.date}</span>
-
-                                <button className='view-details-btn'>Переглянути</button>
-                            </div>
-
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <OrdersGrid
+                orders={orders}
+                emptyText='За вашим запитом замовлень не знайдено.'
+            />
         </div>
     </div>
 )
 
 // Вкладка "Активні": только заказы в работе
-const ActiveTab = () => (
+const ActiveTab = ({ orders }) => (
     <div className='active-tab'>
         <div className='orders-header'>
             <h1>Активні замовлення</h1>
         </div>
 
         {/* Active Orders Grid */}
-        <div className='last-order-card-container'>
-            <div className='last-order-card'>
-                {orderCard.filter(card => card.id !== 4).map((orderCard) => (
-                    <div className='card' key={orderCard.id}>
-
-                        <div className='card-header'>
-                            <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                        </div>
-
-                        <p className='card-description'>{orderCard.description}</p>
-
-                        <div className='card-details'>
-                            <div className='card-category-item'>
-                                <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.categoryText}</span>
-                            </div>
-
-                            <div className='card-price-item'>
-                                <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.priceText}</span>
-                            </div>
-
-                            <div className='card-deadline-item'>
-                                <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.deadlineText}</span>
-                            </div>
-                        </div>
-                        <div className='card-footer'>
-                            <span className='card-item-text'> {orderCard.proposals}</span>
-                            <span> • </span>
-                            <span className='card-item-text'>{orderCard.date}</span>
-
-                            <button className='view-details-btn'>Переглянути</button>
-                        </div>
-
-                    </div>
-                ))}
-            </div>
-        </div>
+        <OrdersGrid
+            orders={orders}
+            emptyText='За вашим запитом активних замовлень не знайдено.'
+        />
     </div>
 )
 
 // Вкладка "Завершені": только завершенные заказы
-const EndOrderTab = () => (
+const EndOrderTab = ({ orders }) => (
     <div className='end-order-tab'>
         <div className='orders-header'>
             <h1>Завершені замовлення</h1>
         </div>
 
         {/* Completed Orders Grid */}
-        <div className='last-order-card-container'>
-            <div className='last-order-card'>
-                {orderCard.filter(card => card.id === 4).map((orderCard) => (
-                    <div className='card' key={orderCard.id}>
-
-                        <div className='card-header'>
-                            <h2 className='card-title'>{orderCard.title}</h2>
-                            <span className={`card-status ${getStatusClass(orderCard.status)}`}>{orderCard.status}</span>
-                        </div>
-
-                        <p className='card-description'>{orderCard.description}</p>
-
-                        <div className='card-details'>
-                            <div className='card-category-item'>
-                                <img className='card-item-icon' src={orderCard.categoryIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.categoryText}</span>
-                            </div>
-
-                            <div className='card-price-item'>
-                                <img className='card-item-icon' src={orderCard.priceIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.priceText}</span>
-                            </div>
-
-                            <div className='card-deadline-item'>
-                                <img className='card-item-icon' src={orderCard.deadlineIcon} alt="" width="16" />
-                                <span className='card-item-text'>{orderCard.deadlineText}</span>
-                            </div>
-                        </div>
-                        <div className='card-footer'>
-                            <span className='card-item-text'> {orderCard.proposals}</span>
-                            <span> • </span>
-                            <span className='card-item-text'>{orderCard.date}</span>
-
-                            <button className='view-details-btn'>Переглянути</button>
-                        </div>
-
-                    </div>
-                ))}
-            </div>
-        </div>
+        <OrdersGrid
+            orders={orders}
+            emptyText='За вашим запитом завершених замовлень не знайдено.'
+        />
     </div>
 )
 
@@ -508,14 +422,22 @@ const MessagesTab = () => {
     });
 
     const [activeChatId, setActiveChatId] = useState(1);
+    const [chatSearchQuery, setChatSearchQuery] = useState('');
     const [messageText, setMessageText] = useState('');
+    const normalizedChatQuery = chatSearchQuery.trim().toLowerCase();
+    const filteredChats = chats.filter((chat) => matchesSearchQuery([
+        chat.name,
+        chat.preview
+    ], normalizedChatQuery));
 
     // Текущий выбранный чат
-    const activeChat = chats.find(c => c.id === activeChatId);
+    const activeChat = filteredChats.find((chat) => chat.id === activeChatId) || filteredChats[0] || null;
+    const selectedChatId = activeChat?.id || null;
+    const activeMessages = selectedChatId ? chatHistories[selectedChatId] || [] : [];
 
     // Отправка сообщения в текущий активный чат
     const handleSendMessage = () => {
-        if (!messageText.trim()) return;
+        if (!messageText.trim() || !selectedChatId) return;
 
         const newMessage = {
             id: Date.now(),
@@ -523,10 +445,10 @@ const MessagesTab = () => {
             sender: 'me',
         };
 
-        setChatHistories({
-            ...chatHistories,
-            [activeChatId]: [...chatHistories[activeChatId], newMessage]
-        });
+        setChatHistories((prev) => ({
+            ...prev,
+            [selectedChatId]: [...(prev[selectedChatId] || []), newMessage]
+        }));
 
         setMessageText('');
     };
@@ -541,14 +463,20 @@ const MessagesTab = () => {
                 {/* Chats Sidebar */}
                 <aside className="chats-sidebar">
                     <div className='chat-search-wrap'>
-                        <input className='chat-search-input' type='text' placeholder='Пошук в повідомленнях...' />
+                        <input
+                            className='chat-search-input'
+                            type='text'
+                            placeholder='Пошук в повідомленнях...'
+                            value={chatSearchQuery}
+                            onChange={(event) => setChatSearchQuery(event.target.value)}
+                        />
                     </div>
 
-                    {chats.map(chat => (
+                    {filteredChats.length ? filteredChats.map((chat) => (
                         <div
                             key={chat.id}
                             onClick={() => setActiveChatId(chat.id)}
-                            className={`chat-item ${activeChatId === chat.id ? 'active' : ''}`}
+                            className={`chat-item ${selectedChatId === chat.id ? 'active' : ''}`}
                         >
                             <div className='chat-avatar'>
                                 {chat.name.charAt(0)}
@@ -566,50 +494,60 @@ const MessagesTab = () => {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <p className='chat-item-preview'>За вашим запитом чатів не знайдено.</p>
+                    )}
                 </aside>
 
                 {/* Active Chat Window */}
                 <main className='chat-window'>
-                    <header className='chat-header'>
-                        <div className='chat-header-user'>
-                            <div className='chat-avatar'>{activeChat?.name.charAt(0)}</div>
-                            <div>
-                                <h2>{activeChat?.name}</h2>
-                                <p className='chat-header-status'>{activeChat?.isOnline ? 'В мережі' : 'Був(ла) нещодавно'}</p>
-                            </div>
-                        </div>
-                        <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
-                            &#9742;
-                        </button>
-                    </header>
-
-                    <div className='messages-container'>
-                        {chatHistories[activeChatId].map(msg => (
-                            <div key={msg.id} className={`message-row ${msg.sender}`}>
-                                {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat?.name.charAt(0)}</div>}
-                                <div className='message-bubble-wrap'>
-                                    <div className={`message ${msg.sender}`}>
-                                        <span className='message-text'>{msg.text}</span>
+                    {activeChat ? (
+                        <>
+                            <header className='chat-header'>
+                                <div className='chat-header-user'>
+                                    <div className='chat-avatar'>{activeChat.name.charAt(0)}</div>
+                                    <div>
+                                        <h2>{activeChat.name}</h2>
+                                        <p className='chat-header-status'>{activeChat.isOnline ? 'В мережі' : 'Був(ла) нещодавно'}</p>
                                     </div>
-                                    <span className='message-time'>
-                                        {msg.sender === 'me' ? '10:29' : '10:30'}
-                                    </span>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                                <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
+                                    &#9742;
+                                </button>
+                            </header>
 
-                    <footer className='chat-input-area'>
-                        <input className="message-input"
-                            type='text'
-                            value={messageText}
-                            onChange={(e) => setMessageText(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                            placeholder="Напишіть повідомлення..."
-                        />
-                        <button className='send-button' onClick={handleSendMessage}>Надіслати</button>
-                    </footer>
+                            <div className='messages-container'>
+                                {activeMessages.map((msg) => (
+                                    <div key={msg.id} className={`message-row ${msg.sender}`}>
+                                        {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat.name.charAt(0)}</div>}
+                                        <div className='message-bubble-wrap'>
+                                            <div className={`message ${msg.sender}`}>
+                                                <span className='message-text'>{msg.text}</span>
+                                            </div>
+                                            <span className='message-time'>
+                                                {msg.sender === 'me' ? '10:29' : '10:30'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <footer className='chat-input-area'>
+                                <input className="message-input"
+                                    type='text'
+                                    value={messageText}
+                                    onChange={(e) => setMessageText(e.target.value)}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                                    placeholder="Напишіть повідомлення..."
+                                />
+                                <button className='send-button' onClick={handleSendMessage}>Надіслати</button>
+                            </footer>
+                        </>
+                    ) : (
+                        <div className='messages-container'>
+                            <p className='chat-item-preview'>Оберіть чат або змініть пошуковий запит.</p>
+                        </div>
+                    )}
                 </main>
             </div>
         </div>
@@ -919,6 +857,26 @@ const SettingsTab = () => {
 // Основной компонент личного кабинета пользователя
 function UserPage() {
     const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('overview');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    const filteredOrders = orderCard.filter((order) => {
+        const matchesQuery = matchesSearchQuery([
+            order.title,
+            order.description,
+            order.categoryText,
+            order.priceText,
+            order.deadlineText,
+            order.status
+        ], normalizedQuery);
+
+        return matchesQuery;
+    });
+
+    const activeOrders = filteredOrders.filter((order) => order.status !== 'Завершено');
+    const completedOrders = filteredOrders.filter((order) => order.status === 'Завершено');
 
     // Вкладки верхнего меню
     const tabs = [
@@ -933,54 +891,29 @@ function UserPage() {
 
     // Соответствие ключа вкладки и React-компонента контента
     const contentMap = {
-        overview: <OverviewTab onGoToOrders={() => setActiveTab('orders')} />,
-        orders: <OrdersTab />,
-        active: <ActiveTab />,
-        completed: <EndOrderTab />,
+        overview: <OverviewTab onGoToOrders={() => setActiveTab('orders')} orders={filteredOrders} />,
+        orders: <OrdersTab orders={filteredOrders} />,
+        active: <ActiveTab orders={activeOrders} />,
+        completed: <EndOrderTab orders={completedOrders} />,
         messages: <MessagesTab />,
         favorites: <FavoritesTab onGoToMessages={() => setActiveTab('messages')} />,
         settings: <SettingsTab />,
     };
 
     // Данные карточки пользователя в шапке
-    const user = { icon: icons.iconOleg, title: 'Замовник', text: 'Олег П.' };
-
-    // Активная вкладка кабинета
-    const [activeTab, setActiveTab] = useState('overview');
+    const user = { avatar: icons.iconOleg, role: 'Замовник', name: 'Олег П.' };
 
     return (
         <div className="user-page">
-            {/* Header */}
-            <header className='header-user'>
-                <div className='brand'>
-                    <Link to="/" className="main-page-link">
-                        <img src={icons.iconBee} alt="BusyBee" className="brand-bee" />
-                        <span className="brand-text">BusyBee</span>
-                    </Link>
-                </div>
-                <div className='order-search'>
-                    <span className="hero-search-icon">⌕</span>
-                    <input type="text" placeholder="Пошук замовлень..." aria-label="Пошук" />
-                </div>
-                <div className='button'>
-                    <button
-                        type="button"
-                        className='create-order-btn'
-                        onClick={() => navigate('/create-order')}
-                    >
-                        +Створити
-                    </button>
-
-                    <button type='button' className='alert'>
-                        <img src={icons.iconKolokolchik} alt="kolokolchik" />
-                    </button>
-                </div>
-                <div className='user-card'>
-                    <img src={user.icon} alt={user.text} />
-                    <h3>{user.title}</h3>
-                    <p>{user.text}</p>
-                </div>
-            </header>
+            <DashboardHeader
+                searchPlaceholder="Пошук замовлень..."
+                searchValue={searchQuery}
+                onSearchChange={setSearchQuery}
+                actionLabel="Створити"
+                actionPrefix="+"
+                onActionClick={() => navigate('/create-order')}
+                user={user}
+            />
 
             {/* Tabs Navigation and Content */}
             <nav className='user-nav'>
@@ -1011,5 +944,5 @@ function UserPage() {
         </div>
     )
 };
-  
+
 export default UserPage;

@@ -1,15 +1,60 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LoginPage.css';
-import { iconBee } from '../../imgs/icons';
+import { iconBee, iconCheck, iconMoney, iconLightning } from '../../imgs/icons';
+import googleIcon from '../../imgs/Icon.png';
+import facebookIcon from '../../imgs/Icon (1).png';
+
+const FORM_FIELDS = [
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'email',
+    placeholder: 'your@email.com'
+  },
+  {
+    name: 'password',
+    label: 'Пароль',
+    type: 'password',
+    placeholder: '••••••••',
+    link: { to: '/forgot', label: 'Забули пароль?' }
+  }
+];
+
+const SOCIAL_OPTIONS = [
+  { id: 'google', label: 'Google', icon: googleIcon },
+  { id: 'facebook', label: 'Facebook', icon: facebookIcon },
+];
+
+const LOGIN_FEATURES = [
+  {
+    icon: iconCheck,
+    title: 'Перевірені фахівці',
+    text: 'Профілі, рейтинг і відгуки вже зібрані в одному місці.'
+  },
+  {
+    icon: iconMoney,
+    title: 'Прозора співпраця',
+    text: 'Бюджет, етапи і домовленості видно без хаосу в переписках.'
+  },
+  {
+    icon: iconLightning,
+    title: 'Швидкий старт',
+    text: 'Після входу можна одразу перейти до замовлень, чату або кабінету.'
+  },
+];
 
 function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    setForm((currentForm) => ({ ...currentForm, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -32,32 +77,27 @@ function LoginPage() {
           <p className="login-subtitle">Увійдіть до свого акаунту</p>
 
           <form className="login-fields" onSubmit={handleSubmit}>
-            <label className="login-label">
-              Email
-              <input
-                name="email"
-                type="email"
-                placeholder="your@email.com"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-            </label>
+            {FORM_FIELDS.map((field) => (
+              <label key={field.name} className="login-label">
+                {field.link ? (
+                  <span className="login-password-row">
+                    {field.label}
+                    <Link to={field.link.to} className="login-forgot">{field.link.label}</Link>
+                  </span>
+                ) : (
+                  field.label
+                )}
 
-            <label className="login-label">
-              <span className="login-password-row">
-                Пароль
-                <a href="/forgot" className="login-forgot">Забули пароль?</a>
-              </span>
-              <input
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
-            </label>
+                <input
+                  name={field.name}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={form[field.name]}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            ))}
 
             <button type="submit" className="login-submit">Увійти</button>
           </form>
@@ -71,14 +111,12 @@ function LoginPage() {
           </div>
 
           <div className="login-social">
-            <button type="button" className="social-btn">
-              <span className="social-btn-icon google-icon">G</span>
-              Google
-            </button>
-            <button type="button" className="social-btn">
-              <span className="social-btn-icon facebook-icon">f</span>
-              Facebook
-            </button>
+            {SOCIAL_OPTIONS.map((option) => (
+              <button key={option.id} type="button" className="login-social-btn">
+                <img src={option.icon} alt="" className="login-social-btn-icon" />
+                {option.label}
+              </button>
+            ))}
           </div>
 
         </div>
@@ -89,7 +127,19 @@ function LoginPage() {
         <div className="login-promo-wrap">
           <img src={iconBee} alt="BusyBee" className="login-promo-bee" />
           <h2 className="login-promo-title">BusyBee</h2>
-          <p className="login-promo-sub">Знайдіть ідеального фахівця для вашого проекту</p>
+          <p className="login-promo-sub">Поверніться до свого кабінету і продовжуйте роботу без зайвих кроків.</p>
+
+          <ul className="login-promo-features">
+            {LOGIN_FEATURES.map((feature) => (
+              <li key={feature.title} className="login-promo-feature">
+                <img src={feature.icon} alt={feature.title} className="login-promo-feature-icon" />
+                <div>
+                  <p className="login-promo-feature-title">{feature.title}</p>
+                  <p className="login-promo-feature-text">{feature.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

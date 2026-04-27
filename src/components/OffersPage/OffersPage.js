@@ -361,46 +361,113 @@ const PROGRAMMING_SUBCATEGORIES = [
   'DevOps'
 ];
 
+const matchesSearchQuery = (values, normalizedQuery) => {
+  const searchableText = values.join(' ').toLowerCase();
+  return !normalizedQuery || searchableText.includes(normalizedQuery);
+};
+
+const getSubCategories = (category) => {
+  const categoryData = offersData[category] || {};
+
+  if (category === 'Розробка і програмування') {
+    return PROGRAMMING_SUBCATEGORIES;
+  }
+
+  return ['Всі', ...Object.keys(categoryData)];
+};
+
+const getOffersBySubCategory = (category, subCategory) => {
+  const categoryData = offersData[category] || {};
+
+  if (subCategory === 'Всі') {
+    return Object.values(categoryData).flat();
+  }
+
+  return categoryData[subCategory] || [];
+};
+
+const OfferCard = ({ offer }) => {
+  const reviewLabel = offer.freelancer.reviews === 1 ? 'отзыв' : 'отзывов';
+
+  return (
+    <div className="offer-card">
+      <div className="offer-header">
+        <div className="offer-title-section">
+          <h3 className="offer-title">{offer.title}</h3>
+          <div className="offer-meta">
+            <span className="offer-category">{offer.mainCategory}</span>
+            {offer.views ? <span className="offer-status">Premium</span> : null}
+          </div>
+        </div>
+        <div className="offer-budget">
+          <p className="offer-budget-amount">{offer.budget}</p>
+          {offer.views ? <p className="offer-views">{offer.views}</p> : null}
+        </div>
+      </div>
+
+      <p className="offer-description">{offer.description}</p>
+
+      <div className="offer-technologies">
+        {offer.technologies.map((tech) => (
+          <span key={`${offer.id}-${tech}`} className="tech-tag">{tech}</span>
+        ))}
+      </div>
+
+      <div className="offer-footer">
+        <div className="offer-freelancer">
+          <div className="freelancer-avatar">
+            {offer.freelancer.name.charAt(0)}
+          </div>
+          <div className="freelancer-info">
+            <p className="freelancer-name">{offer.freelancer.name}</p>
+            <p className="freelancer-rating">⭐ {offer.freelancer.rating} ({offer.freelancer.reviews} {reviewLabel})</p>
+          </div>
+        </div>
+        <button className="offer-btn-hire">Запропонувати ціну</button>
+      </div>
+    </div>
+  );
+};
+
 function OffersPage() {
   const location = useLocation();
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  const [offers, setOffers] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState('Всі');
   const [mainCategory, setMainCategory] = useState('Розробка і програмування');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const getOffersBySubCategory = (category, subCategory) => {
-    const categoryData = offersData[category] || {};
-
-    if (subCategory === 'Всі') {
-      return Object.values(categoryData).flat();
-    }
-
-    return categoryData[subCategory] || [];
-  };
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const subCategories = getSubCategories(mainCategory);
+  const offers = getOffersBySubCategory(mainCategory, selectedSubCategory);
 
   useEffect(() => {
     const state = location.state;
     const category = state?.selectedCategory || 'Розробка і програмування';
     const subCategory = state?.selectedSubCategory || null;
 
+    const availableSubCategories = getSubCategories(category);
+    const defaultSubCategory = subCategory && availableSubCategories.includes(subCategory)
+      ? subCategory
+      : 'Всі';
+
     setMainCategory(category);
-
-    if (offersData[category]) {
-      const subs = category === 'Розробка і програмування'
-        ? PROGRAMMING_SUBCATEGORIES
-        : ['Всі', ...Object.keys(offersData[category])];
-      setSubCategories(subs);
-
-      const defaultSub = subCategory && subs.includes(subCategory) ? subCategory : 'Всі';
-      setSelectedSubCategory(defaultSub);
-      setOffers(getOffersBySubCategory(category, defaultSub));
-    }
+    setSelectedSubCategory(defaultSubCategory);
   }, [location.state]);
 
   const handleSubCategoryClick = (subCategory) => {
     setSelectedSubCategory(subCategory);
-    setOffers(getOffersBySubCategory(mainCategory, subCategory));
   };
+
+  const filteredOffers = offers.filter((offer) => {
+    const matchesQuery = matchesSearchQuery([
+      offer.title,
+      offer.description,
+      offer.mainCategory,
+      offer.freelancer.name,
+      ...offer.technologies
+    ], normalizedQuery);
+
+    return matchesQuery;
+  });
 
   return (
     <div className="OffersPage">
@@ -417,7 +484,13 @@ function OffersPage() {
               <h1 className="offers-hero-title">{mainCategory}</h1>
               <p className="offers-hero-subtitle">{categoryDescriptions[mainCategory] || '8 доступних завдань для фахівців'}</p>
               <div className="offers-hero-search">
-                <input type="text" placeholder="Пошук за назвою, описом або тегом пошуку..." aria-label="Пошук" />
+                <input
+                  type="text"
+                  placeholder="Пошук за назвою, описом або тегом пошуку..."
+                  aria-label="Пошук"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                />
                 <span className="offers-hero-search-icon">⌕</span>
               </div>
             </div>
@@ -445,7 +518,7 @@ function OffersPage() {
               </button>
             ))}
           </div>
-          <p className="offers-count">Знайдено {offers.length} завдань</p>
+          <p className="offers-count">Знайдено {filteredOffers.length} завдань</p>
         </div>
       </section>
 
@@ -453,44 +526,13 @@ function OffersPage() {
       <section className="offers-list-section">
         <div className="container">
           <div className="offers-list">
-            {offers.map((offer) => (
-              <div key={offer.id} className="offer-card">
-                <div className="offer-header">
-                  <div className="offer-title-section">
-                    <h3 className="offer-title">{offer.title}</h3>
-                    <div className="offer-meta">
-                      <span className="offer-category">{offer.mainCategory}</span>
-                      {offer.views && <span className="offer-status">Premium</span>}
-                    </div>
-                  </div>
-                  <div className="offer-budget">
-                    <p className="offer-budget-amount">{offer.budget}</p>
-                    {offer.views && <p className="offer-views">{offer.views}</p>}
-                  </div>
-                </div>
-
-                <p className="offer-description">{offer.description}</p>
-
-                <div className="offer-technologies">
-                  {offer.technologies.map((tech, idx) => (
-                    <span key={idx} className="tech-tag">{tech}</span>
-                  ))}
-                </div>
-
-                <div className="offer-footer">
-                  <div className="offer-freelancer">
-                    <div className="freelancer-avatar">
-                      {offer.freelancer.name.charAt(0)}
-                    </div>
-                    <div className="freelancer-info">
-                      <p className="freelancer-name">{offer.freelancer.name}</p>
-                      <p className="freelancer-rating">⭐ {offer.freelancer.rating} ({offer.freelancer.reviews} {offer.freelancer.reviews === 1 ? 'отзыв' : 'отзывов'})</p>
-                    </div>
-                  </div>
-                  <button className="offer-btn-hire">Запропонувати ціну</button>
-                </div>
+            {filteredOffers.length ? (
+              filteredOffers.map((offer) => <OfferCard key={offer.id} offer={offer} />)
+            ) : (
+              <div className="offer-card">
+                <p className="offer-description">За вашим запитом завдань не знайдено.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>

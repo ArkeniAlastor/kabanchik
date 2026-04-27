@@ -1,29 +1,7 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { iconBee as logo } from '../../imgs/icons';
+import { useNavigate } from 'react-router-dom';
 import './CreateOrder.css';
-
-function CreateOrderHeader() {
-  const navigate = useNavigate();
-
-  return (
-    <header className="co-header">
-      <div className="co-header-inner">
-        <Link to="/" className="co-header-logo">
-          <img src={logo} alt="BusyBee" className="co-header-logo-img" />
-        </Link>
-        <nav className="co-header-nav">
-          <Link to="/" className="co-header-nav-link">Головна</Link>
-          <Link to="/category" className="co-header-nav-link">Категорії</Link>
-        </nav>
-        <div className="co-header-actions">
-          <button className="co-header-login" onClick={() => navigate('/login')}>Увійти</button>
-          <button className="co-header-register" onClick={() => navigate('/register')}>Реєстрація</button>
-        </div>
-      </div>
-    </header>
-  );
-}
+import Header from '../Header/Header';
 
 const CATEGORIES = [
   { id: 'design', label: 'Дизайн і графіка', icon: '🎨' },
@@ -289,7 +267,7 @@ const CreateOrder = () => {
 
   return (
     <div className="co-page">
-      <CreateOrderHeader />
+      <Header />
 
       <div className="co-hero">
         <h1 className="co-hero-title">Створення замовлення</h1>

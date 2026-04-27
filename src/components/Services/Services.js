@@ -1,195 +1,289 @@
 import './Services.css';
 import { Link } from 'react-router-dom';
+import Header from '../Header/Header';
+import * as icons from '../../imgs/icons';
 
-const SERVICES = [
-  {
-    icon: '🔍',
-    iconBg: '#3b5bdb',
-    title: 'Пошук фахівців',
-    desc: 'Знайдіть ідеального виконавця серед тисяч перевірених фахівців з різних галузей. Фільтруйте за навичками, рейтингом, досвідом та вартістю.',
-    features: ['Розширений пошук та фільтри', 'Перегляд портфоліо та відгуків', 'Порівняння пропозицій', 'Верифіковані профілі'],
-  },
-  {
-    icon: '💼',
-    iconBg: '#f5a623',
-    title: 'Публікація проектів',
-    desc: 'Опублікуйте своє завдання безкоштовно та отримайте десятки пропозицій від кваліфікованих фахівців протягом декількох годин.',
-    features: ['Безкоштовна публікація', 'Швидкі відгуки від фахівців', 'Детальний опис вимог', 'Гнучкі умови співпраці'],
-  },
-  {
-    icon: '🔒',
-    iconBg: '#2ecc71',
-    title: 'Безпечні платежі',
-    desc: 'Система ескроу-рахунків гарантує безпеку транзакцій. Кошти передаються виконавцю лише після успішного завершення роботи.',
-    features: ['Захист коштів на платформі', 'Різні способи оплати', 'Миттєві транзакції', 'Прозора комісія'],
-  },
-  {
-    icon: '⭐',
-    iconBg: '#f5a623',
-    title: 'Система рейтингів',
-    desc: 'Прозора система відгуків та рейтингів допомагає приймати правильні рішення та будувати довірчі відносини.',
-    features: ['Чесні відгуки клієнтів', 'Детальна статистика', 'Підтверджені проекти', 'Рейтинг надійності'],
-  },
-  {
-    icon: '🛡️',
-    iconBg: '#9b59b6',
-    title: 'Захист угод',
-    desc: 'Служба підтримки та арбітраж допомагають вирішувати спірні ситуації швидко та справедливо для обох сторін.',
-    features: ['Медіація конфліктів', 'Юридична підтримка', 'Гарантії повернення', 'Страхування проектів'],
-  },
-  {
-    icon: '📱',
-    iconBg: '#00bcd4',
-    title: 'Мобільний додаток',
-    desc: 'Керуйте проектами на ходу з нашими мобільними додатками для iOS та Android. Завжди будьте на зв\'язку.',
-    features: ['Повний функціонал', 'Push-сповіщення', 'Офлайн-режим', 'Синхронізація даних'],
-  },
-  {
-    icon: '💬',
-    iconBg: '#e91e8c',
-    title: 'Система повідомлень',
-    desc: 'Вбудований чат дозволяє швидко комунікувати з фахівцями, обговорювати деталі проекту та обмінюватись файлами.',
-    features: ['Миттєві повідомлення', 'Відправка файлів', 'Історія переписки', 'Групові чати'],
-  },
-  {
-    icon: '📊',
-    iconBg: '#00bfa5',
-    title: 'Аналітика та звіти',
-    desc: 'Детальна статистика по вашим проектам, витратам та доходам. Експортуйте звіти для бухгалтерії.',
-    features: ['Фінансові звіти', 'Статистика проектів', 'Експорт даних', 'Візуалізація метрик'],
-  },
-  {
-    icon: '🎓',
-    iconBg: '#5c6bc0',
-    title: 'Навчальний центр',
-    desc: 'Безкоштовні курси, вебінари та матеріали для підвищення ваших навичок та ефективної роботи на платформі.',
-    features: ['Відео-уроки', 'Практичні завдання', 'Сертифікати', 'Менторство'],
-  },
-  {
-    icon: '🌐',
-    iconBg: '#e53935',
-    title: 'API для інтеграції',
-    desc: 'Інтегруйте BusyBee з вашими існуючими системами через потужний API. Автоматизуйте процеси та підвищуйте ефективність.',
-    features: ['RESTful API', 'Webhooks', 'Детальна документація', 'Технічна підтримка'],
-  },
-  {
-    icon: '🏆',
-    iconBg: '#f5a623',
-    title: 'Програма лояльності',
-    desc: 'Накопичуйте бонуси за активність на платформі та обмінюйте їх на знижки, преміум-функції та ексклюзивні можливості.',
-    features: ['Бонусні бали', 'VIP-статус', 'Спеціальні пропозиції', 'Реферальна програма'],
-  },
-  {
-    icon: '🆘',
-    iconBg: '#e53935',
-    title: 'Підтримка 24/7',
-    desc: 'Наша команда завжди готова допомогти. Email, телефон, онлайн-чат - оберіть зручний спосіб зв\'язку.',
-    features: ['Цілодобова підтримка', 'Багатомовний сервіс', 'База знань FAQ', 'Персональний менеджер'],
-  },
-]
-
-const WHY_ITEMS = [
-  { emoji: 'UA_FLAG', title: '100% український', desc: 'Створено в Україні для українців' },
-  { emoji: '⚡', title: 'Швидкий старт', desc: 'Перші пропозиції за 1 годину' },
-  { emoji: '💰', title: 'Чесні ціни', desc: 'Прозора комісія без прихованих платежів' },
-  { emoji: '🛡️', title: 'Гарантії', desc: 'Захист кожної угоди та транзакції' },
+const SERVICE_STATS = [
+    { value: '24/7', label: 'підтримка в роботі' },
+    { value: 'Escrow', label: 'захист платежів' },
+    { value: '1 год', label: 'перші відгуки на задачу' },
+    { value: 'FAQ', label: 'прості правила та умови' },
 ];
 
+const SERVICE_CARDS = [
+    {
+        id: 'search',
+        icon: icons.iconLupa,
+        tone: 'blue',
+        title: 'Пошук фахівців',
+        description: 'Каталог, фільтри та профілі допомагають швидко знайти виконавця без хаотичного перегляду десятків сторінок.',
+        points: [
+            'Пошук по навичках і категоріях',
+            'Портфоліо, рейтинг і відгуки в одному місці',
+            'Зрозумілий вибір між кількома кандидатами'
+        ],
+        linkText: 'Перейти в каталог',
+        to: '/catalogue-specs',
+    },
+    {
+        id: 'orders',
+        icon: icons.iconFolder,
+        tone: 'gold',
+        title: 'Публікація замовлень',
+        description: 'Створюйте задачу з описом, бюджетом і термінами, щоб одразу отримувати релевантні пропозиції від фахівців.',
+        points: [
+            'Окремі поля для бюджету та деталей',
+            'Швидке оформлення замовлення без зайвих кроків',
+            'Зрозумілий старт для нових користувачів'
+        ],
+        linkText: 'Створити замовлення',
+        to: '/create-order',
+    },
+    {
+        id: 'payments',
+        icon: icons.iconMoney,
+        tone: 'green',
+        title: 'Безпечні платежі',
+        description: 'Оплата і умови співпраці оформлені так, щоб обидві сторони розуміли процес і менше ризикували.',
+        points: [
+            'Прозорі етапи та домовленості',
+            'Опора на правила сервісу й оферту',
+            'Менше суперечок навколо оплати'
+        ],
+        linkText: 'Переглянути умови',
+        to: '/terms',
+    },
+    {
+        id: 'messages',
+        icon: icons.iconChat,
+        tone: 'rose',
+        title: 'Повідомлення і діалог',
+        description: 'Вбудований чат тримає всю переписку по проєкту в одному місці, без сторонніх месенджерів і втрати контексту.',
+        points: [
+            'Обговорення задачі прямо в кабінеті',
+            'Швидкий перехід між чатами',
+            'Зручний формат для замовника і виконавця'
+        ],
+        linkText: 'Відкрити кабінет',
+        to: '/userpage',
+    },
+    {
+        id: 'specialist-area',
+        icon: icons.iconLightning,
+        tone: 'violet',
+        title: 'Кабінет фахівця',
+        description: 'Фахівець бачить свої проєкти, портфоліо, збережені задачі та налаштування профілю в одному робочому просторі.',
+        points: [
+            'Окремий розділ для поточних задач',
+            'Збережені проєкти та портфоліо поруч',
+            'Простий пошук по своїх робочих даних'
+        ],
+        linkText: 'Перейти в кабінет',
+        to: '/SpecPage',
+    },
+    {
+        id: 'trust',
+        icon: icons.iconStar,
+        tone: 'dark',
+        title: 'Рейтинг і довіра',
+        description: 'Відгуки, завершені задачі та публічна інформація про виконавця допомагають краще оцінити, з ким ви працюєте.',
+        points: [
+            'Реальні оцінки після співпраці',
+            'Портфоліо як частина профілю',
+            'Більше прозорості при виборі фахівця'
+        ],
+        linkText: 'Подивитися приклади',
+        to: '/offers',
+    },
+];
 
-const ServicesPage = () => {
-  return (
-    <div className="sp-page">
-      
-      <header className='sp-header'>
-        <div className="sp-header-inner">
-          <a href='/'className='sp-brand'>
-            <span className='sp-brand-icon'>🐝</span>
-            <span className='sp-brand-text'>BusyBee</span>
-          </a>
-          <nav className="sp-nav">
-          <Link to="/" className="sp-nav-link">Головна</Link>
-          <Link to="/categories" className="sp-nav-link">Категорії</Link>
-          <a href="/services" className="sp-nav-link sp-nav-link--active">Сервіси</a>
-        </nav>
+const TRUST_ITEMS = [
+    {
+        id: 'speed',
+        icon: icons.iconLightning,
+        title: 'Швидкий старт',
+        description: 'Не потрібно довго розбиратись, що куди натискати. Основні сценарії вже розкладені по окремих сторінках.',
+    },
+    {
+        id: 'clarity',
+        icon: icons.iconMoney,
+        title: 'Прозорі умови',
+        description: 'Бюджет, терміни, етапи й роль кожної сторони видно одразу, без зайвих уточнень у процесі.',
+    },
+    {
+        id: 'protection',
+        icon: icons.iconShield,
+        title: 'Захист угоди',
+        description: 'Сервіс побудований так, щоб зменшити ризики і для замовника, і для фахівця на кожному етапі.',
+    },
+    {
+        id: 'support',
+        icon: icons.iconCheck,
+        title: 'Підтримка процесу',
+        description: 'Від першого замовлення до завершення задачі платформа веде користувача через зрозумілі дії.',
+    },
+];
 
-         <div className="sp-header-actions">
-          <Link to="/login" className="btn-login">Увійти</Link>
-          <Link to="/register" className="btn-register">Реєстрація</Link>
-        </div>
-      </div>
-    </header>
+const START_OPTIONS = [
+    {
+        id: 'customer',
+        icon: icons.iconFolder,
+        title: 'Я замовник',
+        description: 'Якщо потрібно знайти виконавця і швидко оформити задачу, починайте зі створення замовлення.',
+        action: 'Створити замовлення',
+        to: '/create-order',
+    },
+    {
+        id: 'specialist',
+        icon: icons.iconBee,
+        title: 'Я фахівець',
+        description: 'Якщо ви шукаєте роботу або хочете оформити свій профіль, перейдіть у кабінет фахівця.',
+        action: 'Відкрити кабінет',
+        to: '/SpecPage',
+    },
+    {
+        id: 'rules',
+        icon: icons.iconBook,
+        title: 'Потрібні правила',
+        description: 'Коли хочеться спочатку зрозуміти, як працюють умови, оплата і безпека, відкрийте оферту.',
+        action: 'Переглянути умови',
+        to: '/terms',
+    },
+];
 
-    <section className='sp-hero'>
-      <h1 className='sp-hero-title'>СЕРВІСИ</h1>
-      <p className='sp-hero-suntitle'>Все необхідне для успішної співпраці замовників та фахівців в одній екосистемі</p>
-    </section>
-
-      <section className="sp-services">
-        <div className="sp-services-inner">
-          <div className="sp-grid">
-            {SERVICES.map((s, i) => (
-              <div key={i} className="sp-card">
-                <div className="sp-card-icon" style={{ background: s.iconBg }}>
-                  <span>{s.icon}</span>
-                </div>
-                <h3 className="sp-card-title">{s.title}</h3>
-                <p className="sp-card-desc">{s.desc}</p>
-                <ul className="sp-card-features">
-                  {s.features.map((f, j) => (
-                    <li key={j} className="sp-card-feature">
-                      <span className="sp-check">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#" className="sp-card-link">Дізнатися більше &rarr;</a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="sp-why">
-        <h2 className="sp-why-title">Чому обирають BusyBee?</h2>
-        <p className="sp-why-subtitle">
-          Ми створили платформу, яка поєднує найкращі практики світового фрілансу з унікальними потребами українського ринку
-        </p>
-        <div className="sp-why-grid">
-          {WHY_ITEMS.map((item, i) => (
-            <div key={i} className="sp-why-item">
-              <div className="sp-why-emoji">
-                {item.emoji === 'UA_FLAG' ? (
-                  <img
-                    src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f1fa-1f1e6.svg"
-                    alt="🇺🇦"
-                    style={{width:'2.5rem',height:'2.5rem',display:'block',margin:'0 auto'}}
-                  />
-                ) : item.emoji}
-              </div>
-              <div className="sp-why-item-title">{item.title}</div>
-              <div className="sp-why-item-desc">{item.desc}</div>
+function ServiceCard({ service }) {
+    return (
+        <article className="service-card">
+            <div className={`service-card-icon service-card-icon--${service.tone}`}>
+                <img src={service.icon} alt="" />
             </div>
-          ))}
-        </div>
-      </section>
+            <h3>{service.title}</h3>
+            <p className="service-card-description">{service.description}</p>
+            <ul className="service-card-points">
+                {service.points.map((point) => (
+                    <li key={point}>
+                        <span className="service-card-check" aria-hidden="true">✓</span>
+                        <span>{point}</span>
+                    </li>
+                ))}
+            </ul>
+            <Link to={service.to} className="service-card-link">{service.linkText}</Link>
+        </article>
+    );
+}
 
-      <section className="sp-cta">
-        <h2 className="sp-cta-title">Готові почати?</h2>
-        <p className="sp-cta-subtitle">
-          Приєднуйтесь до тисяч українців, які вже знайшли свій успіх на BusyBee
-        </p>
-        <div className="sp-cta-actions">
-          <button className="sp-cta-btn sp-cta-btn--white">Почати працювати</button>
-          <button className="sp-cta-btn sp-cta-btn--outline">Дізнатися більше</button>
-        </div>
-      </section>
+function ServicesPage() {
+    return (
+        <>
+            <Header />
+            <div className="ServicesPage">
+                <section className="page-header">
+                    <div className="services-container">
+                        <div className="page-header-content">
+                            <div className="page-title-row">
+                                <img src={icons.iconBee} alt="" className="page-title-icon" />
+                                <span className="page-eyebrow">Сервіси платформи</span>
+                            </div>
+                            <h1>Все для роботи без хаосу і зайвих кроків</h1>
+                            <p className="subtitle">BusyBee об'єднує пошук фахівців, замовлення, оплату, чат і робочі кабінети в одному зрозумілому процесі.</p>
 
-      <footer className="sp-footer">
-        <p>Маленька праця для великих людей!</p>
-      </footer>
- 
-    </div>
-  );
-};
- 
+                            <div className="service-stats">
+                                {SERVICE_STATS.map((stat) => (
+                                    <div key={stat.label} className="service-stat">
+                                        <strong>{stat.value}</strong>
+                                        <span>{stat.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="hero-actions">
+                                <Link to="/create-order" className="hero-btn hero-btn--primary">Створити замовлення</Link>
+                                <Link to="/catalogue-specs" className="hero-btn hero-btn--secondary">Знайти фахівця</Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="services-section">
+                    <div className="services-container">
+                        <div className="section-intro">
+                            <h2>Основні можливості</h2>
+                            <p>Кожен сервіс відповідає за конкретну частину роботи: пошук, оформлення задачі, безпеку, комунікацію та контроль процесу.</p>
+                        </div>
+
+                        <div className="services-grid">
+                            {SERVICE_CARDS.map((service) => (
+                                <ServiceCard key={service.id} service={service} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="trust-section">
+                    <div className="services-container">
+                        <div className="section-intro">
+                            <h2>Що це дає в реальній роботі</h2>
+                            <p>Не просто набір функцій, а речі, які реально спрощують старт, спілкування й доведення задачі до результату.</p>
+                        </div>
+
+                        <div className="trust-grid">
+                            {TRUST_ITEMS.map((item) => (
+                                <article key={item.id} className="trust-card">
+                                    <div className="trust-card-icon">
+                                        <img src={item.icon} alt="" />
+                                    </div>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.description}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="start-section">
+                    <div className="services-container">
+                        <div className="section-intro">
+                            <h2>З чого почати</h2>
+                            <p>Оберіть сценарій, який ближчий вам зараз: знайти виконавця, знайти роботу або спочатку прочитати правила.</p>
+                        </div>
+
+                        <div className="start-grid">
+                            {START_OPTIONS.map((item) => (
+                                <article key={item.id} className="start-card">
+                                    <div className="start-card-icon">
+                                        <img src={item.icon} alt="" />
+                                    </div>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.description}</p>
+                                    <Link to={item.to} className="start-card-link">{item.action}</Link>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section className="cta-section">
+                    <div className="services-container">
+                        <div className="cta-panel">
+                            <div className="cta-copy">
+                                <h2>Сервіси вже є. Далі важливий тільки ваш сценарій.</h2>
+                                <p>Можете одразу створити замовлення, переглянути фахівців або перейти в свій кабінет і працювати далі без зайвих переходів.</p>
+                            </div>
+
+                            <div className="cta-actions">
+                                <Link to="/create-order" className="cta-btn cta-btn--primary">Створити задачу</Link>
+                                <Link to="/offers" className="cta-btn cta-btn--secondary">Переглянути проєкти</Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div className="banner-strip">
+                    Маленька праця для великих людей!
+                </div>
+            </div>
+        </>
+    );
+}
+
 export default ServicesPage;

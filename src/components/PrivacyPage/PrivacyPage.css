@@ -1,35 +1,35 @@
-.terms-page {
+.privacy-page {
   min-height: 100vh;
   background: #f6f1eb;
   color: #3f4558;
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
-.terms-page,
-.terms-page *,
-.terms-page *::before,
-.terms-page *::after {
+.privacy-page,
+.privacy-page *,
+.privacy-page *::before,
+.privacy-page *::after {
   box-sizing: border-box;
 }
 
-.terms-container {
+.privacy-container {
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.terms-hero {
+.privacy-hero {
   background: linear-gradient(90deg, #5067ad 0%, #8e836f 51%, #f3bf29 100%);
   color: #ffffff;
   padding: 38px 0 42px;
 }
 
-.terms-hero-inner {
+.privacy-hero-inner {
   max-width: 760px;
 }
 
-.terms-hero h1 {
+.privacy-hero h1 {
   margin: 0 0 12px;
   color: #ffffff;
   font-size: 2.6rem;
@@ -38,17 +38,17 @@
   letter-spacing: -0.03em;
 }
 
-.terms-hero p {
+.privacy-hero p {
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.8rem;
 }
 
-.terms-main {
+.privacy-main {
   padding: 22px 0 56px;
 }
 
-.terms-card {
+.privacy-card {
   width: 100%;
   max-width: 760px;
   margin: 0 auto;
@@ -59,12 +59,12 @@
   box-shadow: 0 8px 22px rgba(42, 50, 83, 0.04);
 }
 
-.terms-section+.terms-section {
+.privacy-section + .privacy-section {
   margin-top: 22px;
 }
 
-.terms-section h2,
-.terms-contact h2 {
+.privacy-section h2,
+.privacy-contact h2 {
   margin: 0 0 12px;
   color: #1f2c58;
   font-size: 1.2rem;
@@ -73,48 +73,52 @@
   letter-spacing: -0.02em;
 }
 
-.terms-section p,
-.terms-contact p,
-.terms-list li {
+.privacy-section p,
+.privacy-contact p,
+.privacy-list li {
   margin: 0;
   color: #646b81;
   font-size: 0.8rem;
   line-height: 1.62;
 }
 
-.terms-section p+p,
-.terms-contact p+p {
+.privacy-section p + p,
+.privacy-contact p + p {
   margin-top: 8px;
 }
 
-.terms-list {
+.privacy-group + .privacy-group {
+  margin-top: 12px;
+}
+
+.privacy-list {
   list-style: none;
   margin: 10px 0 0;
   padding: 0 0 0 20px;
 }
 
-.terms-list li+li {
+.privacy-list li + li {
   margin-top: 3px;
 }
 
-.terms-contact {
+.privacy-contact {
   margin-top: 26px;
   padding-top: 18px;
   border-top: 1px solid #ece3d8;
 }
 
-.terms-contact a {
+.privacy-contact a {
   color: #566fcb;
   text-decoration: none;
 }
 
-.terms-banner {
+.privacy-banner {
   background: #4d61a4;
   padding: 16px;
   text-align: center;
 }
 
-.terms-banner p {
+.privacy-banner p {
   margin: 0;
   color: #ffffff;
   font-size: 0.8rem;

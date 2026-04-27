@@ -1,6 +1,5 @@
 import './TermsPage.css';
-import { Link } from 'react-router-dom';
-import { iconBee } from '../../imgs/icons';
+import Header from '../Header/Header';
 
 const termsSections = [
   {
@@ -109,24 +108,7 @@ const termsSections = [
 function TermsPage() {
   return (
     <div className="terms-page">
-      <header className="terms-topbar">
-        <div className="terms-topbar-inner">
-          <Link to="/" className="terms-brand">
-            <img src={iconBee} alt="BusyBee" className="terms-brand-icon" />
-            <span>BusyBee</span>
-          </Link>
-
-          <nav className="terms-nav">
-            <Link to="/">Головна</Link>
-            <Link to="/category">Категорії</Link>
-          </nav>
-
-          <div className="terms-actions">
-            <Link to="/login" className="terms-login">Увійти</Link>
-            <Link to="/register" className="terms-register">Реєстрація</Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <section className="terms-hero">
         <div className="terms-container terms-hero-inner">

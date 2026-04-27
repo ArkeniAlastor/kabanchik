@@ -1,5 +1,5 @@
 import './CategoryPage.css';
-import { useMemo, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as icons from '../../imgs/icons';
@@ -92,13 +92,19 @@ const ALL_CATEGORIES = 'Всі категорії';
 
 function CategoryPage() {
   const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORIES);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const filteredCategories = useMemo(() => {
-    return selectedCategory === ALL_CATEGORIES
-      ? categories
-      : categories.filter((category) => category.group === selectedCategory);
-  }, [selectedCategory]);
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  const filteredCategories = categories.filter((category) => {
+    const searchableText = [category.title, category.group].join(' ').toLowerCase();
+
+    const matchesGroup = selectedCategory === ALL_CATEGORIES || category.group === selectedCategory;
+    const matchesQuery = !normalizedQuery || searchableText.includes(normalizedQuery);
+
+    return matchesGroup && matchesQuery;
+  });
 
   const handleCategoryClick = useCallback((category) => {
     setSelectedCategory(category);
@@ -126,6 +132,8 @@ function CategoryPage() {
                   type="text"
                   placeholder="Пошук категорії..."
                   aria-label="Пошук категорії"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
                 />
                 <span className="hero-search-icon">⌕</span>
               </div>

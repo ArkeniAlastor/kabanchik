@@ -13,12 +13,14 @@ import SpecialistsDirectory from './components/SpecialistsDirectory/SpecialistsD
 import SpecPage from './components/SpecPage/SpecPage';
 import ServicesPage from './components/Services/Services';
 import TermsPage from './components/TermsPage/TermsPage';
+import PrivacyPage from './components/PrivacyPage/PrivacyPage';
+import CustomerHelpPage from './components/CustomerHelpPage/CustomerHelpPage';
 
 
 function AppContent() {
   // вот тут юзаеться локатион, что бы показать системе, куда футер не ставить
   const location = useLocation();
-  const noFooterRoutes = ['/login', '/register', '/forgot', '/terms', '/services'];
+  const noFooterRoutes = ['/login', '/register', '/forgot', '/terms', '/privacy', '/customer-help'];
   const shouldShowFooter = !noFooterRoutes.includes(location.pathname);
   //чут чут перелопаченный контент
   return (
@@ -37,6 +39,8 @@ function AppContent() {
           <Route path='/SpecPage' element={<SpecPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/customer-help" element={<CustomerHelpPage />} />
         </Routes>
       </main>
 

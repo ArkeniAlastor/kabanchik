@@ -1,0 +1,410 @@
+.customer-help-page {
+    --chp-text: #1f2845;
+    --chp-muted: #737c94;
+    --chp-muted-soft: #68728e;
+    --chp-muted-light: #7d8499;
+    --chp-surface: #fff;
+    --chp-surface-soft: #f6f1eb;
+    --chp-surface-warm: #f8f3ec;
+    --chp-border: #e5ddd0;
+    --chp-border-soft: #e7dfd2;
+    --chp-blue: #4f67ad;
+    --chp-blue-dark: #40589f;
+    --chp-blue-soft: #f3f5fb;
+    --chp-gold-soft: #fcf6e8;
+    --chp-green-soft: #eef8f5;
+    --chp-banner: #4d61a4;
+    --chp-success: #49b36a;
+    --chp-danger: #e63c35;
+    --chp-gradient: linear-gradient(90deg, #4f67ad 0%, #8b8374 50%, #f5c335 100%);
+    --chp-hero-text: rgba(255, 255, 255, 0.9);
+    --chp-hero-text-soft: rgba(255, 255, 255, 0.88);
+    min-height: 100vh;
+    background: var(--chp-surface-soft);
+    color: var(--chp-text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.customer-help-page,
+.customer-help-page *,
+.customer-help-page *::before,
+.customer-help-page *::after {
+    box-sizing: border-box;
+}
+
+.customer-help-container {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Hero */
+.customer-help-hero,
+.customer-help-cta {
+    background: var(--chp-gradient);
+    color: #fff;
+}
+
+.customer-help-hero {
+    padding: 40px 0 36px;
+}
+
+.customer-help-hero-inner,
+.customer-help-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.customer-help-hero-inner {
+    max-width: 760px;
+}
+
+.customer-help-hero-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 16px;
+    object-fit: contain;
+}
+
+.customer-help-hero h1 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: 2.4rem;
+    line-height: 1.14;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.customer-help-hero p {
+    max-width: 620px;
+    margin: 0;
+    color: var(--chp-hero-text);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Main */
+.customer-help-main {
+    padding: 18px 0 56px;
+}
+
+.customer-help-section + .customer-help-section {
+    margin-top: 52px;
+}
+
+.customer-help-section-title {
+    margin: 0 0 12px;
+    color: var(--chp-text);
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 800;
+    text-align: center;
+}
+
+.customer-help-section-subtitle {
+    margin: 0 0 28px;
+    color: var(--chp-muted-light);
+    font-size: 0.98rem;
+    text-align: center;
+}
+
+/* Contact */
+.customer-help-contact-grid,
+.customer-help-tips-grid,
+.customer-help-mistakes-grid {
+    display: grid;
+    gap: 14px;
+}
+
+.customer-help-contact-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-bottom: 42px;
+}
+
+.customer-help-contact-card,
+.customer-help-tip-card,
+.customer-help-faq-item {
+    background: var(--chp-surface);
+}
+
+.customer-help-contact-card,
+.customer-help-tip-card,
+.customer-help-mistake-card,
+.customer-help-faq-item {
+    border: 1px solid var(--chp-border);
+}
+
+.customer-help-contact-card,
+.customer-help-tip-card,
+.customer-help-mistake-card {
+    border-radius: 16px;
+}
+
+.customer-help-contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 118px;
+    padding: 18px;
+    border-color: var(--chp-border-soft);
+    text-align: center;
+    text-decoration: none;
+}
+
+.customer-help-contact-card:nth-child(1) {
+    background: var(--chp-blue-soft);
+}
+
+.customer-help-contact-card:nth-child(2) {
+    background: var(--chp-gold-soft);
+}
+
+.customer-help-contact-card:nth-child(3) {
+    background: var(--chp-green-soft);
+}
+
+.customer-help-contact-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.customer-help-contact-card h2 {
+    margin: 0 0 6px;
+    color: var(--chp-text);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.customer-help-contact-card p {
+    margin: 0;
+    color: var(--chp-muted-soft);
+    font-size: 0.82rem;
+}
+
+/* Tips */
+.customer-help-tips-grid,
+.customer-help-mistakes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.customer-help-tip-card {
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(42, 50, 83, 0.04);
+}
+
+.customer-help-tip-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.customer-help-tip-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--chp-blue);
+    flex-shrink: 0;
+}
+
+.customer-help-tip-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.customer-help-tip-tag {
+    display: inline-block;
+    margin-bottom: 4px;
+    color: var(--chp-muted-light);
+    font-size: 0.74rem;
+}
+
+.customer-help-tip-card h3,
+.customer-help-mistake-card h3 {
+    margin: 0;
+    color: var(--chp-text);
+    font-size: 1.38rem;
+    line-height: 1.24;
+    font-weight: 800;
+}
+
+.customer-help-tip-text,
+.customer-help-mistake-card p,
+.customer-help-faq-answer {
+    margin: 0;
+    color: var(--chp-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
+}
+
+.customer-help-list {
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.customer-help-list li {
+    position: relative;
+    margin: 0;
+    padding-left: 18px;
+    color: var(--chp-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.customer-help-list li + li {
+    margin-top: 6px;
+}
+
+.customer-help-list--ok li::before {
+    content: '✓';
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--chp-success);
+    font-weight: 700;
+}
+
+/* Mistakes */
+.customer-help-section--mistakes {
+    padding-top: 6px;
+}
+
+.customer-help-mistake-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px;
+    background: var(--chp-surface-warm);
+}
+
+.customer-help-mistake-mark {
+    color: var(--chp-danger);
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* FAQ */
+.customer-help-faq-list {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.customer-help-faq-item + .customer-help-faq-item {
+    margin-top: 12px;
+}
+
+.customer-help-faq-item {
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.customer-help-faq-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: none;
+    padding: 18px 20px;
+    background: transparent;
+    color: var(--chp-text);
+    font-size: 0.98rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.customer-help-faq-arrow {
+    color: var(--chp-blue);
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.customer-help-faq-item.is-open .customer-help-faq-arrow {
+    transform: rotate(180deg);
+}
+
+.customer-help-faq-answer {
+    padding: 0 20px 18px;
+}
+
+/* CTA */
+.customer-help-cta {
+    padding: 48px 0 42px;
+}
+
+.customer-help-cta h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.customer-help-cta p {
+    margin: 0 0 24px;
+    color: var(--chp-hero-text-soft);
+    font-size: 0.98rem;
+}
+
+.customer-help-cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.customer-help-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 14px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.customer-help-cta-btn--primary {
+    background: var(--chp-surface);
+    color: var(--chp-blue-dark);
+}
+
+.customer-help-cta-btn--secondary {
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    color: #fff;
+}
+
+/* Banner */
+.customer-help-banner {
+    padding: 16px;
+    background: var(--chp-banner);
+    text-align: center;
+}
+
+.customer-help-banner p {
+    margin: 0;
+    color: #fff;
+    font-size: 0.82rem;
+}
+
+@media (max-width: 900px) {
+    .customer-help-contact-grid,
+    .customer-help-tips-grid,
+    .customer-help-mistakes-grid {
+        grid-template-columns: 1fr;
+    }
+}

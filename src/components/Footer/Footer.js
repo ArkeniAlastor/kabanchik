@@ -49,7 +49,7 @@ function Footer() {
             <ul className="footer-links">
               <li><a href="/">Питання та відповіді</a></li>
               <li><a href="/">Публічна оферта</a></li>
-              <li><a href="/">Правила конфіденційності</a></li>
+              <li><Link to="/privacy">Політика конфіденційності</Link></li>
               <li><a href="/">Служба підтримки</a></li>
             </ul>
           </div>
