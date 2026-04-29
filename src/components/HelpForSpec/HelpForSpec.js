@@ -316,6 +316,9 @@ function HelpForSpec() {
                     ))}
                 </div>
             </section>
+            <div className="banner-strip">
+                Маленька праця для великих людей!
+            </div>
         </div >
     );
 }
