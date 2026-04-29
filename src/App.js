@@ -15,6 +15,7 @@ import ServicesPage from './components/Services/Services';
 import TermsPage from './components/TermsPage/TermsPage';
 import PrivacyPage from './components/PrivacyPage/PrivacyPage';
 import CustomerHelpPage from './components/CustomerHelpPage/CustomerHelpPage';
+import HelpPage from './components/HelpPage/HelpPage';
 
 
 function AppContent() {
@@ -41,6 +42,7 @@ function AppContent() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/customer-help" element={<CustomerHelpPage />} />
+          <Route path="/help" element={<HelpPage />} />
         </Routes>
       </main>
 

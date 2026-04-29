@@ -68,6 +68,7 @@ export { default as iconPisat } from './📝.png';
 export { default as iconMKultra } from './MAKNAGGETS.png';
 export {default as iconRedact} from './🛠️.png'
 export {default as iconMusorka} from './🗑️.png'
+export {default as iconSos} from './🆘.png'
 export {default as iconPart1} from './Image (Мобільний банкінг додаток).png'
 export {default as iconPart2} from './Image (E-commerce платформа).png'
 export {default as iconPart3} from './Image (Брендинг для кав\'ярні).png'
