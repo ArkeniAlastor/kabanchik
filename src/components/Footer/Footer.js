@@ -37,10 +37,10 @@ function Footer() {
           <div className="footer-col">
             <h4 className="footer-col-title">Як це працює</h4>
             <ul className="footer-links">
-              <li><a href="/">Як замовити послугу</a></li>
-              <li><a href="/">Робота в Україні</a></li>
-              <li><a href="/">Переваги для компаній</a></li>
-              <li><a href="/">Гарний бізнес</a></li>
+              <li><a href="/HowWorkPage">Як замовити послугу</a></li>
+              <li><a href="/HowWorkPage">Робота в Україні</a></li>
+              <li><a href="/HowWorkPage">Переваги для компаній</a></li>
+              <li><a href="/HowWorkPage">Гарний бізнес</a></li>
             </ul>
           </div>
 

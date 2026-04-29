@@ -15,6 +15,8 @@ import ServicesPage from './components/Services/Services';
 import TermsPage from './components/TermsPage/TermsPage';
 import PrivacyPage from './components/PrivacyPage/PrivacyPage';
 import CustomerHelpPage from './components/CustomerHelpPage/CustomerHelpPage';
+import HowWorkPage from './components/HowWorkPage/HowWorkPage';
+import HelpForSpec from './components/HelpForSpec/HelpForSpec'
 
 
 function AppContent() {
@@ -41,6 +43,8 @@ function AppContent() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/customer-help" element={<CustomerHelpPage />} />
+          <Route path="/HowWorkPage" element={<HowWorkPage />} />
+          <Route path='/HelpForSpec' element={<HelpForSpec />} />
         </Routes>
       </main>
 
