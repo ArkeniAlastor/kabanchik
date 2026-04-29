@@ -47,7 +47,7 @@ function Footer() {
           <div className="footer-col">
             <h4 className="footer-col-title">Допомога</h4>
             <ul className="footer-links">
-              <li><a href="/">Питання та відповіді</a></li>
+              <li><Link to="/help">Центр допомоги</Link></li>
               <li><a href="/">Публічна оферта</a></li>
               <li><Link to="/privacy">Політика конфіденційності</Link></li>
               <li><a href="/">Служба підтримки</a></li>
