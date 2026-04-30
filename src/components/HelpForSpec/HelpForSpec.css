@@ -1,0 +1,424 @@
+.HelpForSpec {
+	--hfs-text: #1f2845;
+	--hfs-muted: #767e92;
+	--hfs-muted-soft: #8c93a7;
+	--hfs-surface: #ffffff;
+	--hfs-surface-soft: #f6f1eb;
+	--hfs-surface-warm: #f5efe7;
+	--hfs-border: #e8dfd2;
+	--hfs-blue: #4d62a6;
+	--hfs-blue-dark: #40589f;
+	--hfs-gold: #f4bf2a;
+	--hfs-gold-dark: #d9a61f;
+	--hfs-green: #49b36a;
+	--hfs-red: #ef3a35;
+	--hfs-gradient: linear-gradient(95deg, #4d62a6 0%, #6b6a80 44%, #e0ac1d 100%);
+	min-height: 100vh;
+	background: var(--hfs-surface-soft);
+	color: var(--hfs-text);
+	font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.HelpForSpec,
+.HelpForSpec *,
+.HelpForSpec *::before,
+.HelpForSpec *::after {
+	box-sizing: border-box;
+}
+
+.HelpForSpec .help-spec-container {
+	width: 100%;
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+/* Hero */
+.HelpForSpec .help-spec-hero,
+.HelpForSpec .help-spec-cta {
+	background: var(--hfs-gradient);
+}
+
+.HelpForSpec .help-spec-hero {
+	padding: 46px 0 40px;
+	color: #fff;
+}
+
+.HelpForSpec .help-spec-hero-inner,
+.HelpForSpec .help-spec-cta-inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.HelpForSpec .help-spec-hero-image {
+	width: 86px;
+	height: 86px;
+	margin-bottom: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.HelpForSpec .help-spec-hero-image img {
+	width: 64px;
+	height: 64px;
+	object-fit: contain;
+}
+
+.HelpForSpec .help-spec-hero-title {
+	margin: 0 0 12px;
+	color: #fff;
+	font-size: 3rem;
+	line-height: 1.12;
+	font-weight: 800;
+}
+
+.HelpForSpec .help-spec-hero-subtitle {
+	max-width: 640px;
+	margin: 0;
+	color: rgba(255, 255, 255, 0.88);
+	font-size: 1.06rem;
+	line-height: 1.55;
+}
+
+/* Main */
+.HelpForSpec .help-spec-main {
+	padding: 16px 0 54px;
+}
+
+.HelpForSpec .help-spec-section + .help-spec-section {
+	margin-top: 56px;
+}
+
+.HelpForSpec .help-spec-section-title {
+	margin: 0 0 12px;
+	color: var(--hfs-text);
+	font-size: 2rem;
+	line-height: 1.2;
+	font-weight: 800;
+	text-align: center;
+}
+
+.HelpForSpec .help-spec-section-subtitle {
+	margin: 0 0 28px;
+	color: var(--hfs-muted-soft);
+	font-size: 0.98rem;
+	text-align: center;
+}
+
+/* Contact */
+.HelpForSpec .help-spec-contact-grid,
+.HelpForSpec .help-spec-tip-grid,
+.HelpForSpec .help-spec-practice-grid,
+.HelpForSpec .help-spec-mistake-grid {
+	display: grid;
+	gap: 14px;
+}
+
+.HelpForSpec .help-spec-contact-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-bottom: 42px;
+}
+
+.HelpForSpec .help-spec-contact-card,
+.HelpForSpec .help-spec-tip-card,
+.HelpForSpec .help-spec-practice-card,
+.HelpForSpec .help-spec-mistake-card,
+.HelpForSpec .help-spec-faq-item {
+	border: 1px solid var(--hfs-border);
+	border-radius: 16px;
+	background: var(--hfs-surface);
+}
+
+.HelpForSpec .help-spec-contact-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 118px;
+	padding: 18px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.HelpForSpec .help-spec-contact-card:nth-child(1) {
+	background: #fcf7ec;
+}
+
+.HelpForSpec .help-spec-contact-card:nth-child(2) {
+	background: #f3f5fb;
+}
+
+.HelpForSpec .help-spec-contact-card:nth-child(3) {
+	background: #eef8f5;
+}
+
+.HelpForSpec .help-spec-contact-icon {
+	width: 24px;
+	height: 24px;
+	margin-bottom: 10px;
+	object-fit: contain;
+}
+
+.HelpForSpec .help-spec-contact-card h2 {
+	margin: 0 0 6px;
+	color: var(--hfs-text);
+	font-size: 1rem;
+	font-weight: 800;
+}
+
+.HelpForSpec .help-spec-contact-card p {
+	margin: 0;
+	color: var(--hfs-muted);
+	font-size: 0.82rem;
+}
+
+/* Tips */
+.HelpForSpec .help-spec-tip-grid,
+.HelpForSpec .help-spec-practice-grid,
+.HelpForSpec .help-spec-mistake-grid {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.HelpForSpec .help-spec-tip-card {
+	padding: 18px;
+	box-shadow: 0 10px 26px rgba(42, 50, 83, 0.06);
+}
+
+.HelpForSpec .help-spec-tip-head {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.HelpForSpec .help-spec-tip-icon-wrap {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: var(--hfs-gold);
+	flex-shrink: 0;
+}
+
+.HelpForSpec .help-spec-tip-icon {
+	width: 22px;
+	height: 22px;
+	object-fit: contain;
+}
+
+.HelpForSpec .help-spec-tip-tag {
+	display: inline-block;
+	margin-bottom: 4px;
+	color: var(--hfs-gold-dark);
+	font-size: 0.74rem;
+	font-weight: 700;
+}
+
+.HelpForSpec .help-spec-tip-card h3,
+.HelpForSpec .help-spec-practice-card h3,
+.HelpForSpec .help-spec-mistake-card h3 {
+	margin: 0;
+	color: var(--hfs-text);
+	line-height: 1.28;
+	font-weight: 800;
+}
+
+.HelpForSpec .help-spec-tip-card h3,
+.HelpForSpec .help-spec-mistake-card h3 {
+	font-size: 1.04rem;
+}
+
+.HelpForSpec .help-spec-practice-card h3 {
+	font-size: 1rem;
+}
+
+.HelpForSpec .help-spec-tip-text,
+.HelpForSpec .help-spec-practice-card p,
+.HelpForSpec .help-spec-mistake-card p,
+.HelpForSpec .help-spec-faq-answer {
+	margin: 0;
+	color: var(--hfs-muted);
+	font-size: 0.84rem;
+	line-height: 1.65;
+}
+
+.HelpForSpec .help-spec-tip-text {
+	margin-bottom: 14px;
+}
+
+.HelpForSpec .help-spec-list {
+	display: grid;
+	gap: 7px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.HelpForSpec .help-spec-list li {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	min-height: 28px;
+	padding: 0 2px;
+	color: var(--hfs-muted);
+	font-size: 0.78rem;
+	line-height: 1.45;
+}
+
+.HelpForSpec .help-spec-list-icon {
+	width: 12px;
+	height: 12px;
+	margin-top: 3px;
+	object-fit: contain;
+	flex-shrink: 0;
+}
+
+/* Practices */
+.HelpForSpec .help-spec-section--practices {
+	padding-top: 2px;
+}
+
+.HelpForSpec .help-spec-practice-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.HelpForSpec .help-spec-practice-card {
+	padding: 22px 18px;
+	text-align: center;
+}
+
+.HelpForSpec .help-spec-practice-icon {
+	width: 34px;
+	height: 34px;
+	margin-bottom: 10px;
+	object-fit: contain;
+}
+
+/* Mistakes */
+.HelpForSpec .help-spec-section--mistakes {
+	padding-top: 2px;
+}
+
+.HelpForSpec .help-spec-mistake-card {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+	padding: 18px;
+}
+
+.HelpForSpec .help-spec-mistake-icon {
+	width: 22px;
+	height: 22px;
+	margin-top: 2px;
+	object-fit: contain;
+	flex-shrink: 0;
+}
+
+/* FAQ */
+.HelpForSpec .help-spec-faq-list {
+	max-width: 860px;
+	margin: 0 auto;
+}
+
+.HelpForSpec .help-spec-faq-item + .help-spec-faq-item {
+	margin-top: 12px;
+}
+
+.HelpForSpec .help-spec-faq-item {
+	overflow: hidden;
+}
+
+.HelpForSpec .help-spec-faq-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	border: none;
+	padding: 18px 20px;
+	background: transparent;
+	color: var(--hfs-text);
+	font-size: 0.96rem;
+	font-weight: 700;
+	text-align: left;
+	cursor: pointer;
+}
+
+.HelpForSpec .help-spec-faq-arrow {
+	color: var(--hfs-gold);
+	font-size: 1rem;
+	transition: transform 0.2s ease;
+}
+
+.HelpForSpec .help-spec-faq-item.is-open .help-spec-faq-arrow {
+	transform: rotate(180deg);
+}
+
+.HelpForSpec .help-spec-faq-answer {
+	padding: 0 20px 18px;
+}
+
+/* CTA */
+.HelpForSpec .help-spec-cta {
+	padding: 54px 0 58px;
+	color: #fff;
+}
+
+.HelpForSpec .help-spec-cta h2 {
+	margin: 0 0 10px;
+	color: #fff;
+	font-size: 2rem;
+	font-weight: 800;
+}
+
+.HelpForSpec .help-spec-cta p {
+	margin: 0 0 24px;
+	color: rgba(255, 255, 255, 0.88);
+	font-size: 0.98rem;
+}
+
+.HelpForSpec .help-spec-cta-actions {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.HelpForSpec .help-spec-cta-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 46px;
+	padding: 0 22px;
+	border-radius: 14px;
+	font-size: 0.9rem;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.HelpForSpec .help-spec-cta-btn--primary {
+	background: #fff;
+	color: var(--hfs-blue-dark);
+}
+
+.HelpForSpec .help-spec-cta-btn--secondary {
+	border: 1px solid rgba(255, 255, 255, 0.9);
+	color: #fff;
+}
+
+/* Banner */
+.HelpForSpec .help-spec-banner {
+	padding: 16px 12px;
+	background: var(--hfs-blue);
+	text-align: center;
+}
+
+.HelpForSpec .help-spec-banner p {
+	margin: 0;
+	color: #fff;
+	font-size: 0.82rem;
+	font-weight: 700;
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as icons from '../../imgs/icons';
 import './CustomerHelpPage.css';
@@ -23,7 +24,7 @@ const CONTACT_CARDS = [
     icon: icons.iconChat,
     title: 'Центр допомоги',
     text: 'База знань та FAQ',
-    href: '#customer-help-faq',
+    to: '/help',
   },
 ];
 
@@ -197,11 +198,19 @@ function CustomerHelpPage() {
         <div className="customer-help-container">
           <section className="customer-help-contact-grid">
             {CONTACT_CARDS.map((card) => (
-              <a key={card.id} href={card.href} className="customer-help-contact-card">
-                <img src={card.icon} alt="" className="customer-help-contact-icon" />
-                <h2>{card.title}</h2>
-                <p>{card.text}</p>
-              </a>
+              card.to ? (
+                <Link key={card.id} to={card.to} className="customer-help-contact-card">
+                  <img src={card.icon} alt="" className="customer-help-contact-icon" />
+                  <h2>{card.title}</h2>
+                  <p>{card.text}</p>
+                </Link>
+              ) : (
+                <a key={card.id} href={card.href} className="customer-help-contact-card">
+                  <img src={card.icon} alt="" className="customer-help-contact-icon" />
+                  <h2>{card.title}</h2>
+                  <p>{card.text}</p>
+                </a>
+              )
             ))}
           </section>
 
@@ -282,9 +291,9 @@ function CustomerHelpPage() {
             <a href="mailto:support@busybee.ua" className="customer-help-cta-btn customer-help-cta-btn--primary">
               Написати в підтримку
             </a>
-            <a href="#customer-help-faq" className="customer-help-cta-btn customer-help-cta-btn--secondary">
+            <Link to="/help" className="customer-help-cta-btn customer-help-cta-btn--secondary">
               Відкрити центр допомоги
-            </a>
+            </Link>
           </div>
         </div>
       </section>

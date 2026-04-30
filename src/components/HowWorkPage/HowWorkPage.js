@@ -2,7 +2,41 @@ import './HowWorkPage.css';
 import Header from '../Header/Header';
 import * as icons from '../../imgs/icons';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+const StepTimeline = ({ cards }) => {
+    return (
+        <div className="how-work-steps">
+            {cards.map((card) => (
+                <article key={card.id} className="how-work-step-card">
+                    <div className="how-work-step-line" aria-hidden="true" />
+
+                    <div className="how-work-step-inner">
+                        <div className="how-work-step-icon-box">
+                            <img src={card.icon} alt="" className="how-work-step-icon" />
+                            <span className="how-work-step-number">{card.mainStepNumber}</span>
+                        </div>
+
+                        <div className="how-work-step-content">
+                            <h2 className="how-work-step-title">{card.title}</h2>
+                            <p className="how-work-step-description">{card.description}</p>
+
+                            <div className="how-work-step-features">
+                                {card.features.map((feature) => (
+                                    <div key={feature.id} className="how-work-feature-item">
+                                        <img src={feature.icon} alt="" className="how-work-feature-icon" />
+                                        <span>{feature.text}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            ))}
+        </div>
+    );
+};
+
 const ForUserTab = () => {
     const allCards = [
         {
@@ -73,30 +107,9 @@ const ForUserTab = () => {
 
     ];
 
-    return (
-        <div>
-            {allCards.map((card) => (
-                <div key={card.id}>
-                    <div>
-                        <span>{card.mainStepNumber}</span>
-                        <img src={card.icon} alt="Main" />
-                        <h2>{card.title}</h2>
-                        <p>{card.description}</p>
-                    </div>
-
-                    <div>
-                        {card.features && card.features.map((feature) => (
-                            <div key={feature.id}>
-                                <img src={feature.icon} alt="check" />
-                                <span>{feature.text}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+    return <StepTimeline cards={allCards} />;
 };
+
 const ForSpecTab = () => {
     const allCards = [
         {
@@ -167,37 +180,13 @@ const ForSpecTab = () => {
 
     ];
 
-    return (
-        <div>
-            {allCards.map((card) => (
-                <div key={card.id}>
-                    <div>
-                        <span>{card.mainStepNumber}</span>
-                        <img src={card.icon} alt="Main" />
-                        <h2>{card.title}</h2>
-                        <p>{card.description}</p>
-                    </div>
-
-                    <div>
-                        {card.features && card.features.map((feature) => (
-                            <div key={feature.id}>
-                                <img src={feature.icon} alt="check" />
-                                <span>{feature.text}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+    return <StepTimeline cards={allCards} />;
 };
 
 
 
 function HowWorkPage() {
-    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('forUser');
-    const [searchQuery, setSearchQuery] = useState('');
 
     const tabs = [
         { key: 'forUser', icon: icons.iconChumodan, label: 'Для замовників' },
@@ -214,33 +203,36 @@ function HowWorkPage() {
     const benefit = [
         { icon: icons.iconLightning, title: 'Швидко', text: 'перші пропозиції вже через годину після публікації. Почніть роботу негайно.' },
         { icon: icons.iconShield, title: 'Безпечно', text: 'Система ексроу-рахунків та арбітраж захищають інтереси обох сторін.' },
-        { icon: icons.iconMoney, titlle: 'Вигідно', text: 'Прозора комісія без прихованних платежів. Платите тільки за результат.' }
+        { icon: icons.iconMoney, title: 'Вигідно', text: 'Прозора комісія без прихованних платежів. Платите тільки за результат.' }
     ];
 
     return (
         <div className='HowWorkPage'>
             <Header />
-            <div className='Welcome'>
-                <div className="hero-image">
+            <section className='how-work-hero'>
+                <div className="how-work-container how-work-hero-inner">
+                    <div className="how-work-hero-image">
                     <img src={icons.iconBee} alt="BusyBee" />
+                    </div>
+                    <h1 className="how-work-hero-title">Як це працює</h1>
+                    <p className="how-work-hero-subtitle">Простий та зрозумілий процес співпраці на платформі BusyBee</p>
                 </div>
-                <h1 className="hero-title">Як це працює</h1>
-                <p className="hero-subtitle">Простий та зрозумілий процес співпраці на платформі BusyBee.</p>
-            </div>
+            </section>
 
-            <section className='HowWorkPage-nav'>
-                <div className="tabs-container">
-                    <nav
-                        className="tabs-menu">
+            <section className='how-work-tabs-section'>
+                <div className="how-work-container">
+                    <nav className="how-work-tabs" aria-label="Тип сценарію">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
+                                type="button"
                                 onClick={() => setActiveTab(tab.key)}
-                                className={activeTab === tab.key ? 'active' : ''}
+                                className={`how-work-tab-btn ${activeTab === tab.key ? 'active' : ''}`}
                             >
                                 <img
                                     src={tab.icon}
                                     alt=""
+                                    className="how-work-tab-icon"
                                 />
                                 {tab.label}
                             </button>
@@ -248,47 +240,58 @@ function HowWorkPage() {
                     </nav>
                 </div>
             </section>
-            <div className="tabs-content">
-                {contentMap[activeTab]}
-            </div>
 
-            <section className="Benefit">
-                <div className="benefit-list">
+            <main className="how-work-main">
+                <div className="how-work-container">
+                    <div className="how-work-tabs-content">
+                        {contentMap[activeTab]}
+                    </div>
+                </div>
+            </main>
+
+            <section className="how-work-benefits-section">
+                <div className="how-work-container">
+                    <h2 className="how-work-section-title">Чому це вигідно?</h2>
+                    <div className="how-work-benefit-list">
                     {benefit.map((item, index) => (
-                        <div key={index} className="benefit-item">
+                        <article key={index} className="how-work-benefit-item">
                             <img
                                 src={item.icon}
                                 alt={item.title}
-                                className="benefit-icon"
+                                className="how-work-benefit-icon"
                             />
-                            <h3 className="benefit-title">{item.title}</h3>
-                            <p className="benefit-text">{item.text}</p>
-                        </div>
+                            <h3 className="how-work-benefit-title">{item.title}</h3>
+                            <p className="how-work-benefit-text">{item.text}</p>
+                        </article>
                     ))}
-                </div>
-            </section>
-
-            <section className="cta-section">
-                <div className="container">
-                    <h2 className="cta-title">Готові розпочати?</h2>
-                    <p className="cta-sub">Приєднуйтесь до Busybee та знайдіть цікаві проекти вже сьогодні.</p>
-                    <div className="cta-btns">
-                        <Link to="/register" className="cta-btn-primary">Зареєструватися безкоштовно</Link>
                     </div>
                 </div>
             </section>
 
-            <section className="help-section">
-                <div className="container">
-                    <h2 className="help-title">Залишились питання?</h2>
-                    <p className="help-sub">Відвідайте наш центр допомоги або зв'яжіться з підтримкою.</p>
-                    <div className="help-btns">
-                        <Link to="/register" className="help-btn-primary">Центр допомоги </Link>
-                        <Link to="/catalogue-specs" className="help-btn-outline">Написати в підтримку</Link>
+            <section className="how-work-cta-section">
+                <div className="how-work-container">
+                    <div className="how-work-cta-box">
+                        <h2 className="how-work-section-title how-work-section-title--light">Готові розпочати?</h2>
+                        <p className="how-work-cta-sub">Приєднуйтесь до BusyBee та знайдіть ідеального фахівця вже сьогодні</p>
+                        <div className="how-work-cta-actions">
+                            <Link to="/register" className="how-work-cta-primary">Зареєструватися безкоштовно</Link>
+                        </div>
                     </div>
                 </div>
             </section>
-            <div className="banner-strip">
+
+            <section className="how-work-help-section">
+                <div className="how-work-container">
+                    <h2 className="how-work-section-title">Залишились питання?</h2>
+                    <p className="how-work-help-sub">Відвідайте наш центр допомоги або зв'яжіться з підтримкою</p>
+                    <div className="how-work-help-actions">
+                        <Link to="/help" className="how-work-help-primary">Центр допомоги</Link>
+                        <a href="mailto:support@busybee.ua" className="how-work-help-secondary">Написати в підтримку</a>
+                    </div>
+                </div>
+            </section>
+
+            <div className="how-work-banner-strip">
                 Маленька праця для великих людей!
             </div>
         </div>

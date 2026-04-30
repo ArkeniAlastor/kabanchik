@@ -35,12 +35,14 @@ function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4 className="footer-col-title">Як це працює</h4>
+            <h4 className="footer-col-title">
+              <Link to="/HowWorkPage" className="footer-col-title-link">Як це працює</Link>
+            </h4>
             <ul className="footer-links">
-              <li><a href="/HowWorkPage">Як замовити послугу</a></li>
-              <li><a href="/HowWorkPage">Робота в Україні</a></li>
-              <li><a href="/HowWorkPage">Переваги для компаній</a></li>
-              <li><a href="/HowWorkPage">Гарний бізнес</a></li>
+              <li><Link to="/HowWorkPage">Як замовити послугу</Link></li>
+              <li><Link to="/HowWorkPage">Робота в Україні</Link></li>
+              <li><Link to="/HowWorkPage">Переваги для компаній</Link></li>
+              <li><Link to="/HowWorkPage">Гарний бізнес</Link></li>
             </ul>
           </div>
 
@@ -48,9 +50,9 @@ function Footer() {
             <h4 className="footer-col-title">Допомога</h4>
             <ul className="footer-links">
               <li><Link to="/help">Центр допомоги</Link></li>
-              <li><a href="/">Публічна оферта</a></li>
+              <li><Link to="/terms">Публічна оферта</Link></li>
               <li><Link to="/privacy">Політика конфіденційності</Link></li>
-              <li><a href="/">Служба підтримки</a></li>
+              <li><Link to="/help">Служба підтримки</Link></li>
             </ul>
           </div>
 

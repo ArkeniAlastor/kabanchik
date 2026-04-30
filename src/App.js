@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer/Footer';
 import MainPage from './components/MainPage/MainPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
@@ -21,10 +21,6 @@ import HelpPage from './components/HelpPage/HelpPage';
 
 
 function AppContent() {
-  // вот тут юзаеться локатион, что бы показать системе, куда футер не ставить
-  const location = useLocation();
-  const noFooterRoutes = ['/login', '/register', '/forgot', '/terms', '/privacy', '/customer-help'];
-  const shouldShowFooter = !noFooterRoutes.includes(location.pathname);
   //чут чут перелопаченный контент
   return (
     <div className="app-wrapper">
@@ -50,7 +46,7 @@ function AppContent() {
         </Routes>
       </main>
 
-      {shouldShowFooter && <Footer />}
+      <Footer />
     </div>
   );
 }
