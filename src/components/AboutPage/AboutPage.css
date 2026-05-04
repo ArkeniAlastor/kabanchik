@@ -1,0 +1,350 @@
+.ab-page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1a1a2e;
+  background: #fff;
+}
+
+.ab-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.ab-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.ab-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #1a1a2e;
+}
+
+.ab-nav {
+  display: flex;
+  gap: 32px;
+  flex: 1;
+  justify-content: center;
+}
+
+.ab-nav-link {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.ab-nav-link--active {
+  color: #3b5bdb;
+  font-weight: 600;
+}
+
+.ab-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ab-btn-login {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  font-weight: 500;
+  padding: 8px 16px;
+}
+
+.ab-btn-register {
+  text-decoration: none;
+  background: #f5c518;
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 9px 20px;
+  border-radius: 999px;
+}
+
+.ab-hero {
+  background: linear-gradient(135deg, #3b4a8a 0%, #6b7cc4 40%, #d4a017 80%, #f5c518 100%);
+  padding: 70px 32px;
+  text-align: center;
+}
+
+.ab-hero-bee {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+}
+
+.ab-hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.ab-hero-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+
+.ab-content {
+  background: #f5f0eb;
+  padding: 48px 32px;
+}
+
+.ab-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.ab-block {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.ab-block--column {
+  flex-direction: column;
+}
+
+.ab-block-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.ab-block p {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.7;
+}
+
+.ab-block-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 14px;
+}
+
+.ab-section-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+
+.ab-values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.ab-value-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.ab-value-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.ab-value-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.ab-value-desc {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.ab-stats {
+  background: #f5f0eb;
+  padding: 0 32px 20px;
+}
+
+.ab-stats-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #3b4a8a 0%, #6b7cc4 40%, #d4a017 80%, #f5c518 100%);
+  border-radius: 16px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.ab-stats-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 28px;
+}
+
+.ab-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ab-stat-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.ab-stat-label {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ab-team {
+  background: #f5f0eb;
+  padding: 56px 32px;
+}
+
+.ab-team-subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+
+.ab-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.ab-team-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.ab-team-avatar {
+  font-size: 2.8rem;
+  width: 72px;
+  height: 72px;
+  background: #e8e8e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.ab-team-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.ab-team-role {
+  font-size: 0.82rem;
+  color: #3b5bdb;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.ab-team-desc {
+  font-size: 0.82rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+
+.ab-join {
+  background: #f5f0eb;
+  padding: 0 32px 48px;
+}
+
+.ab-join-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.ab-join-rocket {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.ab-join-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.ab-join-subtitle {
+  font-size: 0.92rem;
+  color: #555;
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 auto 28px;
+}
+
+.ab-join-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.ab-join-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ab-join-btn--dark {
+  background: #3b4a8a;
+  color: #fff;
+}
+
+.ab-join-btn--yellow {
+  background: #f5c518;
+  color: #1a1a2e;
+}
+
+
+.ab-footer {
+  background: #3b4a8a;
+  padding: 20px 32px;
+  text-align: center;
+  color: #fff;
+  font-size: 0.9rem;
+}
