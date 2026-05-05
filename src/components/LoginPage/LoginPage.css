@@ -5,6 +5,13 @@
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
+.login-page,
+.login-page *,
+.login-page *::before,
+.login-page *::after {
+  box-sizing: border-box;
+}
+
 /* Left side */
 .login-form-side {
   flex: 0 0 55%;
@@ -73,6 +80,59 @@
   font-size: 0.9rem;
   color: #888;
   margin-bottom: 28px;
+}
+
+/* Shortcuts */
+.login-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.login-shortcut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.login-shortcut:hover {
+  transform: translateY(-1px);
+}
+
+.login-shortcut--primary {
+  background: #2e3d72;
+  color: #fff;
+}
+
+.login-shortcut--secondary {
+  background: #fff;
+  border: 1px solid #ded6c9;
+  color: #2f3648;
+}
+
+.login-help-note {
+  margin: 0 0 20px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #7e7688;
+}
+
+.login-help-note a {
+  color: #2e3d72;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-help-note a:hover {
+  text-decoration: underline;
 }
 
 /* Fields */
@@ -297,4 +357,169 @@
   font-size: 0.86rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 920px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-form-side,
+  .login-promo-side {
+    flex: none;
+    width: 100%;
+  }
+
+  .login-form-side {
+    align-items: flex-start;
+    padding: 28px 0 16px;
+  }
+
+  .login-form-wrap {
+    max-width: 100%;
+    padding: 0 24px;
+  }
+
+  .login-promo-side {
+    min-height: 0;
+    padding: 0 0 28px;
+  }
+
+  .login-promo-wrap {
+    width: 100%;
+    max-width: 100%;
+    padding: 28px 24px;
+    text-align: left;
+  }
+
+  .login-promo-bee {
+    width: 116px;
+    height: 116px;
+    margin-bottom: 20px;
+  }
+
+  .login-promo-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-form-wrap,
+  .login-promo-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .login-title {
+    font-size: 1.62rem;
+  }
+
+  .login-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .login-shortcuts,
+  .login-social {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .login-shortcut,
+  .login-social-btn,
+  .login-submit {
+    width: 100%;
+  }
+
+  .login-label input,
+  .login-submit,
+  .login-social-btn {
+    min-height: 48px;
+  }
+
+  .login-password-row {
+    gap: 8px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .login-promo-side {
+    background: transparent;
+    padding: 8px 16px 24px;
+  }
+
+  .login-promo-wrap {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 22px 18px 24px;
+    border-radius: 24px;
+    background: linear-gradient(to bottom right, #3d4f7c 0%, #4a5a8a 40%, #b8881a 80%, #d4a020 100%);
+    box-shadow: 0 16px 28px rgba(33, 36, 59, 0.2);
+    text-align: center;
+  }
+
+  .login-promo-bee {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 16px;
+  }
+
+  .login-promo-title {
+    font-size: 1.48rem;
+    margin-bottom: 12px;
+  }
+
+  .login-promo-sub {
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+
+  .login-promo-features {
+    gap: 12px;
+    text-align: left;
+  }
+
+  .login-promo-feature {
+    padding: 13px 14px;
+    gap: 10px;
+  }
+
+  .login-promo-feature-title {
+    font-size: 0.9rem;
+  }
+
+  .login-promo-feature-text {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .login-form-side {
+    padding-top: 20px;
+  }
+
+  .login-back {
+    margin-bottom: 22px;
+  }
+
+  .login-logo {
+    margin-bottom: 24px;
+  }
+
+  .login-title {
+    font-size: 1.42rem;
+  }
+
+  .login-help-note,
+  .login-register,
+  .login-forgot {
+    font-size: 0.8rem;
+  }
+
+  .login-submit {
+    font-size: 0.95rem;
+  }
+
+  .login-promo-title {
+    font-size: 1.28rem;
+  }
 }

@@ -87,22 +87,22 @@ const supportChannels = [
   {
     icon: icons.iconEmail,
     title: 'Email підтримка',
-    description: 'Напишіть нам будь-коли',
+    description: 'Напишіть нам у будь-який час',
     contact: 'support@busybee.ua',
-    responseTime: 'Відповідь в течі 1-2 годин'
+    responseTime: 'Відповідь протягом 1-2 годин'
   },
   {
     icon: icons.iconZvonilka,
     title: 'Гаряча лінія',
-    description: 'Говоріть з нами',
+    description: 'Зателефонуйте в підтримку',
     contact: '+38 (044) 123-45-67',
     responseTime: 'Доступна 24/7'
   },
   {
     icon: icons.iconChat,
     title: 'Онлайн чат',
-    description: 'Мають розмову зараз',
-    contact: 'Чат в кабінету',
+    description: 'Отримайте відповідь у чаті',
+    contact: 'Чат у кабінеті',
     responseTime: 'Миттєва відповідь'
   }
 ];
@@ -124,13 +124,13 @@ const resources = [
     icon: icons.iconBee,
     title: 'Про BusyBee',
     description: 'Дізнайтесь більше про нашу платформу та місію',
-    link: '/'
+    link: '/about'
   },
   {
     icon: icons.iconNewspaper,
-    title: 'Блог',
-    description: 'Корисні статті та гайди для користувачів',
-    link: '/'
+    title: 'Як це працює',
+    description: 'Подивіться, як влаштована робота платформи для замовників і фахівців',
+    link: '/HowWorkPage'
   }
 ];
 
@@ -163,7 +163,7 @@ const HelpPage = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
-    alert('Спасибо! Ваше сообщение отправлено.');
+    alert('Дякуємо! Ваше повідомлення надіслано.');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 

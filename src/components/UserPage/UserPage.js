@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as icons from '../../imgs/icons';
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
@@ -207,6 +207,11 @@ const matchesSearchQuery = (values, normalizedQuery) => {
     return !normalizedQuery || searchableText.includes(normalizedQuery);
 };
 
+const getCurrentMessageTime = () => new Intl.DateTimeFormat('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit'
+}).format(new Date());
+
 const OrderCard = ({ order }) => (
     <div className='card'>
         <div className='card-header'>
@@ -259,7 +264,7 @@ const OrdersGrid = ({ orders, emptyText }) => (
 
 // Вкладка "Огляд": статистика, последние заказы и рекомендации
 const OverviewTab = ({ onGoToOrders, orders }) => (
-    <div className='overview-tab'>
+    <div className='user-overview-tab'>
         {/* Stats */}
         <div className='stats-section'>
             <div className="container">
@@ -310,7 +315,7 @@ const OverviewTab = ({ onGoToOrders, orders }) => (
 
 // Вкладка "Всі замовлення": полный список заказов
 const OrdersTab = ({ orders }) => (
-    <div className='orders-tab'>
+    <div className='user-orders-tab'>
         <div className='orders-header'>
             <h1>Всі замовлення</h1>
         </div>
@@ -327,7 +332,7 @@ const OrdersTab = ({ orders }) => (
 
 // Вкладка "Активні": только заказы в работе
 const ActiveTab = ({ orders }) => (
-    <div className='active-tab'>
+    <div className='user-active-tab'>
         <div className='orders-header'>
             <h1>Активні замовлення</h1>
         </div>
@@ -342,7 +347,7 @@ const ActiveTab = ({ orders }) => (
 
 // Вкладка "Завершені": только завершенные заказы
 const EndOrderTab = ({ orders }) => (
-    <div className='end-order-tab'>
+    <div className='user-end-order-tab'>
         <div className='orders-header'>
             <h1>Завершені замовлення</h1>
         </div>
@@ -357,6 +362,8 @@ const EndOrderTab = ({ orders }) => (
 
 // Вкладка "Повідомлення": список чатов + активный чат
 const MessagesTab = () => {
+    const messagesEndRef = useRef(null);
+
     // Список чатов в левой колонке
     const [chats] = useState([
         {
@@ -410,15 +417,28 @@ const MessagesTab = () => {
     // Истории сообщений, привязанные к ID чата
     const [chatHistories, setChatHistories] = useState({
         1: [
-            { id: 1, text: 'Вітаю! Я готова почати.', sender: 'them' },
-            { id: 2, text: 'Чудово! Чекаю.', sender: 'me' },
+            { id: 1, text: 'Супер. Якщо потрібно, я ще надішлю кілька референсів.', sender: 'me', time: '10:19' },
+            { id: 2, text: 'Так, буде корисно. Хочу одразу потрапити в потрібний стиль.', sender: 'them', time: '10:21' },
+            { id: 3, text: 'Домовились, зберу приклади й скину їх у чат.', sender: 'me', time: '10:24' },
+            { id: 4, text: 'Дякую за замовлення! Почну роботу і ввечері покажу перший варіант.', sender: 'them', time: '10:30' },
         ],
         2: [
-            { id: 3, text: 'Привіт, дизайн готовий', sender: 'them' }
+            { id: 6, text: 'Привіт, підготував перший варіант дизайну.', sender: 'them', time: '19:42' },
+            { id: 7, text: 'Бачу, дякую. Зараз перегляну й напишу фідбек.', sender: 'me', time: '19:48' },
+            { id: 8, text: 'Чудово, я на зв’язку.', sender: 'them', time: '19:49' }
         ],
-        3: [],
-        4: [],
-        5: [],
+        3: [
+            { id: 9, text: 'Коли можемо обговорити деталі й дедлайн?', sender: 'them', time: '16:05' },
+            { id: 10, text: 'Після 18:00 буду вільний, можемо тут усе узгодити.', sender: 'me', time: '16:17' }
+        ],
+        4: [
+            { id: 11, text: 'Відправив фінальні файли й посилання на архів.', sender: 'them', time: '13:10' },
+            { id: 12, text: 'Отримав, дякую. Перевірю сьогодні.', sender: 'me', time: '13:18' }
+        ],
+        5: [
+            { id: 13, text: 'Дякую за співпрацю! Було приємно попрацювати разом.', sender: 'them', time: '09:12' },
+            { id: 14, text: 'Взаємно. Якщо буде новий проєкт, обов’язково напишу.', sender: 'me', time: '09:20' }
+        ],
     });
 
     const [activeChatId, setActiveChatId] = useState(1);
@@ -435,6 +455,10 @@ const MessagesTab = () => {
     const selectedChatId = activeChat?.id || null;
     const activeMessages = selectedChatId ? chatHistories[selectedChatId] || [] : [];
 
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ block: 'end' });
+    }, [selectedChatId, activeMessages.length]);
+
     // Отправка сообщения в текущий активный чат
     const handleSendMessage = () => {
         if (!messageText.trim() || !selectedChatId) return;
@@ -443,6 +467,7 @@ const MessagesTab = () => {
             id: Date.now(),
             text: messageText,
             sender: 'me',
+            time: getCurrentMessageTime(),
         };
 
         setChatHistories((prev) => ({
@@ -454,7 +479,7 @@ const MessagesTab = () => {
     };
 
     return (
-        <div className='messages-tab'>
+        <div className='user-messages-tab'>
             <div className='orders-header'>
                 <h1 className='orders-title'>Повідомлення</h1>
             </div>
@@ -512,24 +537,31 @@ const MessagesTab = () => {
                                     </div>
                                 </div>
                                 <button className='chat-call-btn' type='button' aria-label='Зателефонувати'>
-                                    &#9742;
+                                    <img className='chat-call-icon' src={icons.iconZvonilka} alt='' />
                                 </button>
                             </header>
 
                             <div className='messages-container'>
-                                {activeMessages.map((msg) => (
-                                    <div key={msg.id} className={`message-row ${msg.sender}`}>
-                                        {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat.name.charAt(0)}</div>}
-                                        <div className='message-bubble-wrap'>
-                                            <div className={`message ${msg.sender}`}>
-                                                <span className='message-text'>{msg.text}</span>
+                                <div className='messages-stack'>
+                                    {activeMessages.length ? activeMessages.map((msg) => (
+                                        <div key={msg.id} className={`message-row ${msg.sender}`}>
+                                            {msg.sender !== 'me' && <div className='chat-avatar message-avatar'>{activeChat.name.charAt(0)}</div>}
+                                            <div className='message-bubble-wrap'>
+                                                <div className={`message ${msg.sender}`}>
+                                                    <span className='message-text'>{msg.text}</span>
+                                                </div>
+                                                <span className='message-time'>{msg.time || getCurrentMessageTime()}</span>
                                             </div>
-                                            <span className='message-time'>
-                                                {msg.sender === 'me' ? '10:29' : '10:30'}
-                                            </span>
                                         </div>
-                                    </div>
-                                ))}
+                                    )) : (
+                                        <div className='chat-empty-state'>
+                                            <img className='chat-empty-icon' src={icons.iconZvonilka} alt='' />
+                                            <h3 className='chat-empty-title'>Розмова ще не почалась</h3>
+                                            <p className='chat-empty-text'>Напишіть перше повідомлення, щоб обговорити деталі замовлення.</p>
+                                        </div>
+                                    )}
+                                    <div ref={messagesEndRef} />
+                                </div>
                             </div>
 
                             <footer className='chat-input-area'>
@@ -556,7 +588,7 @@ const MessagesTab = () => {
 
 // Вкладка "Обране": сетка карточек избранных специалистов
 const FavoritesTab = ({ onGoToMessages }) => (
-    <div className='favorites-tab'>
+    <div className='user-favorites-tab'>
         <div className='orders-header'>
             <h1 className='favorites-title'>Обрані фахівці</h1>
         </div>
@@ -658,7 +690,7 @@ const SettingsTab = () => {
     };
 
     return (
-        <div className='settings-tab'>
+        <div className='user-settings-tab'>
             <div className='settings-header'>
                 <h1>Налаштування профілю</h1>
             </div>
@@ -912,6 +944,8 @@ function UserPage() {
                 actionLabel="Створити"
                 actionPrefix="+"
                 onActionClick={() => navigate('/create-order')}
+                onAlertClick={() => setActiveTab('messages')}
+                onUserClick={() => setActiveTab('settings')}
                 user={user}
             />
 
@@ -946,3 +980,4 @@ function UserPage() {
 };
 
 export default UserPage;
+

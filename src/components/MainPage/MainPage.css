@@ -139,7 +139,6 @@
     cursor: pointer;
 }
 
-.MainPage .hero-search button:hover,
 .MainPage .cta-btn-primary:hover,
 .MainPage .hero-btn--primary:hover {
     background: var(--mp-accent-hover);
@@ -186,6 +185,8 @@
 
 .MainPage .hero-btn,
 .MainPage .btn-all-cats,
+.MainPage .cta-btn-primary,
+.MainPage .cta-btn-outline,
 .MainPage .cta-btn-primary,
 .MainPage .cta-btn-outline {
     display: inline-flex;
@@ -451,16 +452,39 @@
 }
 
 /* CTA */
+.MainPage .cta-section {
+    padding-top: 56px;
+}
+
+.MainPage .cta-panel {
+    padding: 34px 28px;
+    border: 1px solid var(--mp-border);
+    border-radius: 24px;
+    background: linear-gradient(180deg, #fff 0%, #f8f3ec 100%);
+    box-shadow: 0 18px 36px rgba(70, 64, 52, 0.08);
+}
+
+.MainPage .cta-kicker {
+    margin: 0 0 10px;
+    color: #7d735f;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
 .MainPage .cta-title {
     margin: 0 0 12px;
     color: var(--mp-text);
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 800;
     text-align: center;
 }
 
 .MainPage .cta-sub {
-    margin-bottom: 28px;
+    max-width: 680px;
+    margin: 0 auto 24px;
 }
 
 .MainPage .cta-btns {
@@ -472,7 +496,7 @@
 }
 
 .MainPage .cta-btn-outline {
-    border: 1px solid #d8d0c5;
+    border-color: #d8d0c5;
     background: #f8f5ef;
     color: var(--mp-text);
 }
@@ -483,10 +507,230 @@
 
 /* Banner */
 .MainPage .banner-strip {
-    padding: 20px 12px;
+    padding: 16px 0 18px;
     color: #fff;
-    font-size: 30px;
+}
+
+.MainPage .banner-strip p {
+    margin: 0;
+    font-size: 1.05rem;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.3;
     text-align: center;
+}
+
+@media (max-width: 900px) {
+    .MainPage .container {
+        padding: 0 20px;
+    }
+
+    .MainPage .hero-section,
+    .MainPage .categories-section,
+    .MainPage .how-section,
+    .MainPage .features-section,
+    .MainPage .cta-section {
+        padding: 56px 0;
+    }
+
+    .MainPage .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 28px;
+    }
+
+    .MainPage .hero-text,
+    .MainPage .hero-image {
+        width: 100%;
+    }
+
+    .MainPage .hero-image {
+        justify-content: flex-start;
+    }
+
+    .MainPage .hero-image img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .MainPage .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .MainPage .categories-grid,
+    .MainPage .steps-grid,
+    .MainPage .features-grid,
+    .MainPage .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .MainPage .stat-item {
+        border-right: none;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .MainPage .container {
+        padding: 0 16px;
+    }
+
+    .MainPage .section-title,
+    .MainPage .cta-title {
+        font-size: 1.7rem;
+    }
+
+    .MainPage .hero-section,
+    .MainPage .categories-section,
+    .MainPage .how-section,
+    .MainPage .features-section,
+    .MainPage .cta-section {
+        padding: 48px 0;
+    }
+
+    .MainPage .hero-section {
+        padding: 32px 0 36px;
+    }
+
+    .MainPage .hero-content {
+        gap: 20px;
+        align-items: center;
+    }
+
+    .MainPage .hero-text {
+        width: 100%;
+    }
+
+    .MainPage .hero-eyebrow,
+    .MainPage .hero-title,
+    .MainPage .hero-subtitle {
+        text-align: center;
+    }
+
+    .MainPage .hero-eyebrow {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.76rem;
+        letter-spacing: 0.06em;
+    }
+
+    .MainPage .hero-title {
+        margin-bottom: 12px;
+        font-size: 1.85rem;
+    }
+
+    .MainPage .hero-subtitle {
+        font-size: 0.96rem;
+        margin-bottom: 20px;
+    }
+
+    .MainPage .hero-search {
+        flex-direction: column;
+        margin-bottom: 16px;
+        border-radius: 18px;
+    }
+
+    .MainPage .hero-search input {
+        min-height: 54px;
+        padding: 15px 16px;
+        font-size: 0.95rem;
+    }
+
+    .MainPage .hero-search input::placeholder {
+        font-size: 0.95rem;
+    }
+
+    .MainPage .hero-search button {
+        width: 100%;
+        min-height: 50px;
+        padding: 0 16px;
+    }
+
+    .MainPage .hero-tags {
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .MainPage .hero-tags-label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .MainPage .hero-tag {
+        padding: 8px 12px;
+        font-size: 0.82rem;
+    }
+
+    .MainPage .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .MainPage .cta-btns {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .MainPage .hero-btn,
+    .MainPage .btn-all-cats,
+    .MainPage .cta-btn-primary,
+    .MainPage .cta-btn-outline {
+        width: 100%;
+        min-height: 50px;
+    }
+
+    .MainPage .hero-image {
+        justify-content: center;
+        margin-top: 4px;
+    }
+
+    .MainPage .hero-image img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .MainPage .categories-grid,
+    .MainPage .steps-grid,
+    .MainPage .features-grid,
+    .MainPage .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .MainPage .step-card,
+    .MainPage .feature-card {
+        padding: 24px 18px;
+    }
+
+    .MainPage .stat-item strong {
+        font-size: 1.8rem;
+    }
+
+    .MainPage .cta-panel {
+        padding: 28px 20px;
+        border-radius: 20px;
+    }
+
+    .MainPage .banner-strip p {
+        font-size: 0.96rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .MainPage .hero-title {
+        font-size: 1.7rem;
+    }
+
+    .MainPage .hero-search input,
+    .MainPage .hero-search input::placeholder,
+    .MainPage .hero-search button {
+        font-size: 0.9rem;
+    }
+
+    .MainPage .hero-image img {
+        width: 132px;
+        height: 132px;
+    }
 }

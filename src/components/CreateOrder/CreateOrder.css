@@ -6,6 +6,13 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+.co-page,
+.co-page *,
+.co-page *::before,
+.co-page *::after {
+  box-sizing: border-box;
+}
+
 
 .co-hero {
   background: linear-gradient(to right, #455a9f, #8a7a60, #c5a535);
@@ -25,6 +32,44 @@
   font-size: 1rem;
   margin: 0;
   opacity: 0.9;
+}
+
+.co-hero-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.co-hero-link,
+.co-review-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.co-hero-link:hover,
+.co-review-link:hover {
+  transform: translateY(-1px);
+}
+
+.co-hero-link--primary {
+  background: #fff;
+  color: #36539d;
+}
+
+.co-hero-link--secondary {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #fff;
 }
 
 .co-stepper-wrap {
@@ -267,6 +312,7 @@
 .co-skill-row {
   display: flex;
   gap: 10px;
+  align-items: stretch;
 }
 
 .co-skill-input {
@@ -274,6 +320,10 @@
 }
 
 .co-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
   background: #455a9f;
   color: #fff;
   border: none;
@@ -331,6 +381,10 @@
 }
 
 .co-btn-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
   background: none;
   border: 1.5px solid #d0cbc3;
   border-radius: 10px;
@@ -346,6 +400,10 @@
 }
 
 .co-btn-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
   background: #d0cbc3;
   border: none;
   border-radius: 10px;
@@ -454,7 +512,29 @@
   margin: 0;
 }
 
+.co-review-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.co-review-link--primary {
+  background: #455a9f;
+  color: #fff;
+}
+
+.co-review-link--secondary {
+  background: #fff;
+  border: 1px solid #d8d1c7;
+  color: #314671;
+}
+
 .co-btn-publish {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
   background: #f5a623;
   border: none;
   border-radius: 10px;
@@ -479,4 +559,178 @@
   font-size: 0.9rem;
   font-weight: 500;
   margin-top: auto;
+}
+
+@media (max-width: 920px) {
+  .co-hero {
+    padding: 38px 24px;
+  }
+
+  .co-hero-title {
+    font-size: 1.8rem;
+  }
+
+  .co-stepper-wrap {
+    padding: 18px 20px;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .co-stepper {
+    min-width: 420px;
+  }
+
+  .co-body {
+    max-width: 760px;
+    margin: 24px auto;
+  }
+
+  .co-card {
+    padding: 24px;
+  }
+
+  .co-categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .co-review-two {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .co-hero {
+    padding: 30px 16px 28px;
+  }
+
+  .co-hero-title {
+    font-size: 1.56rem;
+    margin-bottom: 8px;
+  }
+
+  .co-hero-sub {
+    font-size: 0.94rem;
+  }
+
+  .co-hero-links,
+  .co-review-links {
+    flex-direction: column;
+  }
+
+  .co-hero-link,
+  .co-review-link,
+  .co-btn-next,
+  .co-btn-back,
+  .co-btn-publish,
+  .co-btn-add {
+    width: 100%;
+  }
+
+  .co-stepper-wrap {
+    padding: 16px;
+  }
+
+  .co-step-line {
+    width: 46px;
+    margin: 0 2px 22px;
+  }
+
+  .co-step-label {
+    font-size: 0.74rem;
+  }
+
+  .co-body {
+    margin: 18px auto;
+    padding: 0 16px;
+  }
+
+  .co-card {
+    padding: 18px 16px;
+    border-radius: 14px;
+  }
+
+  .co-card-title {
+    font-size: 1.18rem;
+    margin-bottom: 20px;
+  }
+
+  .co-field {
+    margin-bottom: 18px;
+  }
+
+  .co-categories,
+  .co-budgets {
+    grid-template-columns: 1fr;
+  }
+
+  .co-budgets .co-budget-btn:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .co-timelines {
+    flex-direction: column;
+  }
+
+  .co-timeline-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .co-skill-row,
+  .co-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .co-actions {
+    gap: 10px;
+  }
+
+  .co-notice {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .co-review {
+    padding: 18px 16px;
+  }
+
+  .co-footer {
+    padding: 16px 12px;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .co-hero-title {
+    font-size: 1.38rem;
+  }
+
+  .co-hero-sub,
+  .co-hint,
+  .co-notice-text,
+  .co-notice-sub,
+  .co-review-val {
+    font-size: 0.84rem;
+  }
+
+  .co-label,
+  .co-review-key,
+  .co-step-label {
+    font-size: 0.76rem;
+  }
+
+  .co-input,
+  .co-cat-btn,
+  .co-budget-btn,
+  .co-timeline-btn,
+  .co-btn-next,
+  .co-btn-back,
+  .co-btn-publish,
+  .co-btn-add,
+  .co-hero-link,
+  .co-review-link {
+    font-size: 0.82rem;
+  }
 }

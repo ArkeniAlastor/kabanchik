@@ -28,6 +28,24 @@ const CONTACT_CARDS = [
     }
 ];
 
+const HERO_LINKS = [
+    {
+        id: 'offers',
+        label: 'Знайти замовлення',
+        to: '/offers'
+    },
+    {
+        id: 'how-work',
+        label: 'Як це працює',
+        to: '/HowWorkPage'
+    },
+    {
+        id: 'help',
+        label: 'Центр допомоги',
+        to: '/help'
+    }
+];
+
 const TIP_CARDS = [
     {
         id: 1,
@@ -237,6 +255,13 @@ function HelpForSpec() {
                     </div>
                     <h1 className='help-spec-hero-title'>Поради та підтримка 24/7</h1>
                     <p className='help-spec-hero-subtitle'>Професійні поради для фахівців, які допоможуть розвинути кар&apos;єру на BusyBee</p>
+                    <div className='help-spec-hero-actions'>
+                        {HERO_LINKS.map((link) => (
+                            <Link key={link.id} to={link.to} className='help-spec-hero-link'>
+                                {link.label}
+                            </Link>
+                        ))}
+                    </div>
                 </div>
             </section>
 

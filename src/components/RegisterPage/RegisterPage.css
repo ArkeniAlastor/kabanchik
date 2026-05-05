@@ -5,6 +5,13 @@
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
+.register-page,
+.register-page *,
+.register-page *::before,
+.register-page *::after {
+  box-sizing: border-box;
+}
+
 /* Left side */
 .register-form-side {
   flex: 0 0 55%;
@@ -165,6 +172,98 @@
   color: #999;
 }
 
+/* Guide */
+.register-guide {
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  border: 1px solid #e7dfd1;
+  border-radius: 16px;
+  background: #faf6f0;
+}
+
+.register-guide--client {
+  background: #f4f7ff;
+  border-color: #dbe4ff;
+}
+
+.register-guide--expert {
+  background: #fff7df;
+  border-color: #efd88e;
+}
+
+.register-guide-eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5d6478;
+}
+
+.register-guide-text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #5f6677;
+}
+
+.register-guide-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.register-guide-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.register-guide-link:hover {
+  transform: translateY(-1px);
+}
+
+.register-guide-link--primary {
+  background: #2e3d72;
+  color: #fff;
+}
+
+.register-guide--expert .register-guide-link--primary {
+  background: #f5c842;
+  color: #1a1a2e;
+}
+
+.register-guide-link--secondary {
+  background: #fff;
+  border: 1px solid #ddd5c8;
+  color: #2f3648;
+}
+
+.register-guide-note {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #7d7484;
+}
+
+.register-guide-note a {
+  color: #2e3d72;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.register-guide-note a:hover {
+  text-decoration: underline;
+}
+
 /* Fields */
 .register-fields {
   display: flex;
@@ -204,19 +303,17 @@
 .register-submit {
   width: 100%;
   padding: 14px;
-  background: #2e3d72;
-  color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
-  text-transform: capitalize;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, filter 0.2s;
+  text-transform: none;
 }
 
 .register-submit:hover {
-  background: #1e2a52;
+  filter: brightness(0.96);
 }
 
 /* Terms */
@@ -370,4 +467,169 @@
 .register-promo-feature-text {
   font-size: 0.78rem;
   color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 920px) {
+  .register-page {
+    flex-direction: column;
+  }
+
+  .register-form-side,
+  .register-promo-side {
+    flex: none;
+    width: 100%;
+  }
+
+  .register-form-side {
+    padding: 28px 0 16px;
+    overflow-y: visible;
+  }
+
+  .register-form-wrap {
+    max-width: 100%;
+    padding: 0 24px;
+  }
+
+  .register-promo-side {
+    min-height: 0;
+    padding: 0 0 28px;
+  }
+
+  .register-promo-wrap {
+    max-width: 100%;
+    width: 100%;
+    padding: 28px 24px;
+    text-align: left;
+  }
+
+  .register-promo-title {
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .register-promo-side {
+    background: transparent;
+    padding: 8px 16px 24px;
+  }
+
+  .register-form-wrap,
+  .register-promo-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .register-title {
+    font-size: 1.58rem;
+    margin-bottom: 4px;
+  }
+
+  .register-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .register-roles,
+  .register-social {
+    grid-template-columns: 1fr;
+  }
+
+  .register-role-card {
+    min-height: 110px;
+  }
+
+  .register-guide {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .register-guide-links {
+    flex-direction: column;
+  }
+
+  .register-guide-link {
+    width: 100%;
+  }
+
+  .register-label input,
+  .register-submit,
+  .register-social-btn {
+    min-height: 48px;
+  }
+
+  .register-promo-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 22px 18px 24px;
+    border-radius: 24px;
+    background: linear-gradient(to bottom right, #3d4f7c 0%, #4a5a8a 45%, #b8881a 80%, #d4a020 100%);
+    box-shadow: 0 16px 28px rgba(33, 36, 59, 0.2);
+  }
+
+  .register-promo-bee {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 16px;
+  }
+
+  .register-promo-title {
+    font-size: 1.35rem;
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .register-promo-title br {
+    display: none;
+  }
+
+  .register-promo-features {
+    gap: 14px;
+  }
+
+  .register-promo-feature {
+    gap: 10px;
+  }
+
+  .register-promo-feature-icon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 420px) {
+  .register-form-side {
+    padding-top: 20px;
+  }
+
+  .register-back {
+    margin-bottom: 18px;
+  }
+
+  .register-logo {
+    margin-bottom: 22px;
+  }
+
+  .register-title {
+    font-size: 1.42rem;
+  }
+
+  .register-role-card {
+    padding: 13px 14px;
+  }
+
+  .register-guide-text,
+  .register-role-desc,
+  .register-terms,
+  .register-login {
+    font-size: 0.82rem;
+  }
+
+  .register-promo-title {
+    font-size: 1.22rem;
+  }
+
+  .register-submit {
+    font-size: 0.94rem;
+  }
 }

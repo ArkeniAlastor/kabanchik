@@ -1,6 +1,6 @@
 import './CategoryPage.css';
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as icons from '../../imgs/icons';
 
@@ -137,6 +137,11 @@ function CategoryPage() {
                 />
                 <span className="hero-search-icon">⌕</span>
               </div>
+
+              <div className="category-hero-actions">
+                <Link to="/create-order" className="category-hero-action">Створити замовлення</Link>
+                <Link to="/catalogue-specs" className="category-hero-action category-hero-action--secondary">Каталог фахівців</Link>
+              </div>
             </div>
           </div>
         </div>
@@ -163,24 +168,31 @@ function CategoryPage() {
       {/* Categories Grid */}
       <section className="categories-grid-section">
         <div className="container">
-          <div className="features">
-            {filteredCategories.map((category) => (
-              <button
-                key={`${category.group}-${category.title}`}
-                type="button"
-                className={`feature1-card ${category.title === 'Веб-розробка' ? 'is-clickable' : ''}`}
-                onClick={() => {
-                  if (category.title === 'Веб-розробка') {
-                    handleOfferClick(category.title, category.group);
-                  }
-                }}
-              >
-                <img src={category.icon} alt={category.title} />
-                <h3>{category.title}</h3>
-                <p>{category.count}</p>
-              </button>
-            ))}
-          </div>
+          {filteredCategories.length ? (
+            <div className="features">
+              {filteredCategories.map((category) => (
+                <button
+                  key={`${category.group}-${category.title}`}
+                  type="button"
+                  className="feature1-card is-clickable"
+                  onClick={() => handleOfferClick(category.title, category.group)}
+                >
+                  <img src={category.icon} alt={category.title} />
+                  <h3>{category.title}</h3>
+                  <p>{category.count}</p>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="category-empty-state">
+              <h3 className="category-empty-title">Категорій за цим запитом не знайдено</h3>
+              <p className="category-empty-text">Спробуйте змінити фільтр або одразу створіть замовлення, щоб отримати пропозиції від фахівців.</p>
+              <div className="category-empty-actions">
+                <Link to="/create-order" className="cta-btn-primary">Створити замовлення</Link>
+                <Link to="/help" className="cta-btn-secondary">Центр допомоги</Link>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -190,7 +202,8 @@ function CategoryPage() {
           <h2 className="cta-title">Не знайшли потрібну категорію?</h2>
           <p className="cta-sub">Опишіть ваше завдання, і ми допоможемо знайти фахівця</p>
           <div className="cta-btns">
-            <button type="button" className="cta-btn-primary">Створити замовлення</button>
+            <Link to="/create-order" className="cta-btn-primary">Створити замовлення</Link>
+            <Link to="/help" className="cta-btn-secondary">Потрібна допомога</Link>
           </div>
         </div>
       </section>

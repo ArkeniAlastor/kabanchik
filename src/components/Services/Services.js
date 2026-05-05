@@ -10,6 +10,12 @@ const SERVICE_STATS = [
     { value: 'FAQ', label: 'прості правила та умови' },
 ];
 
+const HERO_SHORTCUTS = [
+    { label: 'Як це працює', to: '/HowWorkPage' },
+    { label: 'Категорії послуг', to: '/category' },
+    { label: 'Центр допомоги', to: '/help' },
+];
+
 const SERVICE_CARDS = [
     {
         id: 'search',
@@ -92,8 +98,8 @@ const SERVICE_CARDS = [
             'Портфоліо як частина профілю',
             'Більше прозорості при виборі фахівця'
         ],
-        linkText: 'Подивитися приклади',
-        to: '/offers',
+        linkText: 'Переглянути профілі',
+        to: '/catalogue-specs',
     },
 ];
 
@@ -137,9 +143,9 @@ const START_OPTIONS = [
         id: 'specialist',
         icon: icons.iconBee,
         title: 'Я фахівець',
-        description: 'Якщо ви шукаєте роботу або хочете оформити свій профіль, перейдіть у кабінет фахівця.',
-        action: 'Відкрити кабінет',
-        to: '/SpecPage',
+        description: 'Якщо ви шукаєте роботу або хочете оформити профіль, почніть з реєстрації та підготовки свого акаунта.',
+        action: 'Створити профіль',
+        to: '/register',
     },
     {
         id: 'rules',
@@ -199,6 +205,12 @@ function ServicesPage() {
                             <div className="hero-actions">
                                 <Link to="/create-order" className="hero-btn hero-btn--primary">Створити замовлення</Link>
                                 <Link to="/catalogue-specs" className="hero-btn hero-btn--secondary">Знайти фахівця</Link>
+                            </div>
+
+                            <div className="hero-shortcuts" aria-label="Швидкі переходи по платформі">
+                                {HERO_SHORTCUTS.map((shortcut) => (
+                                    <Link key={shortcut.to} to={shortcut.to} className="hero-shortcut">{shortcut.label}</Link>
+                                ))}
                             </div>
                         </div>
                     </div>

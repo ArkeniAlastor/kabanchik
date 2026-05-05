@@ -4,6 +4,29 @@ import * as icons from '../../imgs/icons';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const PAGE_SCENARIOS = {
+    forUser: {
+        heroPrimary: { to: '/create-order', label: 'Створити замовлення' },
+        heroSecondary: { to: '/catalogue-specs', label: 'Каталог фахівців' },
+        ctaTitle: 'Готові знайти виконавця?',
+        ctaSubtitle: 'Створіть замовлення, опишіть завдання та отримайте пропозиції від фахівців.',
+        ctaPrimary: { to: '/create-order', label: 'Створити замовлення' },
+        ctaSecondary: { to: '/category', label: 'Переглянути категорії' },
+        helpPrimary: { to: '/customer-help', label: 'Поради для замовників' },
+        helpSecondary: { to: '/help', label: 'Центр допомоги' },
+    },
+    forSpec: {
+        heroPrimary: { to: '/offers', label: 'Знайти замовлення' },
+        heroSecondary: { to: '/register', label: 'Створити профіль' },
+        ctaTitle: 'Готові брати нові проєкти?',
+        ctaSubtitle: 'Створіть профіль, знайдіть релевантні замовлення та почніть працювати з клієнтами.',
+        ctaPrimary: { to: '/register', label: 'Зареєструватися' },
+        ctaSecondary: { to: '/offers', label: 'Переглянути замовлення' },
+        helpPrimary: { to: '/HelpForSpec', label: 'Поради для фахівців' },
+        helpSecondary: { to: '/help', label: 'Центр допомоги' },
+    },
+};
+
 const StepTimeline = ({ cards }) => {
     return (
         <div className="how-work-steps">
@@ -200,6 +223,8 @@ function HowWorkPage() {
 
     };
 
+    const currentScenario = PAGE_SCENARIOS[activeTab];
+
     const benefit = [
         { icon: icons.iconLightning, title: 'Швидко', text: 'перші пропозиції вже через годину після публікації. Почніть роботу негайно.' },
         { icon: icons.iconShield, title: 'Безпечно', text: 'Система ексроу-рахунків та арбітраж захищають інтереси обох сторін.' },
@@ -216,6 +241,10 @@ function HowWorkPage() {
                     </div>
                     <h1 className="how-work-hero-title">Як це працює</h1>
                     <p className="how-work-hero-subtitle">Простий та зрозумілий процес співпраці на платформі BusyBee</p>
+                    <div className="how-work-hero-actions">
+                        <Link to={currentScenario.heroPrimary.to} className="how-work-hero-primary">{currentScenario.heroPrimary.label}</Link>
+                        <Link to={currentScenario.heroSecondary.to} className="how-work-hero-secondary">{currentScenario.heroSecondary.label}</Link>
+                    </div>
                 </div>
             </section>
 
@@ -227,7 +256,8 @@ function HowWorkPage() {
                                 key={tab.key}
                                 type="button"
                                 onClick={() => setActiveTab(tab.key)}
-                                className={`how-work-tab-btn ${activeTab === tab.key ? 'active' : ''}`}
+                                className={`how-work-tab-btn how-work-tab-btn--${tab.key} ${activeTab === tab.key ? 'active' : ''}`}
+                                aria-pressed={activeTab === tab.key}
                             >
                                 <img
                                     src={tab.icon}
@@ -271,10 +301,11 @@ function HowWorkPage() {
             <section className="how-work-cta-section">
                 <div className="how-work-container">
                     <div className="how-work-cta-box">
-                        <h2 className="how-work-section-title how-work-section-title--light">Готові розпочати?</h2>
-                        <p className="how-work-cta-sub">Приєднуйтесь до BusyBee та знайдіть ідеального фахівця вже сьогодні</p>
+                        <h2 className="how-work-section-title how-work-section-title--light">{currentScenario.ctaTitle}</h2>
+                        <p className="how-work-cta-sub">{currentScenario.ctaSubtitle}</p>
                         <div className="how-work-cta-actions">
-                            <Link to="/register" className="how-work-cta-primary">Зареєструватися безкоштовно</Link>
+                            <Link to={currentScenario.ctaPrimary.to} className="how-work-cta-primary">{currentScenario.ctaPrimary.label}</Link>
+                            <Link to={currentScenario.ctaSecondary.to} className="how-work-cta-secondary">{currentScenario.ctaSecondary.label}</Link>
                         </div>
                     </div>
                 </div>
@@ -285,8 +316,8 @@ function HowWorkPage() {
                     <h2 className="how-work-section-title">Залишились питання?</h2>
                     <p className="how-work-help-sub">Відвідайте наш центр допомоги або зв'яжіться з підтримкою</p>
                     <div className="how-work-help-actions">
-                        <Link to="/help" className="how-work-help-primary">Центр допомоги</Link>
-                        <a href="mailto:support@busybee.ua" className="how-work-help-secondary">Написати в підтримку</a>
+                        <Link to={currentScenario.helpPrimary.to} className="how-work-help-primary">{currentScenario.helpPrimary.label}</Link>
+                        <Link to={currentScenario.helpSecondary.to} className="how-work-help-secondary">{currentScenario.helpSecondary.label}</Link>
                     </div>
                 </div>
             </section>

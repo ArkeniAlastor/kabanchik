@@ -83,6 +83,38 @@
 	line-height: 1.55;
 }
 
+.HelpForSpec .help-spec-hero-actions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 24px;
+}
+
+.HelpForSpec .help-spec-hero-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0 18px;
+	border: 1px solid rgba(255, 255, 255, 0.76);
+	border-radius: 14px;
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+	font-size: 0.92rem;
+	font-weight: 700;
+	text-decoration: none;
+	transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.HelpForSpec .help-spec-hero-link:hover,
+.HelpForSpec .help-spec-hero-link:focus-visible {
+	background: rgba(255, 255, 255, 0.2);
+	border-color: #fff;
+	transform: translateY(-1px);
+}
+
 /* Main */
 .HelpForSpec .help-spec-main {
 	padding: 16px 0 54px;
@@ -141,6 +173,18 @@
 	padding: 18px;
 	text-align: center;
 	text-decoration: none;
+}
+
+.HelpForSpec .help-spec-contact-card,
+.HelpForSpec .help-spec-cta-btn {
+	transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.HelpForSpec .help-spec-contact-card:hover,
+.HelpForSpec .help-spec-contact-card:focus-visible,
+.HelpForSpec .help-spec-cta-btn:hover,
+.HelpForSpec .help-spec-cta-btn:focus-visible {
+	transform: translateY(-1px);
 }
 
 .HelpForSpec .help-spec-contact-card:nth-child(1) {
@@ -421,4 +465,171 @@
 	color: #fff;
 	font-size: 0.82rem;
 	font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+	.HelpForSpec .help-spec-container {
+		padding: 0 20px;
+	}
+
+	.HelpForSpec .help-spec-hero {
+		padding: 38px 0 34px;
+	}
+
+	.HelpForSpec .help-spec-hero-title {
+		font-size: 2.5rem;
+	}
+
+	.HelpForSpec .help-spec-section + .help-spec-section {
+		margin-top: 46px;
+	}
+
+	.HelpForSpec .help-spec-practice-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 900px) {
+	.HelpForSpec .help-spec-contact-grid,
+	.HelpForSpec .help-spec-tip-grid,
+	.HelpForSpec .help-spec-practice-grid,
+	.HelpForSpec .help-spec-mistake-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.HelpForSpec .help-spec-main {
+		padding: 16px 0 48px;
+	}
+
+	.HelpForSpec .help-spec-contact-grid {
+		margin-bottom: 32px;
+	}
+}
+
+@media (max-width: 640px) {
+	.HelpForSpec .help-spec-container {
+		padding: 0 16px;
+	}
+
+	.HelpForSpec .help-spec-hero {
+		padding: 30px 0 28px;
+	}
+
+	.HelpForSpec .help-spec-hero-image {
+		width: 62px;
+		height: 62px;
+		margin-bottom: 14px;
+	}
+
+	.HelpForSpec .help-spec-hero-image img {
+		width: 46px;
+		height: 46px;
+	}
+
+	.HelpForSpec .help-spec-hero-title {
+		font-size: 1.92rem;
+	}
+
+	.HelpForSpec .help-spec-hero-subtitle,
+	.HelpForSpec .help-spec-section-subtitle,
+	.HelpForSpec .help-spec-cta p {
+		font-size: 0.92rem;
+	}
+
+	.HelpForSpec .help-spec-hero-actions,
+	.HelpForSpec .help-spec-cta-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.HelpForSpec .help-spec-hero-link,
+	.HelpForSpec .help-spec-cta-btn {
+		width: 100%;
+	}
+
+	.HelpForSpec .help-spec-section-title,
+	.HelpForSpec .help-spec-cta h2 {
+		font-size: 1.66rem;
+	}
+
+	.HelpForSpec .help-spec-tip-card,
+	.HelpForSpec .help-spec-practice-card,
+	.HelpForSpec .help-spec-mistake-card {
+		padding: 16px;
+	}
+
+	.HelpForSpec .help-spec-faq-button {
+		padding: 16px;
+		font-size: 0.94rem;
+	}
+
+	.HelpForSpec .help-spec-faq-answer {
+		padding: 0 16px 16px;
+	}
+
+	.HelpForSpec .help-spec-cta {
+		padding: 40px 0 36px;
+	}
+}
+
+@media (max-width: 420px) {
+	.HelpForSpec .help-spec-container {
+		padding: 0 14px;
+	}
+
+	.HelpForSpec .help-spec-main {
+		padding: 14px 0 42px;
+	}
+
+	.HelpForSpec .help-spec-hero-title {
+		font-size: 1.66rem;
+	}
+
+	.HelpForSpec .help-spec-section-title,
+	.HelpForSpec .help-spec-cta h2 {
+		font-size: 1.42rem;
+	}
+
+	.HelpForSpec .help-spec-contact-card,
+	.HelpForSpec .help-spec-tip-card,
+	.HelpForSpec .help-spec-practice-card,
+	.HelpForSpec .help-spec-mistake-card,
+	.HelpForSpec .help-spec-faq-item {
+		border-radius: 14px;
+	}
+
+	.HelpForSpec .help-spec-contact-card {
+		min-height: 104px;
+		padding: 16px;
+	}
+
+	.HelpForSpec .help-spec-tip-head,
+	.HelpForSpec .help-spec-mistake-card {
+		gap: 12px;
+	}
+
+	.HelpForSpec .help-spec-tip-card h3,
+	.HelpForSpec .help-spec-mistake-card h3,
+	.HelpForSpec .help-spec-practice-card h3 {
+		font-size: 1.02rem;
+	}
+
+	.HelpForSpec .help-spec-tip-text,
+	.HelpForSpec .help-spec-practice-card p,
+	.HelpForSpec .help-spec-mistake-card p,
+	.HelpForSpec .help-spec-faq-answer,
+	.HelpForSpec .help-spec-list li,
+	.HelpForSpec .help-spec-contact-card p,
+	.HelpForSpec .help-spec-banner p {
+		font-size: 0.84rem;
+	}
+
+	.HelpForSpec .help-spec-faq-button {
+		gap: 12px;
+		padding: 14px;
+	}
+
+	.HelpForSpec .help-spec-faq-answer {
+		padding: 0 14px 14px;
+	}
 }

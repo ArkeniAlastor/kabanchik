@@ -55,6 +55,25 @@ const SOCIAL_OPTIONS = [
   { id: 'facebook', label: 'Facebook', icon: facebookIcon },
 ];
 
+const ROLE_GUIDES = {
+  client: {
+    eyebrow: 'Маршрут для замовника',
+    text: 'Перед реєстрацією можете переглянути каталог фахівців або відкрити поради для замовників.',
+    links: [
+      { to: '/catalogue-specs', label: 'Каталог фахівців' },
+      { to: '/customer-help', label: 'Поради для замовників' },
+    ],
+  },
+  expert: {
+    eyebrow: 'Маршрут для фахівця',
+    text: 'Якщо хочете спочатку зорієнтуватися, перегляньте актуальні замовлення або поради для фахівців.',
+    links: [
+      { to: '/offers', label: 'Переглянути замовлення' },
+      { to: '/HelpForSpec', label: 'Поради для фахівців' },
+    ],
+  },
+};
+
 const PROMO_FEATURES = [
   { icon: iconCheck, title: 'Перевірені фахівці', text: 'Всі спеціалісти проходять верифікацію' },
   { icon: iconMoney, title: 'Безпечні платежі', text: 'Гарантія повернення коштів' },
@@ -65,6 +84,18 @@ function RegisterPage() {
   const [role, setRole] = useState('client');
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const navigate = useNavigate();
+  const currentGuide = ROLE_GUIDES[role];
+  const submitButtonStyle = role === 'expert'
+    ? {
+      background: '#f5c842',
+      color: '#1a1a2e',
+      boxShadow: '0 10px 18px rgba(217, 168, 32, 0.24)',
+    }
+    : {
+      background: '#2e3d72',
+      color: '#ffffff',
+      boxShadow: 'none',
+    };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -114,6 +145,25 @@ function RegisterPage() {
             ))}
           </div>
 
+          <div className={`register-guide register-guide--${role}`}>
+            <p className="register-guide-eyebrow">{currentGuide.eyebrow}</p>
+            <p className="register-guide-text">{currentGuide.text}</p>
+            <div className="register-guide-links">
+              {currentGuide.links.map((item, index) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`register-guide-link ${index === 0 ? 'register-guide-link--primary' : 'register-guide-link--secondary'}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+            <p className="register-guide-note">
+              Не впевнені, як усе працює? <Link to="/HowWorkPage">Подивіться сценарії платформи</Link>
+            </p>
+          </div>
+
           <form className="register-fields" onSubmit={handleSubmit}>
             {FORM_FIELDS.map((field) => (
               <label key={field.name} className="register-label">
@@ -130,7 +180,7 @@ function RegisterPage() {
               </label>
             ))}
 
-            <button type="submit" className="register-submit">
+            <button type="submit" className="register-submit" style={submitButtonStyle}>
               Зареєструватися як {role === 'client' ? 'замовник' : 'фахівець'}
             </button>
           </form>

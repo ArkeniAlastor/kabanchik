@@ -9,8 +9,12 @@ function DashboardHeader({
     actionLabel,
     actionPrefix,
     onActionClick,
+    onAlertClick,
+    onUserClick,
     user,
 }) {
+    const UserCardTag = onUserClick ? 'button' : 'div';
+
     return (
         <header className="dashboard-header">
             <Link to="/" className="dashboard-header-brand">
@@ -39,12 +43,22 @@ function DashboardHeader({
                     <span>{actionLabel}</span>
                 </button>
 
-                <button type="button" className="dashboard-header-alert-btn" aria-label="Сповіщення">
+                <button
+                    type="button"
+                    className="dashboard-header-alert-btn"
+                    aria-label="Відкрити повідомлення"
+                    onClick={onAlertClick}
+                >
                     <img src={icons.iconKolokolchik} alt="" />
                 </button>
             </div>
 
-            <div className="dashboard-header-user-card">
+            <UserCardTag
+                className={`dashboard-header-user-card${onUserClick ? ' dashboard-header-user-card-button' : ''}`}
+                onClick={onUserClick}
+                type={onUserClick ? 'button' : undefined}
+                aria-label={onUserClick ? `Відкрити налаштування для ${user.name}` : undefined}
+            >
                 <img src={user.avatar} alt={user.name} className="dashboard-header-user-avatar" />
 
                 <div className="dashboard-header-user-copy">
@@ -54,7 +68,7 @@ function DashboardHeader({
                     </h3>
                     <p>{user.name}</p>
                 </div>
-            </div>
+            </UserCardTag>
         </header>
     );
 }

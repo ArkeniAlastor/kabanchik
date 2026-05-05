@@ -67,15 +67,16 @@ const recomendationCards = [
         icon: icons.iconLupa,
         title: 'Нові проекти',
         description: '5 свіжих замовлень чекають на вас.',
-        linkText: 'Переглянути переглянути проекти →',
-        linkPath: '../CategoryPage/CategoryPage', /*с задумкой на маршрутизацию, но пока плевать*/
+        linkText: 'Переглянути проекти →',
+        tabKey: 'searchProjects',
     },
     {
         id: 2,
         icon: icons.iconFolder,
-        title: 'Партфоліо',
+        title: 'Портфоліо',
         description: 'Додайте нові роботи до свого портфоліо.',
-        linkText: 'Керувати партфоліо →',
+        linkText: 'Керувати портфоліо →',
+        tabKey: 'partfolio',
     },
     {
         id: 3,
@@ -83,6 +84,7 @@ const recomendationCards = [
         title: 'Поради для успіху',
         description: 'Як збільшити свій дохід на платформі.',
         linkText: 'Читати поради →',
+        to: '/HelpForSpec',
     }
 ];
 
@@ -321,8 +323,8 @@ const partfolioOrder = [
     },
 ]
 // Вкладка "Огляд": статистика, последние заказы и рекомендации
-const OverviewTab = ({ onGoToSearchProjects, orders }) => (
-    <div className='overview-tab'>
+const OverviewTab = ({ onOpenTab, orders }) => (
+    <div className='spec-overview-tab'>
         {/* Stats */}
         <div className='stats-section'>
             <div className="container">
@@ -344,7 +346,7 @@ const OverviewTab = ({ onGoToSearchProjects, orders }) => (
 
         {/* Last Orders */}
         <div className='last-order-container '>
-            <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={onGoToSearchProjects}> Переглянути всі →</p>
+            <span className='last-order'><h1>Останні замовлення</h1> <p className='go-to-orders' onClick={() => onOpenTab('searchProjects')}> Переглянути всі →</p>
             </span>
             <ProjectStatusGrid
                 orders={orders}
@@ -361,8 +363,16 @@ const OverviewTab = ({ onGoToSearchProjects, orders }) => (
                         <img className='recomendation-card-icon' src={card.icon} alt="" />
                         <h2 className='recomendation-card-title'>{card.title}</h2>
                         <p className='recomendation-card-description'>{card.description}</p>
-                        {card.linkPath ? (
-                            <Link className='recomendation-card-link' to="/category">{card.linkText}</Link>
+                        {card.to ? (
+                            <Link className='recomendation-card-link' to={card.to}>{card.linkText}</Link>
+                        ) : card.tabKey ? (
+                            <button
+                                type='button'
+                                className='recomendation-card-link recomendation-card-link-btn'
+                                onClick={() => onOpenTab(card.tabKey)}
+                            >
+                                {card.linkText}
+                            </button>
                         ) : (
                             <span className='recomendation-card-link'>{card.linkText}</span>
                         )}
@@ -376,7 +386,7 @@ const OverviewTab = ({ onGoToSearchProjects, orders }) => (
 
 // Вкладка "Всі замовлення": полный список заказов
 const SearchProjectsTab = ({ projects }) => (
-    <div className='orders-tab'>
+    <div className='spec-orders-tab'>
         <div className='orders-header'>
             <h1>Пошук проектів</h1>
         </div>
@@ -440,7 +450,7 @@ const SearchProjectsTab = ({ projects }) => (
 
 // Вкладка "Активні": только заказы в работе
 const MyProjectsTab = ({ activeOrders, completedOrders }) => (
-    <div className='my-projects-tab'>
+    <div className='spec-my-projects-tab'>
         <div className='orders-header'>
             <h1>Активні замовлення</h1>
         </div>
@@ -461,7 +471,7 @@ const MyProjectsTab = ({ activeOrders, completedOrders }) => (
 
 // Вкладка "Завершені": только завершенные заказы
 const PartfolioTab = ({ items }) => (
-    <div className='Partfolio-tab'>
+    <div className='spec-portfolio-tab'>
         <div className='Partfolio-header'>
             <h1>Моє портфоліо </h1>
             <button className='partfolio-plus'>+ Додати роботу</button>
@@ -585,7 +595,7 @@ const MessagesTab = () => {
     };
 
     return (
-        <div className='messages-tab'>
+        <div className='spec-messages-tab'>
             <div className='orders-header'>
                 <h1 className='orders-title'>Повідомлення</h1>
             </div>
@@ -687,7 +697,7 @@ const MessagesTab = () => {
 
 // Вкладка "Обране": сетка карточек избранных специалистов
 const TakeTab = ({ savedProjects }) => (
-    <div className='take-tab'>
+    <div className='spec-take-tab'>
         <div className='takes-header'>
             <h1 className='take-title'>Збережені замовлення</h1>
         </div>
@@ -833,7 +843,7 @@ const SettingsTab = () => {
     };
 
     return (
-        <div className='settings-tab'>
+        <div className='spec-settings-tab'>
             <div className='settings-header'>
                 <h1>Налаштування профілю</h1>
             </div>
@@ -1170,7 +1180,7 @@ function SpecPage() {
 
     // Соответствие ключа вкладки и React-компонента контента
     const contentMap = {
-        overview: <OverviewTab onGoToSearchProjects={() => setActiveTab('searchProjects')} orders={activeOrders} />,
+        overview: <OverviewTab onOpenTab={setActiveTab} orders={activeOrders} />,
         searchProjects: <SearchProjectsTab projects={filteredProjects} />,
         myProjects: <MyProjectsTab activeOrders={activeOrders} completedOrders={completedOrders} />,
         partfolio: <PartfolioTab items={filteredPortfolio} />,
@@ -1195,6 +1205,8 @@ function SpecPage() {
                 onSearchChange={setSearchQuery}
                 actionLabel="Знайти роботу"
                 onActionClick={() => setActiveTab('searchProjects')}
+                onAlertClick={() => setActiveTab('messages')}
+                onUserClick={() => setActiveTab('settings')}
                 user={user}
             />
 

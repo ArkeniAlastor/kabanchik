@@ -4,6 +4,13 @@
   padding-bottom: 56px;
 }
 
+.SpecialistsDirectory,
+.SpecialistsDirectory *,
+.SpecialistsDirectory *::before,
+.SpecialistsDirectory *::after {
+  box-sizing: border-box;
+}
+
 .SpecialistsDirectory .directory-container {
   width: 100%;
   max-width: 1120px;
@@ -111,6 +118,46 @@
 .SpecialistsDirectory .hero-search-icon {
   color: rgba(255, 255, 255, 0.74);
   font-size: 1.15rem;
+}
+
+.SpecialistsDirectory .directory-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.SpecialistsDirectory .directory-hero-link,
+.SpecialistsDirectory .specialist-card-action,
+.SpecialistsDirectory .directory-empty-link {
+  text-decoration: none;
+}
+
+.SpecialistsDirectory .directory-hero-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.SpecialistsDirectory .directory-hero-link:hover {
+  transform: translateY(-1px);
+}
+
+.SpecialistsDirectory .directory-hero-link--primary {
+  background: #ffffff;
+  color: #36539d;
+}
+
+.SpecialistsDirectory .directory-hero-link--secondary {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #ffffff;
 }
 
 .SpecialistsDirectory .category-filter {
@@ -226,6 +273,40 @@
   border: 1px solid #eee4d8;
   color: #756d62;
   text-align: center;
+}
+
+.SpecialistsDirectory .empty-state p {
+  margin: 0;
+}
+
+.SpecialistsDirectory .directory-empty-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.SpecialistsDirectory .directory-empty-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.SpecialistsDirectory .directory-empty-link--primary {
+  background: #4d62a6;
+  color: #fff;
+}
+
+.SpecialistsDirectory .directory-empty-link--secondary {
+  background: #fff;
+  border: 1px solid #ddd4c8;
+  color: #314671;
 }
 
 /* Specialist Card */
@@ -420,6 +501,25 @@
   gap: 10px;
 }
 
+.SpecialistsDirectory .specialist-card-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #4d62a6;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.SpecialistsDirectory .specialist-card-action:hover {
+  transform: translateY(-1px);
+  background: #40589f;
+}
+
 .SpecialistsDirectory .availability-badge {
   display: inline-flex;
   align-items: center;
@@ -439,4 +539,158 @@
 .SpecialistsDirectory .availability-badge.is-busy {
   background: #f1f1f1;
   color: #9aa0ad;
+}
+
+@media (max-width: 1024px) {
+  .SpecialistsDirectory .directory-container {
+    padding: 0 20px;
+  }
+
+  .SpecialistsDirectory .page-header {
+    padding: 38px 0 34px;
+  }
+
+  .SpecialistsDirectory .page-header h1 {
+    font-size: 2.45rem;
+  }
+
+  .SpecialistsDirectory .subtitle {
+    font-size: 1.08rem;
+    margin-bottom: 20px;
+  }
+
+  .SpecialistsDirectory .hero-search {
+    max-width: 100%;
+  }
+
+  .SpecialistsDirectory .search-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .SpecialistsDirectory .search-inputs {
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .SpecialistsDirectory .specialists-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .SpecialistsDirectory .directory-container {
+    padding: 0 16px;
+  }
+
+  .SpecialistsDirectory .page-header {
+    padding: 30px 0 28px;
+  }
+
+  .SpecialistsDirectory .page-header::before {
+    top: -100px;
+    left: -78px;
+    width: 180px;
+    height: 180px;
+  }
+
+  .SpecialistsDirectory .page-header::after {
+    right: -72px;
+    bottom: -98px;
+    width: 188px;
+    height: 188px;
+  }
+
+  .SpecialistsDirectory .page-title-row {
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .SpecialistsDirectory .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .SpecialistsDirectory .subtitle {
+    font-size: 0.98rem;
+    margin-bottom: 18px;
+  }
+
+  .SpecialistsDirectory .hero-search {
+    height: 48px;
+    padding: 0 14px;
+  }
+
+  .SpecialistsDirectory .directory-hero-links,
+  .SpecialistsDirectory .directory-empty-actions {
+    flex-direction: column;
+  }
+
+  .SpecialistsDirectory .directory-hero-link,
+  .SpecialistsDirectory .directory-empty-link,
+  .SpecialistsDirectory .specialist-card-action {
+    width: 100%;
+  }
+
+  .SpecialistsDirectory .filter-buttons {
+    gap: 8px;
+    padding: 14px 0 10px;
+  }
+
+  .SpecialistsDirectory .catalog-content {
+    padding-top: 18px;
+  }
+
+  .SpecialistsDirectory .search-inputs,
+  .SpecialistsDirectory .specialists-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .SpecialistsDirectory .search-filters {
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .SpecialistsDirectory .specialist-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .SpecialistsDirectory .card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .SpecialistsDirectory .card-meta {
+    align-items: stretch;
+  }
+
+  .SpecialistsDirectory .availability-badge {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .SpecialistsDirectory .page-header h1 {
+    font-size: 1.72rem;
+  }
+
+  .SpecialistsDirectory .subtitle,
+  .SpecialistsDirectory .search-filters p,
+  .SpecialistsDirectory .description {
+    font-size: 0.86rem;
+  }
+
+  .SpecialistsDirectory .filter-btn,
+  .SpecialistsDirectory .search-input,
+  .SpecialistsDirectory .directory-hero-link,
+  .SpecialistsDirectory .specialist-card-action,
+  .SpecialistsDirectory .directory-empty-link {
+    font-size: 0.8rem;
+  }
+
+  .SpecialistsDirectory .specialist-name,
+  .SpecialistsDirectory .price {
+    font-size: 0.95rem;
+  }
 }

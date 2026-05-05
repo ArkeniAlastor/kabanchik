@@ -28,6 +28,24 @@ const CONTACT_CARDS = [
   },
 ];
 
+const HERO_LINKS = [
+  {
+    id: 'create-order',
+    label: 'Створити замовлення',
+    to: '/create-order',
+  },
+  {
+    id: 'specialists',
+    label: 'Знайти фахівця',
+    to: '/catalogue-specs',
+  },
+  {
+    id: 'help-center',
+    label: 'Центр допомоги',
+    to: '/help',
+  },
+];
+
 const TIP_CARDS = [
   {
     id: 'brief',
@@ -191,6 +209,13 @@ function CustomerHelpPage() {
             Корисні поради для замовників, які допоможуть успішно реалізувати
             ваші проекти на BusyBee.
           </p>
+          <div className="customer-help-hero-actions">
+            {HERO_LINKS.map((link) => (
+              <Link key={link.id} to={link.to} className="customer-help-hero-link">
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

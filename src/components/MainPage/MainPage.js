@@ -215,21 +215,24 @@ function MainPage() {
                     </div>
                 </section>
 
-                {/* CTA */}
                 <section className="cta-section">
                     <div className="container">
-                        <h2 className="cta-title">Готові почати?</h2>
-                        <p className="cta-sub">Приєднуйтесь до тисяч користувачів, які вже знайшли свого фахівця або перший проєкт.</p>
-                        <div className="cta-btns">
-                            <Link to="/register" className="cta-btn-primary">Створити замовлення</Link>
-                            <Link to="/catalogue-specs" className="cta-btn-outline">Знайти фахівця</Link>
+                        <div className="cta-panel">
+                            <p className="cta-kicker">Потрібен швидкий старт?</p>
+                            <h2 className="cta-title">Почніть з потрібного маршруту без зайвих кроків</h2>
+                            <p className="cta-sub">Якщо дійшли до кінця сторінки, тут залишили короткі переходи до замовлення і каталогу.</p>
+                            <div className="cta-btns">
+                                <Link to="/create-order" className="cta-btn-primary">Створити замовлення</Link>
+                                <Link to="/catalogue-specs" className="cta-btn-outline">Знайти фахівця</Link>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Banner */}
                 <div className="banner-strip">
-                    Маленька праця для великих людей!
+                    <div className="container">
+                        <p>Маленька праця для великих людей!</p>
+                    </div>
                 </div>
             </main>
         </div>

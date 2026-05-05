@@ -81,6 +81,19 @@
 	line-height: 1.55;
 }
 
+.HowWorkPage .how-work-hero-actions,
+.HowWorkPage .how-work-cta-actions,
+.HowWorkPage .how-work-help-actions {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.HowWorkPage .how-work-hero-actions {
+	margin-top: 24px;
+}
+
 /* Tabs */
 .HowWorkPage .how-work-tabs-section {
 	padding: 16px 0;
@@ -92,6 +105,7 @@
 	display: flex;
 	justify-content: center;
 	gap: 8px;
+	flex-wrap: wrap;
 }
 
 .HowWorkPage .how-work-tab-btn {
@@ -114,9 +128,18 @@
 }
 
 .HowWorkPage .how-work-tab-btn.active {
-	background: var(--hwp-blue);
 	color: #fff;
 	box-shadow: 0 10px 20px rgba(65, 88, 159, 0.24);
+}
+
+.HowWorkPage .how-work-tab-btn--forUser.active {
+	background: var(--hwp-blue);
+}
+
+.HowWorkPage .how-work-tab-btn--forSpec.active {
+	background: var(--hwp-gold);
+	color: #2f2a19;
+	box-shadow: 0 10px 20px rgba(217, 166, 31, 0.28);
 }
 
 .HowWorkPage .how-work-tab-icon {
@@ -342,11 +365,13 @@
 }
 
 .HowWorkPage .how-work-cta-actions {
-	display: flex;
-	justify-content: center;
+	margin-top: 0;
 }
 
+.HowWorkPage .how-work-hero-primary,
+.HowWorkPage .how-work-hero-secondary,
 .HowWorkPage .how-work-cta-primary,
+.HowWorkPage .how-work-cta-secondary,
 .HowWorkPage .how-work-help-primary,
 .HowWorkPage .how-work-help-secondary {
 	display: inline-flex;
@@ -360,11 +385,25 @@
 	text-decoration: none;
 }
 
+.HowWorkPage .how-work-hero-primary,
 .HowWorkPage .how-work-cta-primary {
-	min-width: 236px;
+	min-width: 220px;
 	background: #fff;
 	color: var(--hwp-blue-dark);
 	box-shadow: 0 10px 20px rgba(31, 40, 69, 0.18);
+}
+
+.HowWorkPage .how-work-hero-secondary,
+.HowWorkPage .how-work-cta-secondary {
+	min-width: 220px;
+	border: 1px solid rgba(255, 255, 255, 0.26);
+	background: rgba(255, 255, 255, 0.14);
+	color: #fff;
+}
+
+.HowWorkPage .how-work-cta-primary {
+	min-width: 236px;
+	background: #fff;
 }
 
 /* Help */
@@ -381,8 +420,6 @@
 }
 
 .HowWorkPage .how-work-help-actions {
-	display: flex;
-	justify-content: center;
 	gap: 10px;
 }
 
@@ -404,4 +441,209 @@
 	font-size: 0.82rem;
 	font-weight: 700;
 	text-align: center;
+}
+
+@media (max-width: 1024px) {
+	.HowWorkPage .how-work-container {
+		padding: 0 20px;
+	}
+
+	.HowWorkPage .how-work-hero {
+		padding: 40px 0 38px;
+	}
+
+	.HowWorkPage .how-work-hero-title {
+		font-size: 2.45rem;
+	}
+
+	.HowWorkPage .how-work-hero-subtitle {
+		font-size: 1rem;
+	}
+
+	.HowWorkPage .how-work-tabs {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.HowWorkPage .how-work-tab-btn {
+		width: 100%;
+		min-width: 0;
+		min-height: 44px;
+	}
+
+	.HowWorkPage .how-work-main {
+		padding: 30px 0 52px;
+	}
+
+	.HowWorkPage .how-work-step-card {
+		padding-left: 38px;
+	}
+
+	.HowWorkPage .how-work-step-line {
+		left: 24px;
+		top: 40px;
+	}
+
+	.HowWorkPage .how-work-step-inner {
+		padding: 16px 18px;
+	}
+
+	.HowWorkPage .how-work-step-features {
+		grid-template-columns: 1fr;
+	}
+
+	.HowWorkPage .how-work-benefit-list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px;
+	}
+
+	.HowWorkPage .how-work-cta-section,
+	.HowWorkPage .how-work-help-section,
+	.HowWorkPage .how-work-benefits-section {
+		padding-top: 44px;
+		padding-bottom: 44px;
+	}
+}
+
+@media (max-width: 640px) {
+	.HowWorkPage .how-work-container {
+		padding: 0 16px;
+	}
+
+	.HowWorkPage .how-work-hero {
+		padding: 34px 0 32px;
+	}
+
+	.HowWorkPage .how-work-hero-image {
+		width: 72px;
+		height: 72px;
+		margin-bottom: 14px;
+	}
+
+	.HowWorkPage .how-work-hero-image img {
+		width: 58px;
+		height: 58px;
+	}
+
+	.HowWorkPage .how-work-hero-title {
+		font-size: 2rem;
+		margin-bottom: 10px;
+	}
+
+	.HowWorkPage .how-work-hero-subtitle {
+		font-size: 0.96rem;
+	}
+
+	.HowWorkPage .how-work-hero-actions,
+	.HowWorkPage .how-work-cta-actions,
+	.HowWorkPage .how-work-help-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.HowWorkPage .how-work-hero-primary,
+	.HowWorkPage .how-work-hero-secondary,
+	.HowWorkPage .how-work-cta-primary,
+	.HowWorkPage .how-work-cta-secondary,
+	.HowWorkPage .how-work-help-primary,
+	.HowWorkPage .how-work-help-secondary {
+		width: 100%;
+		min-width: 0;
+		min-height: 48px;
+	}
+
+	.HowWorkPage .how-work-tabs-section {
+		padding: 14px 0;
+	}
+
+	.HowWorkPage .how-work-tabs {
+		grid-template-columns: 1fr;
+	}
+
+	.HowWorkPage .how-work-main {
+		padding: 24px 0 40px;
+	}
+
+	.HowWorkPage .how-work-step-card {
+		padding-left: 0;
+	}
+
+	.HowWorkPage .how-work-step-line {
+		display: none;
+	}
+
+	.HowWorkPage .how-work-step-card + .how-work-step-card {
+		margin-top: 16px;
+	}
+
+	.HowWorkPage .how-work-step-inner {
+		flex-direction: column;
+		gap: 14px;
+		padding: 18px 16px;
+		border-radius: 16px;
+	}
+
+	.HowWorkPage .how-work-step-icon-box {
+		width: 44px;
+		height: 44px;
+		border-radius: 12px;
+	}
+
+	.HowWorkPage .how-work-step-icon {
+		width: 24px;
+		height: 24px;
+	}
+
+	.HowWorkPage .how-work-step-number {
+		top: -6px;
+		right: -6px;
+		width: 22px;
+		height: 22px;
+		font-size: 0.72rem;
+	}
+
+	.HowWorkPage .how-work-step-title {
+		font-size: 0.98rem;
+	}
+
+	.HowWorkPage .how-work-step-description {
+		margin-bottom: 12px;
+		font-size: 0.86rem;
+	}
+
+	.HowWorkPage .how-work-feature-item {
+		min-height: 0;
+		padding: 10px 12px;
+		font-size: 0.78rem;
+	}
+
+	.HowWorkPage .how-work-section-title {
+		font-size: 1.7rem;
+	}
+
+	.HowWorkPage .how-work-benefit-list {
+		grid-template-columns: 1fr;
+	}
+
+	.HowWorkPage .how-work-benefit-text {
+		font-size: 0.86rem;
+	}
+
+	.HowWorkPage .how-work-cta-section,
+	.HowWorkPage .how-work-help-section,
+	.HowWorkPage .how-work-benefits-section {
+		padding-top: 38px;
+		padding-bottom: 38px;
+	}
+
+	.HowWorkPage .how-work-cta-sub,
+	.HowWorkPage .how-work-help-sub {
+		font-size: 0.92rem;
+	}
+
+	.HowWorkPage .how-work-banner-strip {
+		padding: 16px 14px;
+		font-size: 0.95rem;
+	}
 }

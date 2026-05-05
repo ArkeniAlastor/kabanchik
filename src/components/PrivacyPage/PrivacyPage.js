@@ -1,5 +1,17 @@
 import './PrivacyPage.css';
+import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
+
+const heroShortcuts = [
+  { to: '/terms', label: 'Умови використання', tone: 'primary' },
+  { to: '/help', label: 'Центр допомоги', tone: 'secondary' },
+  { to: '/register', label: 'Створити акаунт', tone: 'secondary' },
+];
+
+const contactActions = [
+  { to: '/help', label: 'Написати в підтримку', tone: 'primary' },
+  { to: '/HowWorkPage', label: 'Як це працює', tone: 'secondary' },
+];
 
 const privacySections = [
   {
@@ -134,6 +146,17 @@ function PrivacyPage() {
         <div className="privacy-container privacy-hero-inner">
           <h1>Політика конфіденційності</h1>
           <p>Останнє оновлення: 23 квітня 2026 року</p>
+          <div className="privacy-shortcuts">
+            {heroShortcuts.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`privacy-shortcut privacy-shortcut--${item.tone}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -188,6 +211,20 @@ function PrivacyPage() {
               <p>Загальна підтримка: <a href="mailto:support@busybee.ua">support@busybee.ua</a></p>
               <p>Телефон: <a href="tel:+380441234567">+38 (044) 123-45-67</a></p>
               <p>Адреса: м. Київ, вул. Хрещатик, 1</p>
+              <div className="privacy-contact-actions">
+                {contactActions.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`privacy-contact-link privacy-contact-link--${item.tone}`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+              <p className="privacy-contact-note">
+                Також можете переглянути <Link to="/terms">умови використання</Link> або повернутися до <Link to="/register">реєстрації</Link>.
+              </p>
             </section>
           </article>
         </div>

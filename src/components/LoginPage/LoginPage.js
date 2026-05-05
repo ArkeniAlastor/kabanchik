@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import { iconBee, iconCheck, iconMoney, iconLightning } from '../../imgs/icons';
 import googleIcon from '../../imgs/Icon.png';
@@ -26,6 +26,12 @@ const SOCIAL_OPTIONS = [
   { id: 'facebook', label: 'Facebook', icon: facebookIcon },
 ];
 
+const LOGIN_SHORTCUTS = [
+  { to: '/register', label: 'Створити акаунт', tone: 'primary' },
+  { to: '/HowWorkPage', label: 'Як це працює', tone: 'secondary' },
+  { to: '/help', label: 'Центр допомоги', tone: 'secondary' },
+];
+
 const LOGIN_FEATURES = [
   {
     icon: iconCheck,
@@ -46,6 +52,7 @@ const LOGIN_FEATURES = [
 
 function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -55,6 +62,7 @@ function LoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    navigate('/userpage');
   };
 
   return (
@@ -75,6 +83,22 @@ function LoginPage() {
 
           <h1 className="login-title">Вітаємо знову!</h1>
           <p className="login-subtitle">Увійдіть до свого акаунту</p>
+
+          <div className="login-shortcuts">
+            {LOGIN_SHORTCUTS.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`login-shortcut login-shortcut--${item.tone}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          <p className="login-help-note">
+            Якщо ще не користувалися платформою, спочатку можете відкрити <Link to="/catalogue-specs">каталог фахівців</Link> або <Link to="/offers">актуальні замовлення</Link>.
+          </p>
 
           <form className="login-fields" onSubmit={handleSubmit}>
             {FORM_FIELDS.map((field) => (

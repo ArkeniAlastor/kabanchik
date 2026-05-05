@@ -1,6 +1,6 @@
 import './OffersPage.css';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 
 import {
@@ -361,6 +361,12 @@ const PROGRAMMING_SUBCATEGORIES = [
   'DevOps'
 ];
 
+const HERO_SHORTCUTS = [
+  { to: '/HowWorkPage', label: 'Як це працює' },
+  { to: '/HelpForSpec', label: 'Поради для фахівців' },
+  { to: '/register', label: 'Створити профіль' },
+];
+
 const matchesSearchQuery = (values, normalizedQuery) => {
   const searchableText = values.join(' ').toLowerCase();
   return !normalizedQuery || searchableText.includes(normalizedQuery);
@@ -423,7 +429,7 @@ const OfferCard = ({ offer }) => {
             <p className="freelancer-rating">⭐ {offer.freelancer.rating} ({offer.freelancer.reviews} {reviewLabel})</p>
           </div>
         </div>
-        <button className="offer-btn-hire">Запропонувати ціну</button>
+        <Link to="/register" className="offer-btn-hire">Запропонувати ціну</Link>
       </div>
     </div>
   );
@@ -493,12 +499,17 @@ function OffersPage() {
                 />
                 <span className="offers-hero-search-icon">⌕</span>
               </div>
+              <div className="offers-hero-shortcuts">
+                {HERO_SHORTCUTS.map((item) => (
+                  <Link key={item.to} to={item.to} className="offers-hero-shortcut">{item.label}</Link>
+                ))}
+              </div>
             </div>
             <div className="offers-hero-action">
-              <button type="button" className="offers-create-order-btn">
+              <Link to="/create-order" className="offers-create-order-btn">
                 <span className="offers-create-order-plus">+</span>
                 Створити замовлення
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -529,8 +540,12 @@ function OffersPage() {
             {filteredOffers.length ? (
               filteredOffers.map((offer) => <OfferCard key={offer.id} offer={offer} />)
             ) : (
-              <div className="offer-card">
+              <div className="offer-card offers-empty-state">
                 <p className="offer-description">За вашим запитом завдань не знайдено.</p>
+                <div className="offers-empty-actions">
+                  <Link to="/HowWorkPage" className="offers-empty-link offers-empty-link--primary">Як це працює</Link>
+                  <Link to="/help" className="offers-empty-link offers-empty-link--secondary">Центр допомоги</Link>
+                </div>
               </div>
             )}
           </div>

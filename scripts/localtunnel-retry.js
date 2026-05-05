@@ -1,23 +1,61 @@
 const { spawn } = require('child_process');
 
-const port = process.env.LOCALTUNNEL_PORT || '3000';
-const subdomain = process.env.LOCALTUNNEL_SUBDOMAIN || 'mykabanchik';
-const maxAttempts = Number(process.env.LOCALTUNNEL_MAX_ATTEMPTS || 10);
-const retryDelayMs = Number(process.env.LOCALTUNNEL_RETRY_DELAY_MS || 2000);
-const stableAfterMs = Number(process.env.LOCALTUNNEL_STABLE_MS || 15000);
-const enableCloudflaredFallback = process.env.TUNNEL_CLOUDFLARED_FALLBACK !== 'false';
-const isWindows = process.platform === 'win32';
+const config = {
+  port: process.env.LOCALTUNNEL_PORT || '3000',
+  subdomain: process.env.LOCALTUNNEL_SUBDOMAIN || 'mykabanchikbeta',
+  maxAttempts: Number(process.env.LOCALTUNNEL_MAX_ATTEMPTS || 10),
+  retryDelayMs: Number(process.env.LOCALTUNNEL_RETRY_DELAY_MS || 2000),
+  stableAfterMs: Number(process.env.LOCALTUNNEL_STABLE_MS || 15000),
+  acceptAssignedHostOnMismatch: process.env.LOCALTUNNEL_ACCEPT_ASSIGNED_HOST !== 'false',
+  enableCloudflaredFallback: process.env.TUNNEL_CLOUDFLARED_FALLBACK !== 'false',
+  isWindows: process.platform === 'win32',
+};
 
-let attempt = 0;
+config.expectedLocaltunnelHost = `${config.subdomain}.loca.lt`;
+
+const localtunnelArgs = ['localtunnel', '--port', config.port, '--subdomain', config.subdomain];
+const cloudflaredArgs = ['tunnel', '--url', `http://localhost:${config.port}`, '--no-autoupdate'];
+
+const localtunnelUrlLinePattern = /your url is:\s*https:\/\/[^\s]+/i;
+const httpsUrlPattern = /https:\/\/[^\s]+/i;
+const quickTunnelUrlPattern = /https:\/\/(?!api\.)[a-z0-9-]+\.trycloudflare\.com\b/i;
+const localtunnelRefusalPattern = /connection refused: .*localtunnel\.me:9327|check your firewall settings/i;
+const quickTunnelTimeoutPattern = /api\.trycloudflare\.com\/tunnel|context deadline exceeded/i;
+
 let currentChild = null;
-let isUsingFallback = false;
+let fallbackStarted = false;
 
-const localtunnelArgs = ['localtunnel', '--port', port, '--subdomain', subdomain];
-const cloudflaredCommand = 'cloudflared';
-const cloudflaredArgs = ['tunnel', '--url', `http://localhost:${port}`, '--no-autoupdate'];
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const writeLine = (stream, text) => {
+  stream.write(`${text}\n`);
+};
+
+const extractMatch = (text, pattern) => text.match(pattern)?.[0] || null;
+
+const getHostnameFromUrlLine = (text) => {
+  const urlLine = extractMatch(text, localtunnelUrlLinePattern);
+
+  if (!urlLine) {
+    return null;
+  }
+
+  const url = extractMatch(urlLine, httpsUrlPattern);
+
+  if (!url) {
+    return null;
+  }
+
+  try {
+    return new URL(url).hostname;
+  } catch (error) {
+    writeLine(process.stderr, `could not parse localtunnel url: ${error.message}`);
+    return null;
+  }
+};
 
 const spawnLocaltunnel = () => {
-  if (isWindows) {
+  if (config.isWindows) {
     const comspec = process.env.ComSpec || 'cmd.exe';
     const commandLine = ['npx', ...localtunnelArgs].join(' ');
 
@@ -31,188 +69,371 @@ const spawnLocaltunnel = () => {
   });
 };
 
-const stopChild = (signal) => {
-  if (currentChild && !currentChild.killed) {
-    currentChild.kill(signal);
-  }
+const spawnCloudflared = () => {
+  return spawn('cloudflared', cloudflaredArgs, {
+    stdio: ['inherit', 'pipe', 'pipe'],
+  });
 };
 
-process.on('SIGINT', () => {
-  stopChild('SIGINT');
-  process.exit(130);
-});
+const terminateChild = (child, signal = 'SIGTERM') => {
+  if (!child || child.exitCode !== null || child.signalCode) {
+    return;
+  }
 
-process.on('SIGTERM', () => {
-  stopChild('SIGTERM');
-  process.exit(143);
-});
+  if (config.isWindows) {
+    spawn('taskkill', ['/pid', String(child.pid), '/t', '/f'], {
+      stdio: 'ignore',
+    });
+
+    return;
+  }
+
+  child.kill(signal);
+};
+
+const stopCurrentChild = (signal = 'SIGTERM') => {
+  terminateChild(currentChild, signal);
+};
 
 const pipeOutput = (child, handlers = {}) => {
   child.stdout.on('data', (chunk) => {
     const text = chunk.toString();
-    process.stdout.write(text);
+    let shouldForward = true;
 
     if (handlers.stdout) {
-      handlers.stdout(text);
+      shouldForward = handlers.stdout(text) !== false;
+    }
+
+    if (shouldForward) {
+      process.stdout.write(text);
     }
   });
 
   child.stderr.on('data', (chunk) => {
     const text = chunk.toString();
-    process.stderr.write(text);
+    let shouldForward = true;
 
     if (handlers.stderr) {
-      handlers.stderr(text);
+      shouldForward = handlers.stderr(text) !== false;
+    }
+
+    if (shouldForward) {
+      process.stderr.write(text);
     }
   });
 };
 
-const startCloudflared = (reason) => {
-  if (!enableCloudflaredFallback) {
-    process.stderr.write(`localtunnel failed: ${reason}\n`);
+process.on('SIGINT', () => {
+  stopCurrentChild('SIGINT');
+  process.exit(130);
+});
+
+process.on('SIGTERM', () => {
+  stopCurrentChild('SIGTERM');
+  process.exit(143);
+});
+
+const startCloudflared = async (reason) => {
+  if (!config.enableCloudflaredFallback) {
+    writeLine(process.stderr, `localtunnel failed: ${reason}`);
     process.exit(1);
     return;
   }
 
-  if (isUsingFallback) {
+  if (fallbackStarted) {
     return;
   }
 
-  isUsingFallback = true;
-  process.stderr.write(
-    `localtunnel is unavailable (${reason}). Switching to cloudflared quick tunnel...\n`
+  fallbackStarted = true;
+  writeLine(
+    process.stderr,
+    `localtunnel is unavailable (${reason}). Switching to cloudflared quick tunnel...`
   );
 
   let child;
 
   try {
-    child = spawn(cloudflaredCommand, cloudflaredArgs, {
-      stdio: ['inherit', 'pipe', 'pipe'],
-    });
+    child = spawnCloudflared();
   } catch (error) {
-    process.stderr.write(`cloudflared failed to start: ${error.message}\n`);
+    writeLine(process.stderr, `cloudflared failed to start: ${error.message}`);
     process.exit(1);
     return;
   }
 
   currentChild = child;
 
-  let printedQuickUrl = false;
-  let sawQuickTunnelTimeout = false;
-  const printQuickUrl = (text) => {
-    if (printedQuickUrl) {
-      return;
-    }
+  return new Promise((resolve) => {
+    let printedQuickUrl = false;
+    let sawQuickTunnelTimeout = false;
 
-    const match = text.match(/https:\/\/(?!api\.)[a-z0-9-]+\.trycloudflare\.com\b/i);
-
-    if (match) {
-      printedQuickUrl = true;
-      process.stdout.write(`your url is: ${match[0]}\n`);
-    }
-  };
-
-  pipeOutput(child, {
-    stdout: printQuickUrl,
-    stderr: (text) => {
-      printQuickUrl(text);
-
-      if (/api\.trycloudflare\.com\/tunnel/i.test(text) || /context deadline exceeded/i.test(text)) {
-        sawQuickTunnelTimeout = true;
+    const printQuickUrl = (text) => {
+      if (printedQuickUrl) {
+        return;
       }
-    },
-  });
 
-  child.on('error', (error) => {
-    process.stderr.write(`cloudflared tunnel failed: ${error.message}\n`);
-    process.exit(1);
-  });
+      const url = extractMatch(text, quickTunnelUrlPattern);
 
-  child.on('exit', (code) => {
-    if (!printedQuickUrl && sawQuickTunnelTimeout) {
-      process.stderr.write(
-        'cloudflared quick tunnel could not reach api.trycloudflare.com. Check firewall, proxy, or network restrictions.\n'
-      );
-    }
+      if (!url) {
+        return;
+      }
 
-    process.exit(code || 1);
+      printedQuickUrl = true;
+      writeLine(process.stdout, `your url is: ${url}`);
+    };
+
+    pipeOutput(child, {
+      stdout: (text) => {
+        printQuickUrl(text);
+        return true;
+      },
+      stderr: (text) => {
+        printQuickUrl(text);
+
+        if (quickTunnelTimeoutPattern.test(text)) {
+          sawQuickTunnelTimeout = true;
+        }
+
+        return true;
+      },
+    });
+
+    child.on('error', (error) => {
+      writeLine(process.stderr, `cloudflared tunnel failed: ${error.message}`);
+      process.exit(1);
+      resolve();
+    });
+
+    child.on('exit', (code) => {
+      currentChild = currentChild === child ? null : currentChild;
+
+      if (!printedQuickUrl && sawQuickTunnelTimeout) {
+        writeLine(
+          process.stderr,
+          'cloudflared quick tunnel could not reach api.trycloudflare.com. Check firewall, proxy, or network restrictions.'
+        );
+      }
+
+      process.exit(code || 1);
+      resolve();
+    });
   });
 };
 
-const startTunnel = () => {
-  attempt += 1;
+const runLocaltunnelAttempt = async ({ allowUnexpectedHost = false } = {}) => {
   let child;
 
   try {
     child = spawnLocaltunnel();
   } catch (error) {
-    if (attempt >= maxAttempts) {
-      startCloudflared(error.message);
-      return;
-    }
-
-    process.stderr.write(
-      `localtunnel failed to start on attempt ${attempt}/${maxAttempts}: ${error.message}\n`
-    );
-    setTimeout(startTunnel, retryDelayMs);
-    return;
+    return {
+      type: 'start-error',
+      reason: error.message,
+    };
   }
 
   currentChild = child;
 
-  let becameStable = false;
-  let sawBackendRefusal = false;
-  const stableTimer = setTimeout(() => {
-    becameStable = true;
-  }, stableAfterMs);
+  return new Promise((resolve) => {
+    const state = {
+      settled: false,
+      becameStable: false,
+      sawBackendRefusal: false,
+      acceptedUnexpectedHost: false,
+      sawUnexpectedHost: false,
+      pendingUrlLine: '',
+    };
 
-  pipeOutput(child, {
-    stderr: (text) => {
-      if (/connection refused: .*localtunnel\.me:9327/i.test(text) || /check your firewall settings/i.test(text)) {
-        sawBackendRefusal = true;
+    const stableTimer = setTimeout(() => {
+      state.becameStable = true;
+
+      if (state.pendingUrlLine) {
+        writeLine(process.stdout, state.pendingUrlLine);
+        state.pendingUrlLine = '';
       }
-    },
-  });
+    }, config.stableAfterMs);
 
-  child.on('error', (error) => {
-    clearTimeout(stableTimer);
+    const finish = (result) => {
+      if (state.settled) {
+        return;
+      }
 
-    if (attempt >= maxAttempts) {
-      startCloudflared(error.message);
-      return;
-    }
+      state.settled = true;
+      clearTimeout(stableTimer);
+      resolve(result);
+    };
 
-    process.stderr.write(
-      `localtunnel process error on attempt ${attempt}/${maxAttempts}: ${error.message}\n`
-    );
+    pipeOutput(child, {
+      stdout: (text) => {
+        const urlLine = extractMatch(text, localtunnelUrlLinePattern);
 
-    setTimeout(startTunnel, retryDelayMs);
-  });
+        if (!urlLine) {
+          return true;
+        }
 
-  child.on('exit', (code) => {
-    clearTimeout(stableTimer);
+        const hostname = getHostnameFromUrlLine(urlLine);
 
-    if (becameStable || code === 0) {
-      process.exit(code || 0);
-      return;
-    }
+        if (hostname && hostname !== config.expectedLocaltunnelHost) {
+          if (allowUnexpectedHost) {
+            state.acceptedUnexpectedHost = true;
+            state.pendingUrlLine = urlLine;
+            writeLine(
+              process.stderr,
+              `requested subdomain ${config.expectedLocaltunnelHost} was not honored by localtunnel; using assigned hostname ${hostname} instead`
+            );
+          } else {
+            state.sawUnexpectedHost = true;
+            writeLine(
+              process.stderr,
+              `requested subdomain ${config.expectedLocaltunnelHost} was not honored by localtunnel; received ${hostname} instead`
+            );
+            terminateChild(child);
+          }
+        } else {
+          state.pendingUrlLine = urlLine;
+        }
 
-    if (sawBackendRefusal) {
-      startCloudflared('backend refused the connection');
-      return;
-    }
+        const remainingText = text.replace(urlLine, '').trim();
 
-    if (attempt >= maxAttempts) {
-      startCloudflared(`failed after ${attempt} attempts`);
-      return;
-    }
+        if (remainingText) {
+          writeLine(process.stdout, remainingText);
+        }
 
-    process.stderr.write(
-      `localtunnel disconnected on attempt ${attempt}/${maxAttempts}, retrying in ${retryDelayMs / 1000}s...\n`
-    );
+        return false;
+      },
+      stderr: (text) => {
+        if (localtunnelRefusalPattern.test(text)) {
+          state.sawBackendRefusal = true;
+        }
 
-    setTimeout(startTunnel, retryDelayMs);
+        return true;
+      },
+    });
+
+    child.on('error', (error) => {
+      currentChild = currentChild === child ? null : currentChild;
+
+      if (state.sawUnexpectedHost && !state.acceptedUnexpectedHost) {
+        finish({ type: 'unexpected-host' });
+        return;
+      }
+
+      finish({
+        type: 'process-error',
+        reason: error.message,
+      });
+    });
+
+    child.on('exit', (code) => {
+      currentChild = currentChild === child ? null : currentChild;
+
+      if (state.sawUnexpectedHost && !state.acceptedUnexpectedHost) {
+        finish({ type: 'unexpected-host' });
+        return;
+      }
+
+      if (state.becameStable || code === 0) {
+        finish({
+          type: 'exit',
+          code: code || 0,
+        });
+        return;
+      }
+
+      if (state.pendingUrlLine) {
+        writeLine(
+          process.stderr,
+          'localtunnel disconnected before the URL became stable; ignoring that temporary loca.lt address'
+        );
+        state.pendingUrlLine = '';
+      }
+
+      if (state.sawBackendRefusal) {
+        finish({ type: 'backend-refusal' });
+        return;
+      }
+
+      finish({
+        type: 'disconnect',
+        code: code || 1,
+      });
+    });
   });
 };
 
-startTunnel();
+const main = async () => {
+  for (let attempt = 1; attempt <= config.maxAttempts; attempt += 1) {
+    const result = await runLocaltunnelAttempt({
+      allowUnexpectedHost: config.acceptAssignedHostOnMismatch && attempt >= config.maxAttempts,
+    });
+
+    if (result.type === 'exit') {
+      process.exit(result.code);
+      return;
+    }
+
+    if (result.type === 'unexpected-host') {
+      if (attempt >= config.maxAttempts) {
+        await startCloudflared(
+          `requested subdomain ${config.expectedLocaltunnelHost} was not honored after ${attempt} attempts`
+        );
+        return;
+      }
+
+      writeLine(
+        process.stderr,
+        `localtunnel assigned an unexpected hostname on attempt ${attempt}/${config.maxAttempts}, retrying in ${config.retryDelayMs / 1000}s...`
+      );
+      await wait(config.retryDelayMs);
+      continue;
+    }
+
+    if (result.type === 'backend-refusal') {
+      await startCloudflared('backend refused the connection');
+      return;
+    }
+
+    if (result.type === 'start-error') {
+      if (attempt >= config.maxAttempts) {
+        await startCloudflared(result.reason);
+        return;
+      }
+
+      writeLine(
+        process.stderr,
+        `localtunnel failed to start on attempt ${attempt}/${config.maxAttempts}: ${result.reason}`
+      );
+      await wait(config.retryDelayMs);
+      continue;
+    }
+
+    if (result.type === 'process-error') {
+      if (attempt >= config.maxAttempts) {
+        await startCloudflared(result.reason);
+        return;
+      }
+
+      writeLine(
+        process.stderr,
+        `localtunnel process error on attempt ${attempt}/${config.maxAttempts}: ${result.reason}`
+      );
+      await wait(config.retryDelayMs);
+      continue;
+    }
+
+    if (attempt >= config.maxAttempts) {
+      await startCloudflared(`failed after ${attempt} attempts`);
+      return;
+    }
+
+    writeLine(
+      process.stderr,
+      `localtunnel disconnected on attempt ${attempt}/${config.maxAttempts}, retrying in ${config.retryDelayMs / 1000}s...`
+    );
+    await wait(config.retryDelayMs);
+  }
+};
+
+main().catch((error) => {
+  writeLine(process.stderr, `tunnel script failed: ${error.message}`);
+  process.exit(1);
+});

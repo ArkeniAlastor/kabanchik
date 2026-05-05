@@ -10,6 +10,12 @@ const FORGOT_FIELD = {
   placeholder: 'your@email.com'
 };
 
+const FORGOT_SHORTCUTS = [
+  { to: '/login', label: 'Повернутися до входу', tone: 'primary' },
+  { to: '/register', label: 'Створити акаунт', tone: 'secondary' },
+  { to: '/help', label: 'Центр допомоги', tone: 'secondary' },
+];
+
 const PROMO_FEATURES = [
   {
     icon: iconCheck,
@@ -62,6 +68,22 @@ function ForgotPage() {
               <h1 className="forgot-title">Забули пароль?</h1>
               <p className="forgot-subtitle">Введіть email і ми надішлемо інструкції для відновлення</p>
 
+              <div className="forgot-shortcuts">
+                {FORGOT_SHORTCUTS.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`forgot-shortcut forgot-shortcut--${item.tone}`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              <p className="forgot-help-note">
+                Якщо немає доступу до старого email, відкрийте <Link to="/help">центр допомоги</Link> або поверніться до <Link to="/login">входу</Link> та перевірте дані ще раз.
+              </p>
+
               <form className="forgot-fields" onSubmit={handleSubmit}>
                 <label className="forgot-label">
                   {FORGOT_FIELD.label}
@@ -89,6 +111,9 @@ function ForgotPage() {
               <h2 className="forgot-success-title">Листа надіслано!</h2>
               <p className="forgot-success-text">
                 Ми надіслали інструкції для відновлення пароля на <strong>{email}</strong>
+              </p>
+              <p className="forgot-success-support">
+                Не бачите лист? Перевірте спам або відкрийте <Link to="/help">центр допомоги</Link>.
               </p>
               <Link to="/login" className="forgot-submit forgot-submit--link">Повернутися до входу</Link>
             </div>

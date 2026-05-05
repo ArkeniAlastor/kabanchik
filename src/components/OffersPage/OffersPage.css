@@ -2,6 +2,13 @@
   background: #efedeb;
 }
 
+.OffersPage,
+.OffersPage *,
+.OffersPage *::before,
+.OffersPage *::after {
+  box-sizing: border-box;
+}
+
 .OffersPage .offers-hero-section {
   background: linear-gradient(95deg, #4d62a6 0%, #5a648e 42%, #e2aa18 100%);
   padding: 56px 0 52px;
@@ -55,6 +62,7 @@
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -113,6 +121,41 @@
   color: rgba(255, 255, 255, 0.75);
   font-size: 22px;
   line-height: 1;
+}
+
+.OffersPage .offers-hero-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.OffersPage .offers-hero-shortcut,
+.OffersPage .offers-empty-link,
+.OffersPage .offer-btn-hire {
+  text-decoration: none;
+}
+
+.OffersPage .offers-hero-shortcut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.OffersPage .offers-hero-shortcut:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.34);
 }
 
 .OffersPage .offers-filter-section {
@@ -326,6 +369,9 @@
 }
 
 .OffersPage .offer-btn-hire {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 24px;
   border: none;
   border-radius: 6px;
@@ -340,6 +386,40 @@
 .OffersPage .offer-btn-hire:hover {
   background: #e8b11d;
   box-shadow: 0 4px 12px rgba(244, 191, 42, 0.3);
+}
+
+.OffersPage .offers-empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.OffersPage .offers-empty-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.OffersPage .offers-empty-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.OffersPage .offers-empty-link--primary {
+  background: #4d62a6;
+  color: #fff;
+}
+
+.OffersPage .offers-empty-link--secondary {
+  background: #fff;
+  border: 1px solid #ddd5c8;
+  color: #314671;
 }
 
 .OffersPage .banner-strip {
@@ -358,4 +438,141 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+@media (max-width: 1024px) {
+  .OffersPage .offers-hero-section {
+    padding: 42px 0 38px;
+  }
+
+  .OffersPage .offers-hero-content {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .OffersPage .offers-hero-action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .OffersPage .offers-hero-title {
+    font-size: 42px;
+  }
+
+  .OffersPage .offer-header {
+    flex-direction: column;
+  }
+
+  .OffersPage .offer-budget {
+    text-align: left;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .OffersPage .offers-hero-section {
+    padding: 32px 0 30px;
+  }
+
+  .OffersPage .offers-hero-icon-wrapper,
+  .OffersPage .offers-hero-action {
+    min-width: 0;
+  }
+
+  .OffersPage .offers-hero-icon {
+    width: 88px;
+    height: 88px;
+  }
+
+  .OffersPage .offers-hero-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .OffersPage .offers-hero-subtitle {
+    margin-bottom: 18px;
+    font-size: 18px;
+  }
+
+  .OffersPage .offers-hero-search {
+    height: 48px;
+    padding: 0 14px;
+  }
+
+  .OffersPage .offers-hero-search input {
+    font-size: 15px;
+  }
+
+  .OffersPage .offers-hero-shortcuts,
+  .OffersPage .offers-empty-actions {
+    flex-direction: column;
+  }
+
+  .OffersPage .offers-hero-shortcut,
+  .OffersPage .offers-create-order-btn,
+  .OffersPage .offer-btn-hire,
+  .OffersPage .offers-empty-link {
+    width: 100%;
+  }
+
+  .OffersPage .offers-filter-section {
+    padding: 14px 0 6px;
+  }
+
+  .OffersPage .offers-category-buttons {
+    gap: 8px;
+    padding-bottom: 8px;
+  }
+
+  .OffersPage .offers-list-section {
+    padding: 18px 0 44px;
+  }
+
+  .OffersPage .offer-card {
+    padding: 16px;
+  }
+
+  .OffersPage .offer-description {
+    font-size: 13px;
+  }
+
+  .OffersPage .offer-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .OffersPage .offer-freelancer {
+    width: 100%;
+  }
+
+  .OffersPage .banner-strip {
+    padding: 16px 12px;
+    font-size: 22px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .OffersPage .offers-hero-title {
+    font-size: 28px;
+  }
+
+  .OffersPage .offers-hero-subtitle {
+    font-size: 16px;
+  }
+
+  .OffersPage .offers-category-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .OffersPage .offer-title,
+  .OffersPage .offer-budget-amount {
+    font-size: 16px;
+  }
 }

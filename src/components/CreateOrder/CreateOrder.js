@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './CreateOrder.css';
 import Header from '../Header/Header';
 
@@ -35,6 +35,12 @@ const TIMELINES = [
 ];
 
 const STEP_LABELS = ['Опис', 'Деталі', 'Перегляд'];
+
+const HERO_SHORTCUTS = [
+  { to: '/catalogue-specs', label: 'Каталог фахівців', tone: 'primary' },
+  { to: '/HowWorkPage', label: 'Як це працює', tone: 'secondary' },
+  { to: '/help', label: 'Центр допомоги', tone: 'secondary' },
+];
 
 function Stepper({ step }) {
   return (
@@ -244,6 +250,11 @@ function Step3({ data, onBack }) {
         </div>
       </div>
 
+      <div className="co-review-links">
+        <Link to="/catalogue-specs" className="co-review-link co-review-link--primary">Переглянути фахівців</Link>
+        <Link to="/help" className="co-review-link co-review-link--secondary">Центр допомоги</Link>
+      </div>
+
       <div className="co-actions">
         <button className="co-btn-back" onClick={onBack}>← Назад</button>
         <button className="co-btn-publish" onClick={() => navigate('/userpage')}>Опублікувати замовлення</button>
@@ -272,6 +283,17 @@ const CreateOrder = () => {
       <div className="co-hero">
         <h1 className="co-hero-title">Створення замовлення</h1>
         <p className="co-hero-sub">Опишіть ваше завдання, і фахівці почнуть надсилати пропозиції</p>
+        <div className="co-hero-links">
+          {HERO_SHORTCUTS.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`co-hero-link co-hero-link--${item.tone}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <Stepper step={step} />

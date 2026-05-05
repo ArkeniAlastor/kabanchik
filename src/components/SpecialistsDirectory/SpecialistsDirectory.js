@@ -1,5 +1,6 @@
 import './SpecialistsDirectory.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import * as icons from '../../imgs/icons';
 
@@ -10,6 +11,12 @@ const categories = [
   { id: 'marketing', label: 'Маркетинг', icon: icons.iconMarketing },
   { id: 'content', label: 'Контент', icon: icons.iconPencil },
   { id: 'video', label: 'Відео', icon: icons.iconVideo },
+];
+
+const DIRECTORY_SHORTCUTS = [
+  { to: '/create-order', label: 'Створити замовлення', tone: 'primary' },
+  { to: '/customer-help', label: 'Поради для замовників', tone: 'secondary' },
+  { to: '/HowWorkPage', label: 'Як це працює', tone: 'secondary' },
 ];
 
 const specialists = [
@@ -206,6 +213,7 @@ function SpecialistsDirectory() {
           <span className={`availability-badge ${specialist.availability === 'Доступний' ? 'is-open' : 'is-busy'}`}>
             {specialist.availability}
           </span>
+          <Link to="/create-order" className="specialist-card-action">Запросити до проєкту</Link>
         </div>
       </div>
     </div>
@@ -233,6 +241,18 @@ function SpecialistsDirectory() {
                 />
                 <span className="hero-search-icon" aria-hidden="true">⌕</span>
               </label>
+
+              <div className="directory-hero-links">
+                {DIRECTORY_SHORTCUTS.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={`directory-hero-link directory-hero-link--${item.tone}`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -290,7 +310,13 @@ function SpecialistsDirectory() {
                   <SpecialistCard key={specialist.id} specialist={specialist} />
                 ))
               ) : (
-                <div className="empty-state">За цими фільтрами фахівців не знайдено.</div>
+                <div className="empty-state">
+                  <p>За цими фільтрами фахівців не знайдено.</p>
+                  <div className="directory-empty-actions">
+                    <Link to="/create-order" className="directory-empty-link directory-empty-link--primary">Створити замовлення</Link>
+                    <Link to="/help" className="directory-empty-link directory-empty-link--secondary">Центр допомоги</Link>
+                  </div>
+                </div>
               )}
             </div>
           </div>

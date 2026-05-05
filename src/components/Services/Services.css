@@ -124,7 +124,8 @@
 .ServicesPage .hero-btn,
 .ServicesPage .cta-btn,
 .ServicesPage .start-card-link,
-.ServicesPage .service-card-link {
+.ServicesPage .service-card-link,
+.ServicesPage .hero-shortcut {
     text-decoration: none;
 }
 
@@ -142,7 +143,8 @@
 
 .ServicesPage .hero-btn:hover,
 .ServicesPage .cta-btn:hover,
-.ServicesPage .start-card-link:hover {
+.ServicesPage .start-card-link:hover,
+.ServicesPage .hero-shortcut:hover {
     transform: translateY(-2px);
 }
 
@@ -156,6 +158,33 @@
     background: rgba(255, 255, 255, 0.14);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: #fff;
+}
+
+.ServicesPage .hero-shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.ServicesPage .hero-shortcut {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.ServicesPage .hero-shortcut:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.38);
 }
 
 /* Sections */
@@ -435,4 +464,174 @@
     font-size: 30px;
     font-weight: 700;
     line-height: 1.2;
+}
+
+@media (max-width: 1024px) {
+    .ServicesPage .services-container {
+        padding: 0 20px;
+    }
+
+    .ServicesPage .page-header {
+        padding: 42px 0 38px;
+    }
+
+    .ServicesPage .page-header h1 {
+        font-size: 2.45rem;
+    }
+
+    .ServicesPage .subtitle {
+        font-size: 1.08rem;
+        margin-bottom: 22px;
+    }
+
+    .ServicesPage .service-stats,
+    .ServicesPage .services-grid,
+    .ServicesPage .trust-grid,
+    .ServicesPage .start-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ServicesPage .cta-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px 28px;
+    }
+
+    .ServicesPage .cta-copy {
+        max-width: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .ServicesPage .services-container {
+        padding: 0 16px;
+    }
+
+    .ServicesPage .page-header {
+        padding: 34px 0 30px;
+    }
+
+    .ServicesPage .page-header::before {
+        top: -104px;
+        left: -70px;
+        width: 176px;
+        height: 176px;
+    }
+
+    .ServicesPage .page-header::after {
+        right: -74px;
+        bottom: -102px;
+        width: 188px;
+        height: 188px;
+    }
+
+    .ServicesPage .page-title-row {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .ServicesPage .page-title-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .ServicesPage .page-eyebrow {
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+    }
+
+    .ServicesPage .page-header h1 {
+        font-size: 2rem;
+        line-height: 1.06;
+        margin-bottom: 12px;
+    }
+
+    .ServicesPage .subtitle {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .ServicesPage .service-stats,
+    .ServicesPage .services-grid,
+    .ServicesPage .trust-grid,
+    .ServicesPage .start-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ServicesPage .hero-actions,
+    .ServicesPage .hero-shortcuts,
+    .ServicesPage .cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ServicesPage .hero-btn,
+    .ServicesPage .hero-shortcut,
+    .ServicesPage .cta-btn,
+    .ServicesPage .start-card-link {
+        width: 100%;
+    }
+
+    .ServicesPage .service-card,
+    .ServicesPage .trust-card,
+    .ServicesPage .start-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .ServicesPage .services-section,
+    .ServicesPage .trust-section,
+    .ServicesPage .start-section {
+        padding-top: 24px;
+    }
+
+    .ServicesPage .section-intro {
+        margin-bottom: 16px;
+    }
+
+    .ServicesPage .section-intro h2,
+    .ServicesPage .cta-copy h2 {
+        font-size: 1.7rem;
+    }
+
+    .ServicesPage .section-intro p,
+    .ServicesPage .service-card-description,
+    .ServicesPage .trust-card p,
+    .ServicesPage .start-card p {
+        font-size: 0.95rem;
+    }
+
+    .ServicesPage .start-grid {
+        margin-bottom: 48px;
+    }
+
+    .ServicesPage .cta-section {
+        padding: 0 0 44px;
+    }
+
+    .ServicesPage .cta-panel {
+        padding: 24px 20px;
+        border-radius: 22px;
+    }
+
+    .ServicesPage .banner-strip {
+        padding: 16px 12px;
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 420px) {
+    .ServicesPage .page-header h1 {
+        font-size: 1.78rem;
+    }
+
+    .ServicesPage .service-stat {
+        padding: 12px 14px;
+    }
+
+    .ServicesPage .hero-btn,
+    .ServicesPage .cta-btn {
+        min-height: 46px;
+    }
 }
