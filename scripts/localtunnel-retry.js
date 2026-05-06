@@ -2,7 +2,7 @@ const { spawn } = require('child_process');
 
 const config = {
   port: process.env.LOCALTUNNEL_PORT || '3000',
-  subdomain: process.env.LOCALTUNNEL_SUBDOMAIN || 'mykabanchikbeta',
+  subdomain: process.env.LOCALTUNNEL_SUBDOMAIN || 'kabanchik',
   maxAttempts: Number(process.env.LOCALTUNNEL_MAX_ATTEMPTS || 10),
   retryDelayMs: Number(process.env.LOCALTUNNEL_RETRY_DELAY_MS || 2000),
   stableAfterMs: Number(process.env.LOCALTUNNEL_STABLE_MS || 15000),
@@ -19,8 +19,14 @@ const cloudflaredArgs = ['tunnel', '--url', `http://localhost:${config.port}`, '
 const localtunnelUrlLinePattern = /your url is:\s*https:\/\/[^\s]+/i;
 const httpsUrlPattern = /https:\/\/[^\s]+/i;
 const quickTunnelUrlPattern = /https:\/\/(?!api\.)[a-z0-9-]+\.trycloudflare\.com\b/i;
-const localtunnelRefusalPattern = /connection refused: .*localtunnel\.me:9327|check your firewall settings/i;
+const localtunnelRefusalPattern = /connection refused: .*localtunnel\.me:\d+|check your firewall settings/i;
 const quickTunnelTimeoutPattern = /api\.trycloudflare\.com\/tunnel|context deadline exceeded/i;
+const partialFlushPatterns = [
+  localtunnelUrlLinePattern,
+  quickTunnelUrlPattern,
+  localtunnelRefusalPattern,
+  quickTunnelTimeoutPattern,
+];
 
 let currentChild = null;
 let fallbackStarted = false;
@@ -96,31 +102,63 @@ const stopCurrentChild = (signal = 'SIGTERM') => {
 };
 
 const pipeOutput = (child, handlers = {}) => {
-  child.stdout.on('data', (chunk) => {
-    const text = chunk.toString();
-    let shouldForward = true;
+  const streamStates = [
+    {
+      stream: child.stdout,
+      forward: (text) => process.stdout.write(text),
+      handler: handlers.stdout,
+      buffer: '',
+    },
+    {
+      stream: child.stderr,
+      forward: (text) => process.stderr.write(text),
+      handler: handlers.stderr,
+      buffer: '',
+    },
+  ];
 
-    if (handlers.stdout) {
-      shouldForward = handlers.stdout(text) !== false;
+  const flushBufferedLines = (state, force = false) => {
+    const emitText = (text) => {
+      let shouldForward = true;
+
+      if (state.handler) {
+        shouldForward = state.handler(text) !== false;
+      }
+
+      if (shouldForward) {
+        state.forward(text);
+      }
+    };
+
+    const parts = state.buffer.split(/\r?\n/);
+    state.buffer = parts.pop() || '';
+
+    for (const line of parts) {
+      emitText(`${line}\n`);
     }
 
-    if (shouldForward) {
-      process.stdout.write(text);
-    }
-  });
-
-  child.stderr.on('data', (chunk) => {
-    const text = chunk.toString();
-    let shouldForward = true;
-
-    if (handlers.stderr) {
-      shouldForward = handlers.stderr(text) !== false;
+    if (!force && state.buffer && partialFlushPatterns.some((pattern) => pattern.test(state.buffer))) {
+      emitText(state.buffer);
+      state.buffer = '';
+      return;
     }
 
-    if (shouldForward) {
-      process.stderr.write(text);
+    if (force && state.buffer) {
+      emitText(state.buffer);
+      state.buffer = '';
     }
-  });
+  };
+
+  for (const state of streamStates) {
+    state.stream.on('data', (chunk) => {
+      state.buffer += chunk.toString();
+      flushBufferedLines(state);
+    });
+
+    state.stream.on('end', () => {
+      flushBufferedLines(state, true);
+    });
+  }
 };
 
 process.on('SIGINT', () => {
@@ -203,7 +241,7 @@ const startCloudflared = async (reason) => {
       resolve();
     });
 
-    child.on('exit', (code) => {
+    child.on('close', (code) => {
       currentChild = currentChild === child ? null : currentChild;
 
       if (!printedQuickUrl && sawQuickTunnelTimeout) {
@@ -264,6 +302,10 @@ const runLocaltunnelAttempt = async ({ allowUnexpectedHost = false } = {}) => {
 
     pipeOutput(child, {
       stdout: (text) => {
+        if (localtunnelRefusalPattern.test(text)) {
+          state.sawBackendRefusal = true;
+        }
+
         const urlLine = extractMatch(text, localtunnelUrlLinePattern);
 
         if (!urlLine) {
@@ -323,7 +365,7 @@ const runLocaltunnelAttempt = async ({ allowUnexpectedHost = false } = {}) => {
       });
     });
 
-    child.on('exit', (code) => {
+    child.on('close', (code) => {
       currentChild = currentChild === child ? null : currentChild;
 
       if (state.sawUnexpectedHost && !state.acceptedUnexpectedHost) {
