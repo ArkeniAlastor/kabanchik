@@ -7,10 +7,10 @@ import LoginPage from './components/LoginPage/LoginPage';
 import ForgotPage from './components/ForgotPage/ForgotPage';
 import CategoryPage from './components/CategoryPage/CategoryPage';
 import OffersPage from './components/OffersPage/OffersPage';
-import UserPage from './components/UserPage/UserPage';
+// import UserPage from './components/UserPage/UserPage';
 import CreateOrder from './components/CreateOrder/CreateOrder';
 import SpecialistsDirectory from './components/SpecialistsDirectory/SpecialistsDirectory';
-import SpecPage from './components/SpecPage/SpecPage';
+// import SpecPage from './components/SpecPage/SpecPage';
 import ServicesPage from './components/Services/Services';
 import TermsPage from './components/TermsPage/TermsPage';
 import PrivacyPage from './components/PrivacyPage/PrivacyPage';
@@ -33,10 +33,10 @@ function AppContent() {
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/offers" element={<OffersPage />} />
-          <Route path="/userpage" element={<UserPage />} />
+          {/* <Route path="/userpage" element={<UserPage />} /> */}
           <Route path="/create-order" element={<CreateOrder />} />
           <Route path="/catalogue-specs" element={<SpecialistsDirectory />} />
-          <Route path='/SpecPage' element={<SpecPage />} />
+          {/* <Route path='/SpecPage' element={<SpecPage />} /> */}
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
