@@ -33,10 +33,10 @@ function AppContent() {
           <Route path="/forgot" element={<ForgotPage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/offers" element={<OffersPage />} />
-          {/* <Route path="/userpage" element={<UserPage />} /> */}
+          <Route path="/userpage" element={<UserPage />} />
           <Route path="/create-order" element={<CreateOrder />} />
           <Route path="/catalogue-specs" element={<SpecialistsDirectory />} />
-          {/* <Route path='/SpecPage' element={<SpecPage />} /> */}
+          <Route path='/SpecPage' element={<SpecPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
